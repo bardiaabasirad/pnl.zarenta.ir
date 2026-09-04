@@ -1,0 +1,143 @@
+@if (isBalanceSufficient) {
+  <div class="mb-4 text-sm px-4 py-2.5 bg-sky-50 text-sky-800 rounded">  هزینه انجام هر استعلام از بانک مبلغ {{ fee | number }} تومان می‌باشد</div>
+}
+@else {
+<div class="mb-4 text-sm px-4 py-2.5 bg-yellow-50 text-yellow-800 rounded">  هزینه انجام هر استعلام از بانک مبلغ {{ fee | number }} تومان می‌باشد و موجودی حساب شما برای این استعلام کافی نمی‌باشد</div>
+}
+<form [formGroup]="form" class="space-y-4">
+
+  <div class="grid gap-4 lg:grid-cols-3">
+    <div class="lg:col-span-3">
+      <label for="national_code" class="sr-only">کد ملی</label>
+      <input formControlName="national_code"
+        mask="0000000000"
+        [inputTransformFn]="e2p"
+        placeholder="کد ملی را وارد کنید"
+        type="text"
+        id="national_code"
+        class="bg-transparent border border-gray-300 text-gray-900 text-sm rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+      </div>
+    </div>
+
+    <div class="grid gap-4 lg:grid-cols-3">
+      <div class="lg:col-span-3 form">
+        <label for="birthdate" class="sr-only">تاریخ تولد</label>
+        <app-date-picker id="birthdate"
+          placeholder="تاریخ تولد"
+        (datePicked)="datePicked($event)"></app-date-picker>
+      </div>
+    </div>
+
+    <div class="grid gap-4 lg:grid-cols-3">
+      <div class="lg:col-span-3">
+        <label for="iban" class="sr-only">شماره شبا یا کارت</label>
+        <input formControlName="iban"
+          [inputTransformFn]="e2p"
+          [mask]="currentMask"
+          placeholder="شماره شبا یا کارت را وارد کنید"
+          type="text"
+          id="iban"
+          dir="ltr"
+          class="ltr rtl-placeholder bg-transparent border border-gray-300 text-gray-900 text-sm rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+        </div>
+      </div>
+
+      <div class="flex justify-end">
+        @if (form.invalid || Number(balance) < Number(fee)) {
+          <button class="w-full lg:max-w-72 bg-emerald-500/25 text-white px-6 rounded py-2 flex justify-center items-center">
+            <svg width="15" height="11" viewBox="0 0 15 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M1.22754 6.625L4.54727 10L13.3999 1" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span class="mr-2.5">استعلام</span>
+          </button>
+        } @else {
+          <app-button-with-loader type="submit" class="relative w-full lg:max-w-72" classes="bg-emerald-500 text-white px-6 rounded w-full py-2" [loading]="loading" [disabled]="loading" (clicked)="inquiry()">
+            <svg width="15" height="11" viewBox="0 0 15 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M1.22754 6.625L4.54727 10L13.3999 1" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span class="mr-2.5">استعلام</span>
+          </app-button-with-loader>
+        }
+      </div>
+
+      @if (inquiryResponse) {
+        <div>
+          <div>
+            @switch (inquiryResponse.code) {
+              @case ('valid') {
+                <div>
+                  <div class="mb-4">نتیجه استعلام</div>
+                  <div class="flex justify-between items-center p-4 bg-gray-100 rounded">
+                    <div class="text-sm">وضعیت تطابق</div>
+                    <div class="text-xs bg-emerald-400 p-2 rounded">تطابق</div>
+                  </div>
+                </div>
+              }
+              @case ('not_valid') {
+                <div>
+                  <div class="mb-4">نتیجه استعلام</div>
+                  <div class="flex justify-between items-center p-4 bg-gray-100 rounded">
+                    <div class="text-sm">وضعیت تطابق</div>
+                    <div class="text-xs bg-yellow-400 p-2 rounded">عدم تطابق</div>
+                  </div>
+                </div>
+              }
+              @case ('card_source_bank_is_not_active') {
+                <div class="p-4 bg-yellow-300 rounded text-yellow-600">ﺑﺎﻧﮏ ﻣﺮﺑﻮط ﺑﻪ ﮐﺎرت غیر فعال است</div>
+              }
+              @case ('card_provider_is_not_active') {
+                <div class="p-4 bg-yellow-300 rounded text-yellow-600">ﺳﺮوﯾﺲ دﻫﻨﺪه‌ی ﻣﺮﺑﻮط ﺑﻪ ﮐﺎرت ﻓﻌﺎل ﻧﯿﺴﺖ</div>
+              }
+              @case ('card_black_listed') {
+                <div class="p-4 bg-yellow-300 rounded text-yellow-600">استعلام این کارت امکان پذیر نیست</div>
+              }
+              @case ('identity_info_not_found') {
+                <div class="p-4 bg-yellow-300 rounded text-yellow-600">اطلاعات هویتی یافت نشد</div>
+              }
+              @case ('matching_unknown') {
+                <div class="p-4 bg-yellow-300 rounded text-yellow-600">تطابق نامشخص است</div>
+              }
+              @case ('iban_is_required') {
+                <div class="p-4 bg-yellow-300 rounded text-yellow-600">ﺷﺒﺎ اﻟﺰاﻣﯽ اﺳﺖ</div>
+              }
+              @case ('iban_not_valid') {
+                <div class="p-4 bg-yellow-300 rounded text-yellow-600">ﺷﺒﺎ نامعتبر اﺳﺖ</div>
+              }
+              @case ('invalid_request_body') {
+                <div class="p-4 bg-yellow-300 rounded text-yellow-600">بدونه درخواست خالی و یا نامعتبر است</div>
+              }
+              @case ('forbidden') {
+                <div class="p-4 bg-yellow-300 rounded text-yellow-600">عدم دسترسی به سرویس</div>
+              }
+              @case ('card_not_valid') {
+                <div class="p-4 bg-yellow-300 rounded text-yellow-600">کارت نامعتبر است</div>
+              }
+              @case ('daily_limit_reached') {
+                <div class="p-4 bg-yellow-300 rounded text-yellow-600">در ﻓﺮاﺧﻮاﻧﯽ اﯾﻦ ﺳﺮوﯾﺲ ﺑﻪ ﻣﺤﺪودﯾﺖ روزاﻧﻪ رﺳﯿﺪه‌اﯾﺪ</div>
+              }
+              @case ('card_not_active') {
+                <div class="p-4 bg-yellow-300 rounded text-yellow-600"> ﮐﺎرتﻏﯿﺮﻓﻌﺎل اﺳﺖ</div>
+              }
+              @case ('card_is_expired') {
+                <div class="p-4 bg-yellow-300 rounded text-yellow-600"> ﮐﺎرت ﻣﻨﻘﻀﯽﺷﺪه اﺳﺖ</div>
+              }
+              @case ('card_account_number_not_valid') {
+                <div class="p-4 bg-yellow-300 rounded text-yellow-600">ﺷﻤﺎره ﺣﺴﺎب ﻣﺮﺑﻮط ﺑﻪ ﮐﺎرت ﻣﻌﺘﺒﺮ ﻧﯿﺴﺖ</div>
+              }
+              @case ('card_owner_not_authorized') {
+                <div class="p-4 bg-yellow-300 rounded text-yellow-600">ﻫﻮﯾﺖ دارﻧﺪه ﮐﺎرت ﻧﺎﻣﻌﺘﺒﺮ اﺳﺖ</div>
+              }
+              @case ('card_registered_as_lost') {
+                <div class="p-4 bg-yellow-300 rounded text-yellow-600">اﯾﻦ ﮐﺎرت ﺑﻪ ﻋﻨﻮان ﮐﺎرت ﮔﻢ ﺷﺪه ﺛﺒﺖ ﺷﺪه اﺳﺖ</div>
+              }
+              @case ('card_registered_as_stolen') {
+                <div class="p-4 bg-yellow-300 rounded text-yellow-600">اﯾﻦ ﮐﺎرت ﺑﻪ ﻋﻨﻮات ﮐﺎرت ﻣﺴﺮوﻗﻪ ﺛﺒﺖ ﺷﺪه اﺳﺖ</div>
+              }
+              @default {
+                <div class="p-4 bg-yellow-300 rounded text-yellow-600">خطای نامشخص</div>
+              }
+            }
+          </div>
+        </div>
+      }
+    </form>

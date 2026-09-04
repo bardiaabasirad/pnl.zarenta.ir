@@ -1,0 +1,144 @@
+@use '@angular/material' as mat;
+
+html {
+  @include mat.theme((
+    typography: (
+      plain-family: IRANSansX,
+    ),
+  ));
+}
+
+.filter{
+  .mat-mdc-form-field-infix{
+    min-height: 34px !important;
+    max-height: 34px !important;
+    height: 34px !important;
+  }
+  .mdc-text-field--no-label:not(.mdc-text-field--outlined):not(.mdc-text-field--textarea) .mat-mdc-form-field-infix{
+    padding-top: 5px !important;
+    padding-bottom: 5px !important;
+  }
+  .mat-mdc-icon-button .mat-mdc-button-touch-target{
+    height: 34px !important;
+    width: 34px !important;
+  }
+  .mat-mdc-icon-button .mat-mdc-focus-indicator{
+    height: 34px !important;
+    width: 34px !important;
+    display: none !important;
+  }
+  .mat-mdc-icon-button .mat-mdc-button-ripple{
+    height: 34px !important;
+    width: 34px !important;
+    display: none !important;
+  }
+  button[mat-ripple-loader-class-name="mat-mdc-button-ripple"] {
+    padding: 0 !important;
+    height: 34px !important;
+    width: 34px !important;
+  }
+  button[mat-ripple-loader-class-name="mat-mdc-button-ripple"].mat-calendar-previous-button, button[mat-ripple-loader-class-name="mat-mdc-button-ripple"].mat-calendar-next-button {
+    padding: 8px !important;
+    height: 40px !important;
+    width: 40px !important;
+  }
+  button[mat-ripple-loader-class-name="mat-mdc-button-ripple"].mat-calendar-period-button {
+    padding: 0 8px 0 8px !important;
+    height: 36px !important;
+    width: auto !important;
+  }
+  .mat-mdc-form-field-subscript-wrapper.mat-mdc-form-field-bottom-align{
+    display: none;
+  }
+  .mat-mdc-text-field-wrapper.mdc-text-field{
+    border-radius: 7px;
+    border: 1px solid #d3d5d7;
+  }
+  .mdc-line-ripple{
+    display: none !important;
+  }
+  .mat-mdc-form-field-has-icon-suffix.mat-mdc-text-field-wrapper{
+    background-color: #f8fafc !important;
+  }
+  .mdc-text-field--filled:not(.mdc-text-field--disabled){
+    background-color: #f8fafc !important;
+  }
+  .mat-mdc-icon-button .mat-mdc-button-persistent-ripple{
+    display: none !important;
+  }
+  .mat-mdc-icon-button .mat-mdc-button-touch-target{
+    display: none !important;
+  }
+
+  .mat-mdc-slider{
+    width: 100% !important;
+  }
+}
+
+.form{
+  .mat-mdc-form-field-infix{
+    display: flex;
+    min-height: 40px !important;
+    max-height: 40px !important;
+    height: 40px !important;
+  }
+  .mdc-text-field--no-label:not(.mdc-text-field--outlined):not(.mdc-text-field--textarea) .mat-mdc-form-field-infix{
+    padding-top: 5px !important;
+    padding-bottom: 5px !important;
+  }
+  .mat-mdc-icon-button .mat-mdc-button-touch-target{
+    height: 40px !important;
+    width: 40px !important;
+  }
+  .mat-mdc-icon-button .mat-mdc-focus-indicator{
+    height: 40px !important;
+    width: 40px !important;
+    display: none !important;
+  }
+  .mat-mdc-icon-button .mat-mdc-button-ripple{
+    height: 40px !important;
+    width: 40px !important;
+    display: none !important;
+  }
+  button[mat-ripple-loader-class-name="mat-mdc-button-ripple"] {
+    padding: 0 !important;
+    height: 40px !important;
+    width: 40px !important;
+  }
+  button[mat-ripple-loader-class-name="mat-mdc-button-ripple"].mat-calendar-previous-button, button[mat-ripple-loader-class-name="mat-mdc-button-ripple"].mat-calendar-next-button {
+    padding: 8px !important;
+    height: 40px !important;
+    width: 40px !important;
+  }
+  button[mat-ripple-loader-class-name="mat-mdc-button-ripple"].mat-calendar-period-button {
+    padding: 0 8px 0 8px !important;
+    height: 36px !important;
+    width: auto !important;
+  }
+  .mat-mdc-form-field-subscript-wrapper.mat-mdc-form-field-bottom-align{
+    display: none;
+  }
+  .mat-mdc-text-field-wrapper.mdc-text-field{
+    border-radius: 7px;
+    border: 1px solid #d3d5d7;
+  }
+  .mdc-line-ripple{
+    display: none !important;
+  }
+  .mat-mdc-form-field-has-icon-suffix.mat-mdc-text-field-wrapper{
+    background-color: #f8fafc !important;
+  }
+  .mdc-text-field--filled:not(.mdc-text-field--disabled){
+    background-color: #f8fafc !important;
+  }
+  .mat-mdc-icon-button .mat-mdc-button-persistent-ripple{
+    display: none !important;
+  }
+  .mat-mdc-icon-button .mat-mdc-button-touch-target{
+    display: none !important;
+  }
+
+  .mat-mdc-slider{
+    width: 100% !important;
+  }
+}

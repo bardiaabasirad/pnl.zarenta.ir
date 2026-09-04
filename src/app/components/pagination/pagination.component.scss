@@ -1,0 +1,39 @@
+.pagination {
+  margin-bottom: 0;
+}
+.pagination .page-link {
+  border: none;
+  cursor: pointer;
+  color: #0075FF;
+  transition: transform 0.3s ease;
+}
+.pagination .page-link:hover {
+  color: #003780;
+  transform: translateY(-2px);
+  transition: transform 0.3s ease;
+}
+.pagination .page-item.active a {
+  cursor: default;
+}
+.pagination .page-link:hover {
+  background-color: transparent;
+}
+.pagination .page-link.disabled {
+  color: gray;
+}
+.pagination .page-link.disabled:hover {
+  cursor: default;
+  transform: translateY(0);
+}
+.pagination .page-item.active > .page-link:hover {
+  cursor: default;
+  transform: translateY(0);
+}
+.pagination .dots {
+  color: gray;
+  line-height: 30px;
+}
+.pagination .page-item.active .page-link {
+  color: gray;
+  background-color: transparent;
+}

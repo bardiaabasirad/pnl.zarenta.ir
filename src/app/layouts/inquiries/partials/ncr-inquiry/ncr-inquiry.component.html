@@ -1,0 +1,175 @@
+@if (isBalanceSufficient) {
+  <div class="mb-4 text-sm px-4 py-2.5 bg-sky-50 text-sky-800 rounded">  هزینه انجام هر استعلام از سامانه ثبت احوال مبلغ {{ fee | number }} تومان می‌باشد</div>
+}
+@else {
+<div class="mb-4 text-sm px-4 py-2.5 bg-yellow-50 text-yellow-800 rounded">  هزینه انجام هر استعلام از سامانه ثبت احوال مبلغ {{ fee | number }} تومان می‌باشد و موجودی حساب شما برای این استعلام کافی نمی‌باشد</div>
+}
+
+<form [formGroup]="form" class="space-y-4">
+
+  <div class="grid gap-4 lg:grid-cols-3">
+    <div class="lg:col-span-3">
+      <label for="national_code" class="sr-only">کد ملی</label>
+      <input [formControl]="national_code" mask="0000000000" [inputTransformFn]="e2p" placeholder="کد ملی را وارد کنید" type="text" id="national_code" class="bg-transparent border border-gray-300 text-gray-900 text-sm rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+      <!--      <p *ngIf="utilityService.hasError(national_code)" class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium">اوه!</span> {{utilityService.getErrorMessage(national_code)}}!</p>-->
+    </div>
+  </div>
+
+  <div class="grid gap-4 lg:grid-cols-3">
+    <div class="lg:col-span-3 form">
+      <label for="birthdate" class="sr-only">تاریخ تولد</label>
+      <app-date-picker id="birthdate" placeholder="تاریخ تولد" (datePicked)="datePicked($event)"></app-date-picker>
+      <!--      <p *ngIf="utilityService.hasError(birthdate)" class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium">اوه!</span> {{utilityService.getErrorMessage(birthdate)}}!</p>-->
+    </div>
+  </div>
+
+  <div class="grid gap-4 lg:grid-cols-3">
+    <div class="lg:col-span-3">
+      <label for="name" class="sr-only">نام</label>
+      <input [formControl]="firstname" placeholder="نام را وارد کنید" type="text" id="name" class="bg-transparent border border-gray-300 text-gray-900 text-sm rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+      <!--      <p *ngIf="utilityService.hasError(firstname)" class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium">اوه!</span> {{utilityService.getErrorMessage(firstname)}}!</p>-->
+    </div>
+  </div>
+
+  <div class="grid gap-4 lg:grid-cols-3">
+    <div class="lg:col-span-3">
+      <label for="lastname" class="sr-only">نام خانوادگی</label>
+      <input [formControl]="lastname" placeholder="نام خانوادگی را وارد کنید" type="text" id="lastname" class="bg-transparent border border-gray-300 text-gray-900 text-sm rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+      <!--      <p *ngIf="utilityService.hasError(lastname)" class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium">اوه!</span> {{utilityService.getErrorMessage(lastname)}}!</p>-->
+    </div>
+  </div>
+
+  <div class="grid gap-4 lg:grid-cols-3">
+    <div class="lg:col-span-3">
+      <label for="father_name" class="sr-only">نام پدر</label>
+      <input [formControl]="father_name" placeholder="نام پدر را وارد کنید" type="text" id="father_name" class="bg-transparent border border-gray-300 text-gray-900 text-sm rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+      <!--      <p *ngIf="utilityService.hasError(father_name)" class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium">اوه!</span> {{utilityService.getErrorMessage(father_name)}}!</p>-->
+    </div>
+  </div>
+
+  <div class="flex justify-end">
+    @if (form.invalid || Number(balance) < Number(fee)) {
+      <button class="w-full lg:max-w-72 bg-emerald-500/25 text-white px-6 rounded py-2 flex justify-center items-center">
+        <svg width="15" height="11" viewBox="0 0 15 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M1.22754 6.625L4.54727 10L13.3999 1" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span class="mr-2.5">استعلام</span>
+      </button>
+    } @else {
+      <app-button-with-loader type="submit" class="relative w-full lg:max-w-72" classes="bg-emerald-500 text-white px-6 rounded w-full py-2" [loading]="loading" [disabled]="loading" (clicked)="inquiry()">
+        <svg width="15" height="11" viewBox="0 0 15 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M1.22754 6.625L4.54727 10L13.3999 1" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span class="mr-2.5">استعلام</span>
+      </app-button-with-loader>
+    }
+  </div>
+
+  @if (inquiryResponse) {
+    <div>
+      <div>
+        @switch (inquiryResponse.code) {
+          @case ('valid') {
+            <div class="space-y-4">
+              <div>نتیجه استعلام</div>
+              <div class="flex justify-between items-center p-4 bg-gray-100 rounded">
+                <div class="text-sm">وضعیت تطابق نام</div>
+                <div class="text-xs p-2 rounded"
+                  [class.bg-red-400]="inquiryResponse.first_name_similarity_percentage < 30"
+                  [class.text-red-700]="inquiryResponse.first_name_similarity_percentage < 30"
+                  [class.bg-yellow-400]="inquiryResponse.first_name_similarity_percentage >= 30 && inquiryResponse.first_name_similarity_percentage < 70"
+                  [class.text-yellow-700]="inquiryResponse.first_name_similarity_percentage >= 30 && inquiryResponse.first_name_similarity_percentage < 70"
+                  [class.bg-emerald-400]="inquiryResponse.first_name_similarity_percentage >= 70"
+                  [class.text-emerald-700]="inquiryResponse.first_name_similarity_percentage >= 70"
+                >{{inquiryResponse.first_name_similarity_percentage}}</div>
+              </div>
+              <div class="flex justify-between items-center p-4 bg-gray-100 rounded">
+                <div class="text-sm">وضعیت تطابق نام خانوادگی</div>
+                <div class="text-xs p-2 rounded"
+                  [class.bg-red-400]="inquiryResponse.last_name_similarity_percentage < 30"
+                  [class.text-red-700]="inquiryResponse.last_name_similarity_percentage < 30"
+                  [class.bg-yellow-400]="inquiryResponse.last_name_similarity_percentage >= 30 && inquiryResponse.last_name_similarity_percentage < 70"
+                  [class.text-yellow-700]="inquiryResponse.last_name_similarity_percentage >= 30 && inquiryResponse.last_name_similarity_percentage < 70"
+                  [class.bg-emerald-400]="inquiryResponse.last_name_similarity_percentage >= 70"
+                  [class.text-emerald-700]="inquiryResponse.last_name_similarity_percentage >= 70"
+                >{{inquiryResponse.last_name_similarity_percentage}}</div>
+              </div>
+              <div class="flex justify-between items-center p-4 bg-gray-100 rounded">
+                <div class="text-sm">وضعیت تطابق نام کامل</div>
+                <div class="text-xs p-2 rounded"
+                  [class.bg-red-400]="inquiryResponse.full_name_similarity_percentage < 30"
+                  [class.text-red-700]="inquiryResponse.full_name_similarity_percentage < 30"
+                  [class.bg-yellow-400]="inquiryResponse.full_name_similarity_percentage >= 30 && inquiryResponse.full_name_similarity_percentage < 70"
+                  [class.text-yellow-700]="inquiryResponse.full_name_similarity_percentage >= 30 && inquiryResponse.full_name_similarity_percentage < 70"
+                  [class.bg-emerald-400]="inquiryResponse.full_name_similarity_percentage >= 70"
+                  [class.text-emerald-700]="inquiryResponse.full_name_similarity_percentage >= 70"
+                >{{inquiryResponse.full_name_similarity_percentage}}</div>
+              </div>
+              <div class="flex justify-between items-center p-4 bg-gray-100 rounded">
+                <div class="text-sm">وضعیت تطابق نام پدر</div>
+                <div class="text-xs p-2 rounded"
+                  [class.bg-red-400]="inquiryResponse.father_name_similarity_percentage < 30"
+                  [class.text-red-700]="inquiryResponse.father_name_similarity_percentage < 30"
+                  [class.bg-yellow-400]="inquiryResponse.father_name_similarity_percentage >= 30 && inquiryResponse.father_name_similarity_percentage < 70"
+                  [class.text-yellow-700]="inquiryResponse.father_name_similarity_percentage >= 30 && inquiryResponse.father_name_similarity_percentage < 70"
+                  [class.bg-emerald-400]="inquiryResponse.father_name_similarity_percentage >= 70"
+                  [class.text-emerald-700]="inquiryResponse.father_name_similarity_percentage >= 70"
+                >{{inquiryResponse.father_name_similarity_percentage}}</div>
+              </div>
+            </div>
+          }
+          @case ('invalid_request_body') {
+            <div>
+              <div class="p-4 bg-yellow-300 rounded text-yellow-600">بدنه درخواست خالی و یا نامعتبر است</div>
+            </div>
+          }
+          @case ('forbidden') {
+            <div>
+              <div class="p-4 bg-yellow-300 rounded text-yellow-600">عدم دسترسی به سرویس</div>
+            </div>
+          }
+          @case ('national_code_is_required') {
+            <div>
+              <div class="p-4 bg-yellow-300 rounded text-yellow-600">ﮐﺪ ﻣﻠﯽ اﻟﺰاﻣﯽ اﺳﺖ</div>
+            </div>
+          }
+          @case ('national_code_not_valid') {
+            <div>
+              <div class="p-4 bg-yellow-300 rounded text-yellow-600">کد ملی نامعتبر است</div>
+            </div>
+          }
+          @case ('birthdate_is_required') {
+            <div>
+              <div class="p-4 bg-yellow-300 rounded text-yellow-600">تاریخ تولد الزامی است</div>
+            </div>
+          }
+          @case ('birthdate_not_valid') {
+            <div>
+              <div class="p-4 bg-yellow-300 rounded text-yellow-600">تاریخ تولد نامعتبر است</div>
+            </div>
+          }
+          @case ('query_parameters_not_provided') {
+            <div>
+              <div class="p-4 bg-yellow-300 rounded text-yellow-600">پارامترهای درخواست کافی نیست</div>
+            </div>
+          }
+          @case ('identity_info_found_not') {
+            <div>
+              <div class="p-4 bg-yellow-300 rounded text-yellow-600">اطلاعات هویتی یافت نشد</div>
+            </div>
+          }
+          @case ('daily_limit_reached') {
+            <div>
+              <div class="p-4 bg-yellow-300 rounded text-yellow-600">در فراخوانی این سرویس به محدودیت روزانه رسیده‌اید</div>
+            </div>
+          }
+          @default {
+            <div>
+              <div class="p-4 bg-yellow-300 rounded text-yellow-600">خطای نامشخص</div>
+            </div>
+          }
+        }
+      </div>
+    </div>
+  }
+</form>

@@ -1,0 +1,15 @@
+<mat-form-field class="w-full">
+  <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
+    <input (dateChange)="onDateRangeChange()" matStartDate formControlName="start" placeholder="تاریخ شروع">
+    <input (dateChange)="onDateRangeChange()" matEndDate formControlName="end" placeholder="تاریخ پایان">
+  </mat-date-range-input>
+  <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+  <mat-date-range-picker touchUi #picker></mat-date-range-picker>
+
+  @if (range.controls.start.hasError('matStartDateInvalid')) {
+    <mat-error>تاریخ شروع اشتباه</mat-error>
+  }
+  @if (range.controls.end.hasError('matEndDateInvalid')) {
+    <mat-error>تاریخ پایان اشتباه</mat-error>
+  }
+</mat-form-field>

@@ -1,0 +1,89 @@
+<div class="px-4 mb-6">
+  <div class="w-full max-w-lg mx-auto p-6 shadow-[0_0_10px_0_rgba(0,0,0,0.2)] rounded-2xl bg-white">
+
+    <div class="mb-4">
+      <button (click)="back()" class="flex gap-2 items-center text-gray-500">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+             class="size-6">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"/>
+        </svg>
+        بازگشت
+      </button>
+    </div>
+
+    <form [formGroup]="form">
+
+      <div class="mb-4">
+        <div class="mb-2">
+          <label for="full_name" class="mb-2 block text-sm font-medium text-gray-400 dark:text-white">نام و نام
+            خانوادگی</label>
+          <input type="text"
+                 formControlName="full_name"
+                 id="full_name"
+                 placeholder="نام و نام خانوادگی خود را وارد کنید"
+                 (keydown.enter)="submit()"
+                 class="block w-full rounded border border-gray-300 bg-gray-50 text-sm text-gray-900 p-2.5 focus:border-blue-500 focus:ring-blue-500 dark:placeholder-gray-400 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:focus:border-blue-500 dark:focus:ring-blue-500"/>
+        </div>
+        <app-error-display [control]="form.get('full_name')"></app-error-display>
+      </div>
+
+      <div class="mb-4">
+        <div class="font-medium text-gray-600 mb-2">زمینه فعالیت خود را انتخاب کنید</div>
+        <div class="text-sm text-gray-400 mb-4">برای اینکه بهترین امکانات را در اختیار شما قرار دهیم، نوع فعالیت خود را
+          انتخاب کنید.
+        </div>
+        <div
+          class="business-type-list"
+          role="radiogroup"
+          aria-label="نوع فعالیت"
+        >
+          <div class="grid grid-cols-3 gap-4">
+            @for (businessType of businessTypes; track businessType.value) {
+              <div
+                class="p-2 border rounded text-center cursor-pointer"
+                role="radio"
+                tabindex="0"
+                [attr.aria-checked]="form.get('business_type')?.value === businessType.value"
+                [ngClass]="
+                form.get('business_type')?.value === businessType.value
+                  ? 'shadow-[0_0_6px_rgba(94,173,94,1)] border-green-500'
+                  : 'border-gray-400'
+              "
+                (click)="selectBusinessType(businessType.value)"
+                (keydown.enter)="selectBusinessType(businessType.value)"
+                (keydown.space)="$event.preventDefault(); selectBusinessType(businessType.value)"
+              >
+                <div class="flex justify-center">
+                  <img [src]="businessType.img_src" class="size-24 lg:size-32">
+                </div>
+                <div class="text-sm font-medium mb-2.5">{{ businessType.label }}</div>
+                <div class="text-xs text-gray-400">{{ businessType.description }}</div>
+              </div>
+            }
+          </div>
+        </div>
+
+        @if (form.get('business_type')?.invalid && form.get('business_type')?.touched) {
+          <small class="text-xs font-medium text-red-500">انتخاب نوع فعالیت الزامی است.</small>
+        }
+      </div>
+
+      <div>
+        <app-button-with-loader type="submit" class="relative block"
+                                classes="bg-yellow-300 rounded w-full py-2.5"
+                                loading_bg="bg-yellow-200"
+                                [loading]="submitting"
+                                [disabled]="submitting"
+                                (clicked)="submit()">
+          <span class="text-base font-bold text-white ml-2.5">ادامه</span>
+          <svg class="w-4" viewBox="0 0 20 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M7.42732 1.21973L1 7.64701L7.42732 14.0743" stroke="#FFFFFF" stroke-width="2"
+                  stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M19.0009 7.64712H1.18018" stroke="#FFFFFF" stroke-width="2" stroke-miterlimit="10"
+                  stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </app-button-with-loader>
+      </div>
+    </form>
+  </div>
+</div>

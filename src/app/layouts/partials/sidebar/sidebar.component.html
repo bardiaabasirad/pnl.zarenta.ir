@@ -1,0 +1,85 @@
+@let user_data = user();
+
+<div class="xl:top-20 xl:sticky space-y-4">
+  <div class="rounded bg-white p-4 shadow">
+    <a routerLink="/profile" class="flex items-center justify-between">
+      <div class="flex items-center">
+        <div class="w-16 h-16 flex items-center justify-center aspect-square rounded-full border border-gray-300 dark:border-gray-600">
+          <svg width="20" height="23" viewBox="0 0 20 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M9.02418 10.3413C11.6037 10.3413 13.6948 8.2502 13.6948 5.67067C13.6948 3.09113 11.6037 1 9.02418 1C6.44465 1 4.35352 3.09113 4.35352 5.67067C4.35352 8.2502 6.44465 10.3413 9.02418 10.3413Z" stroke="#A7A9AC" stroke-width="1.74199" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M1 19.6827C1 16.0676 4.59641 13.1438 9.0242 13.1438C9.88794 13.1438 10.7201 13.255 11.5 13.461C11.6153 13.4914 11.7294 13.5239 11.8423 13.5585" stroke="#A7A9AC" stroke-width="1.74199" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M15.25 21.5V15M15.25 15L18.5 18.25M15.25 15L12 18.25" stroke="#A7A9AC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+        </div>
+        <div class="flex flex-col mr-3.5">
+          <span class="text-base font-medium mb-1.5">{{ user_data?.name }}</span>
+          <span class="text-base font-medium">{{ user_data?.phone }}</span>
+        </div>
+      </div>
+      <div class="ml-4">
+        <svg width="9" height="16" viewBox="0 0 9 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M7.57422 1.40008L2.14091 6.83341C1.49924 7.47508 1.49924 8.52508 2.14091 9.16675L7.57422 14.6001" stroke="#414042" stroke-opacity="0.5" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </a>
+  </div>
+  @if(user_data?.kimi_account_id){
+    <div>
+      <app-balance></app-balance>
+    </div>
+  }
+  <div class="rounded bg-white p-4 shadow">
+    <div class="space-y-2.5">
+      <a routerLink="/" class="flex items-center justify-between rounded px-5 py-2.5" [ngClass]="{'bg-yellow-200/70': url === '/'}">
+        <div class="flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" class="size-5 fill-gray-600" viewBox="0 0 24 24">
+            <path d="m1.423 9.813c-.018-.078-.423-1.949-.423-3.813s.406-3.735.423-3.813c.083-.382.381-.679.762-.763.079-.018 1.95-.424 3.815-.424s3.736.406 3.815.424c.381.084.678.381.762.763.018.078.423 1.949.423 3.813s-.406 3.735-.423 3.813c-.083.382-.381.679-.762.763-.079.018-1.95.424-3.815.424s-3.736-.406-3.815-.424c-.381-.084-.678-.381-.762-.763zm21.153 4.373c-.083-.382-.381-.679-.762-.763-.079-.018-1.95-.424-3.815-.424s-3.736.406-3.815.424c-.381.084-.678.381-.762.763-.018.078-.423 1.949-.423 3.813s.406 3.735.423 3.813c.083.382.381.679.762.763.079.018 1.95.424 3.815.424s3.736-.406 3.815-.424c.381-.084.678-.381.762-.763.018-.078.423-1.949.423-3.813s-.406-3.735-.423-3.813zm-7.178-6.387c.624.5 1.627 0 1.601-.8v-.982c.794.028 1.392.086 1.806.144.114.687.219 2.175.194 3.338 0 .828.671 1.5 1.5 1.5s1.5-.672 1.5-1.5c.078-2.137-.419-5.186-.445-4.964-.121-.483-.474-.875-.942-1.045-.2-.073-1.23-.4-3.614-.475v-1.016c.026-.799-.976-1.3-1.601-.8-1.023.768-1.932 1.676-2.699 2.699-.267.356-.267.845 0 1.201.768 1.023 1.676 1.932 2.699 2.699zm-7.298 8.4c-.624-.5-1.627 0-1.601.8v.982c-.794-.028-1.392-.086-1.806-.144-.114-.687-.219-2.175-.194-3.338 0-.828-.671-1.5-1.5-1.5s-1.5.672-1.5 1.5c-.078 2.137.419 5.186.445 4.964.121.483.474.875.942 1.045.2.073 1.23.4 3.614.475v1.016c-.026.8.976 1.3 1.601.8 1.023-.768 1.932-1.676 2.699-2.699.267-.356.267-.845 0-1.201-.768-1.023-1.676-1.932-2.699-2.699z"/>
+          </svg>
+          <span class="text-base font-medium mr-2.5">خرید و فروش</span>
+        </div>
+        <svg width="9" height="16" viewBox="0 0 9 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M7.57422 1.40008L2.14091 6.83341C1.49924 7.47508 1.49924 8.52508 2.14091 9.16675L7.57422 14.6001" stroke="#414042" stroke-opacity="0.5" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+      <a routerLink="/orders" class="flex items-center justify-between rounded px-5 py-2.5" [ngClass]="{'bg-yellow-200/70': url.isMatching('/orders')}">
+        <div class="flex items-center relative">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="size-5 fill-gray-600">
+            <path d="M7,6H23a1,1,0,0,0,0-2H7A1,1,0,0,0,7,6Z"/>
+            <path d="M23,11H7a1,1,0,0,0,0,2H23a1,1,0,0,0,0-2Z"/>
+            <path d="M23,18H7a1,1,0,0,0,0,2H23a1,1,0,0,0,0-2Z"/>
+            <circle cx="2" cy="5" r="2"/>
+            <circle cx="2" cy="12" r="2"/>
+            <circle cx="2" cy="19" r="2"/>
+          </svg>
+          <span class="text-base font-medium mr-2.5">سفارش‌های من</span>
+
+          @if (hasUnseenUpdate()) {
+            <span class="absolute top-0 -right-1 h-2.5 w-2.5 rounded-full bg-red-500"></span>
+          }
+        </div>
+        <svg width="9" height="16" viewBox="0 0 9 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M7.57422 1.40008L2.14091 6.83341C1.49924 7.47508 1.49924 8.52508 2.14091 9.16675L7.57422 14.6001" stroke="#414042" stroke-opacity="0.5" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+
+      <app-department></app-department>
+
+      <button (click)="logout()" class="cursor-pointer flex items-center px-5 py-2.5">
+        <svg class="size-5" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12.5827 13.7C12.3243 16.7 10.7827 17.925 7.40768 17.925L7.29935 17.925C3.57435 17.925 2.08268 16.4334 2.08268 12.7084L2.08268 7.27505C2.08268 3.55005 3.57435 2.05838 7.29935 2.05838L7.40768 2.05838C10.7577 2.05838 12.2994 3.26672 12.5744 6.21672M7.49935 10L16.9827 10M15.1243 12.7917L17.916 10L15.1244 7.20838" stroke="#f43f5e" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span class="text-base font-medium text-rose-500 mr-2.5">خروج</span>
+        @if (loggingOut) {
+          <div role="status" class="mr-2">
+            <svg aria-hidden="true" class="w-4 h-4 text-gray-200 animate-spin dark:text-gray-600 fill-rose-500" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
+              <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>
+            </svg>
+            <span class="sr-only">Loading...</span>
+          </div>
+        }
+      </button>
+    </div>
+  </div>
+
+</div>

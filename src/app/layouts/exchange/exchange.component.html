@@ -1,0 +1,154 @@
+@if (messages().length) {
+  <div class="relative border border-gray-300 dark:border-gray-600
+            shadow shadow-sky-50 bg-sky-50 rounded p-4 text-sm font-medium
+          text-sky-700 mb-2">
+    <div #contentBox
+         class="overflow-hidden transition-[max-height] duration-300"
+         [style.max-height.px]="(showToggle() && !expanded())
+        ? collapsedHeight()
+        : (contentHeight() ?? 'none')">
+      @for (item of messages(); track item) {
+        <p>{{ item }}</p>
+      }
+    </div>
+
+    @if (showToggle() && !expanded()) {
+      <div class="pointer-events-none absolute inset-x-0 bottom-12 h-8
+                  bg-gradient-to-t from-sky-50 to-transparent"></div>
+    }
+
+    @if (showToggle()) {
+      <div class="flex justify-center mt-3">
+        <button (click)="expanded.set(!expanded())"
+                class="cursor-pointer px-2 py-1 text-sky-700 flex items-center gap-2 text-xs">
+          @if (expanded()) {
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                 stroke-width="1.5" stroke="currentColor" class="text-sky-700 size-3.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 15.75 7.5-7.5 7.5 7.5"/>
+            </svg>
+            مشاهده کمتر
+          } @else {
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                 stroke-width="1.5" stroke="currentColor" class="text-sky-700 size-3.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/>
+            </svg>
+            مشاهده بیشتر
+          }
+        </button>
+      </div>
+    }
+  </div>
+}
+
+@if (initialized()) {
+
+  @let market_status = marketStatus();
+
+  <div class="space-y-4">
+    @for (group of filteredGroups(); track group.id) {
+      <div class="shadow bg-white p-4 rounded space-y-10">
+        <div class="space-y-6">
+          <div class="flex gap-1.5 lg:gap-4 items-center justify-between">
+            <div class="font-medium text-sm lg:text-base">{{ group.title }}</div>
+            <div class="flex justify-end gap-2 items-center">
+              @if (connectionStatus.isOnline && connectionStatus.isConnected) {
+                <div class="relative bg-emerald-500 mr-0.5 w-2 h-2 lg:w-3 lg:h-3 aspect-square rounded-full">
+                  <span
+                    class="animate-ping bg-emerald-500 absolute inline-flex h-full w-full rounded-full opacity-75"></span>
+                </div>
+              } @else {
+                <div class="relative bg-red-500 mr-0.5 w-2 h-2 lg:w-3 lg:h-3 aspect-square rounded-full">
+                    <span
+                      class="bg-red-500 absolute inline-flex h-full w-full rounded-full opacity-75"></span>
+                </div>
+              }
+              @let updated_at = getGroupLastUpdate(group.id);
+
+              @if (isToday(updated_at)) {
+                <span
+                  class="text-gray-700 text-xs lg:text-sm font-medium">بروزرسانی در {{ updated_at | jalali:'HH:mm:ss' }}</span>
+              } @else {
+                <span
+                  class="text-gray-700 text-xs lg:text-sm font-medium">بروزرسانی در {{ updated_at | jalali:'YYYY/MM/DD ساعت HH:mm:ss' }}</span>
+              }
+            </div>
+          </div>
+
+          <div class="space-y-4">
+
+            <div class="flex gap-1.5 lg:gap-4 items-center">
+              <div class="w-20 lg:w-40"></div>
+              <div class="flex-1 flex gap-4">
+                <div class="w-full text-center font-medium text-xs lg:text-base">مظنه خرید شما</div>
+                <div class="w-full text-center font-medium text-xs lg:text-base">مظنه فروش شما</div>
+              </div>
+            </div>
+
+            <div class="space-y-4">
+              @for (metalItem of group.metal_items; track metalItem.id) {
+                @let config = getConfig(metalItem.id);
+
+                @if (config && (metalItem.is_buy_active || metalItem.is_sell_active)) {
+                  <div class="flex gap-1.5 lg:gap-4 items-center">
+                    <div class="w-20 lg:w-40 font-medium text-xs lg:text-base line-clamp-2">{{ metalItem.title }}</div>
+                    <div class="flex-1 flex gap-1.5 lg:gap-4 items-center">
+                      <app-exchange-btn class="w-full"
+                                        [rate]="metalItem.latest_price.sell"
+                                        [marketStatus]="market_status"
+                                        [config]="config"
+                                        [productStatus]="metalItem.is_buy_active"
+                                        [metalItem]="metalItem.id"
+                                        orderType="buy"
+                                        (modalOpened)="onModalOpened($event)"></app-exchange-btn>
+                      <app-exchange-btn class="w-full"
+                                        [rate]="metalItem.latest_price.buy"
+                                        [marketStatus]="market_status"
+                                        [config]="config"
+                                        [productStatus]="metalItem.is_sell_active"
+                                        [metalItem]="metalItem.id"
+                                        orderType="sell"
+                                        (modalOpened)="onModalOpened($event)"></app-exchange-btn>
+                    </div>
+                  </div>
+                }
+              }
+            </div>
+
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+
+  <app-exchange-modal
+    #exchangeModal
+    class="w-full"
+    [baseOrderData]="baseOrderData()"
+    [latestPrices]="latestPrices()"
+    [metalItems]="metalItemsWithoutPrice()"
+    [marketStatus]="market_status"
+    [user]="user()"
+    [expirationTime]="expirationTime()"
+  ></app-exchange-modal>
+
+} @else {
+  <div class="shadow bg-white p-4 rounded space-y-10">
+    <div class="mx-auto w-full max-w-44 rounded h-6 bg-gray-200 animate-pulse mb-8"></div>
+    <div class="space-y-4">
+      <div class="flex gap-1.5 lg:gap-4 items-center">
+        <div class="w-20 lg:w-40"></div>
+        <div class="flex-1 flex gap-1.5 lg:gap-4 items-center">
+          <div class="mx-auto w-full max-w-28 rounded h-5 bg-gray-200 animate-pulse"></div>
+          <div class="mx-auto w-full max-w-28 rounded h-5 bg-gray-200 animate-pulse"></div>
+        </div>
+      </div>
+      <div class="flex items-center gap-4">
+        <div class="w-20 lg:w-40 rounded h-5 bg-gray-200 animate-pulse"></div>
+        <div class="flex-1 flex gap-1.5 lg:gap-4 items-center">
+          <div class="mx-auto w-full rounded h-12 bg-gray-200 animate-pulse"></div>
+          <div class="mx-auto w-full rounded h-12 bg-gray-200 animate-pulse"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+}

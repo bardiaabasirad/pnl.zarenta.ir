@@ -1,0 +1,233 @@
+<div class="mb-6 mt-24 lg:mt-14">
+  <div class="lg:flex lg:justify-center lg:gap-8 px-4">
+    <div class="flex-1">
+      <div class="w-full lg:mt-20 max-w-md p-6 shadow-[0_0_10px_0_rgba(0,0,0,0.2)] rounded-2xl bg-white">
+
+        @if (state && state.action && state.action == 'forgot_password') {
+          <div class="mb-4">
+            <button (click)="back()" class="flex gap-2 items-center text-gray-500">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                   stroke="currentColor"
+                   class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"/>
+              </svg>
+              بازگشت
+            </button>
+          </div>
+
+          <div class="mb-4 text-lg font-semibold text-gray-700">تغییر رمز عبور</div>
+        }
+
+        <form [formGroup]="loginByOtpForm" (ngSubmit)="submit()">
+
+          @if (!state || (state && state.action && state.action !== 'forgot_password')) {
+            <div class="mb-4 text-lg font-semibold text-gray-700">ورود / ثبت نام</div>
+          }
+
+          <div class="mb-4">
+            <div class="mb-2">
+              <label for="mobile" class="mb-2 block text-sm font-medium text-gray-400 dark:text-white">
+                @if (state && state.action && state.action == 'forgot_password') {
+                  برای تغییر رمز عبور، شماره موبایل خود را وارد کنید
+                } @else {
+                  شماره موبایل خود را وارد کنید
+                }
+              </label>
+              <input type="text"
+                     formControlName="phone"
+                     mask="0000000000"
+                     prefix="0"
+                     [inputTransformFn]="p2e"
+                     [validation]="false"
+                     [dropSpecialCharacters]="false"
+                     id="mobile"
+                     placeholder="شماره موبایل"
+                     class="block w-full rounded border border-gray-300 bg-gray-50 text-sm text-gray-900 p-2.5 focus:border-blue-500 focus:ring-blue-500 dark:placeholder-gray-400 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:focus:border-blue-500 dark:focus:ring-blue-500"/>
+            </div>
+            <app-error-display [control]="loginByOtpForm.get('phone')"></app-error-display>
+            @if (statusError) {
+              <!-- مربوط به پیغام غیر فعال بودن حساب کاربری -->
+              <div class="text-xs font-medium text-red-500">{{ statusError }}</div>
+            }
+          </div>
+
+          <div class="mb-4">
+            <app-button-with-loader type="submit" class="relative block"
+                                    classes="bg-yellow-300 rounded w-full py-2.5"
+                                    loading_bg="bg-yellow-200"
+                                    [loading]="submitting"
+                                    [disabled]="submitting">
+              <span class="text-base font-bold text-white ml-2.5">ادامه</span>
+              <svg class="w-4" viewBox="0 0 20 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M7.42732 1.21973L1 7.64701L7.42732 14.0743" stroke="#FFFFFF" stroke-width="2"
+                      stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M19.0009 7.64712H1.18018" stroke="#FFFFFF" stroke-width="2" stroke-miterlimit="10"
+                      stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </app-button-with-loader>
+          </div>
+          <div class="text-xs">ورود شما به معنای پذیرش شرایط طلای ژیک و <a routerLink="/" class="text-sky-400">قوانین و
+            مقررات</a> است
+          </div>
+        </form>
+
+      </div>
+    </div>
+    <div class="flex-1">
+      <img src="./assets/images/fd9956d4a5c65cbc510db26f2da79781.png" alt="">
+    </div>
+  </div>
+  <div class="px-4">
+    <div
+      class="shadow-[0_0_10px_0_rgba(0,0,0,0.2)] rounded-2xl bg-white mb-12 lg:grid lg:grid-cols-4 px-4 lg:px-6 py-4 lg:py-2">
+      <div class="flex gap-4 items-center">
+        <div>
+          <img src="./assets/images/9cc4f9ed02c220ea49166ced033bf7802fcf3ba9.png" alt="">
+        </div>
+        <div>
+          <div class="font-semibold text-gray-700 pl-4 mb-1">قیمت لحظه‌ای</div>
+          <div class="text-gray-700 pl-4">مشاهده آنلاین قیمت خرید و فروش</div>
+        </div>
+      </div>
+      <div class="flex gap-4 items-center">
+        <div>
+          <img src="./assets/images/e2d59b8d6b64c61c306362257ae27f1f93648f7b.png" alt="">
+        </div>
+        <div>
+          <div class="font-semibold text-gray-700 pl-4 mb-1">دسترسی ۲۴/۷</div>
+          <div class="text-gray-700 pl-4">در هر ساعت از شبانه‌روز</div>
+        </div>
+      </div>
+      <div class="flex gap-4 items-center">
+        <div>
+          <img src="./assets/images/46928dad3bd8b282a9310af33d688c42f336a681.png" alt="">
+        </div>
+        <div>
+          <div class="font-semibold text-gray-700 pl-4 mb-1">امنیت و اطمینان</div>
+          <div class="text-gray-700 pl-4">با امنیت بالا و حفاظت از اطلاعات شما</div>
+        </div>
+      </div>
+      <div class="flex gap-4 items-center">
+        <div>
+          <img src="./assets/images/8e4bd475fa2a252273dbb7d4002aebbc7c7eef54.png" alt="">
+        </div>
+        <div>
+          <div class="font-semibold text-gray-700 pl-4 mb-1">پشتیبانی اختصاصی</div>
+          <div class="text-gray-700 pl-4">کارشناسان ما همیشه همراه شما هستند</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="why-zhik" class="mb-12 px-4">
+    <div class="text-xl font-semibold text-gray-700 text-center mb-16">چرا ژیک؟</div>
+
+    <div class="grid w-full max-w-4xl mx-auto gap-16 lg:grid-cols-2 lg:gap-x-6">
+      <div class="px-4 pb-4 pt-16 relative">
+        <img src="./assets/images/4e4bdd85d097b647d5f65202481684bf6804f8a8.png"
+             class="w-32 absolute -top-10 -translate-x-1/2 left-1/2 z-20">
+        <div class="text-center relative z-20">
+          <div class="mb-2 font-semibold">ته حساب لحظه ای</div>
+          <div>مشاهده ته حساب آنلاین به صورت تفکیک شده</div>
+        </div>
+        <div class="bg-amber-100/50 blur z-10 absolute top-0 right-0 w-full h-full rounded"></div>
+      </div>
+
+      <div class="px-4 pb-4 pt-16 relative">
+        <img src="./assets/images/7022aeaecbee2704735964082fcb790f4ff614ab.png"
+             class="w-40 absolute -top-10 -translate-x-1/2 left-1/2 z-20">
+        <div class="text-center relative z-20">
+          <div class="mb-2 font-semibold">اختلاف خرید و فروش پایین</div>
+          <div>نمایش شفاف قیمت‌ها با کمترین اختلاف خرید و فروش</div>
+        </div>
+        <div class="bg-amber-100/50 blur z-10 absolute top-0 right-0 w-full h-full rounded"></div>
+      </div>
+
+      <div class="px-4 pb-4 pt-16 relative">
+        <img src="./assets/images/3ee483ffc9f03c5e03419c32320a476ae6c55c1b.png"
+             class="w-36 absolute -top-10 -translate-x-1/2 left-1/2 z-20">
+        <div class="text-center relative z-20">
+          <div class="mb-2 font-semibold">همه چیز در یک اپلیکیشن</div>
+          <div>خرید و فروش آبشده، سکه های بانکی و نقره</div>
+        </div>
+        <div class="bg-amber-100/50 blur z-10 absolute top-0 right-0 w-full h-full rounded"></div>
+      </div>
+
+      <div class="px-4 pb-4 pt-16 relative">
+        <img src="./assets/images/fb7709d56d3569175a17226f605b3ujh.png"
+             class="w-20 absolute -top-10 -translate-x-1/2 left-1/2 z-20">
+        <div class="text-center relative z-20">
+          <div class="mb-2 font-semibold">دسترسی ۲۴/۷</div>
+          <div>سامانه در تمام ساعات شبانه‌روز در دسترس شماست</div>
+        </div>
+        <div class="bg-amber-100/50 blur z-10 absolute top-0 right-0 w-full h-full rounded"></div>
+      </div>
+
+    </div>
+
+  </div>
+  <div class="mb-28 px-4">
+    <div class="text-center mb-4">
+      <div class="mb-2 text-xl font-semibold text-gray-700">پنل ژیک در یک نگاه</div>
+      <div class="text-gray-700">همه چیز برای یک معامله حرفه‌ای، سریع و امن</div>
+    </div>
+    <div class="lg:flex lg:items-center lg:justify-center gap-8">
+      <img src="./assets/images/544ae080ec25a705ff22d6b55b52bd33624c0840.png" class="w-full max-w-2xl">
+      <img src="./assets/images/2f01bbc1270fbf178c5b84601efd12d1074aee7f.png" class="mx-auto lg:mx-0 w-80">
+    </div>
+  </div>
+  <div class="px-4">
+    <div id="consultation-request"
+         class="mb-12 lg:relative lg:flex bg-gradient-to-bl from-[#309631] to-[#73C773] rounded px-6 pt-6">
+      <div class="lg:flex-1">
+        <div class="max-w-lg mx-auto">
+          <div class="mb-4 space-y-2.5 text-white text-center">
+            <div class="text-lg font-medium">همین حالا شروع کنید!</div>
+            <div>برای دریافت اطلاعات بیشتر و مشاوره رایگان شماره موبایل خود را وارد کنید.</div>
+          </div>
+          <form [formGroup]="leadForm" (ngSubmit)="submitLead()">
+            <div class="space-y-4 mb-8 lg:flex lg:gap-4 lg:space-y-0">
+              <div class="flex-1">
+                <input type="text"
+                       formControlName="lead_phone"
+                       mask="0000000000"
+                       prefix="0"
+                       [inputTransformFn]="p2e"
+                       [validation]="false"
+                       [dropSpecialCharacters]="false"
+                       id="mobile"
+                       class="shadow-[0_0_10px_0_rgba(255,255,255,0.8)] block w-full rounded border border-gray-300 bg-gray-50 text-sm text-gray-900 p-3 focus:border-gray-50 focus:ring-gray-50 dark:placeholder-gray-400 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:focus:border-gray-50 dark:focus:ring-gray-50"
+                       placeholder="شماره موبایل خود را وارد کنید">
+                <div class="lg:min-h-4">
+                  <app-error-display [control]="leadForm.get('lead_phone')"
+                                     [style]="'text-xs font-medium text-white'"></app-error-display>
+                </div>
+              </div>
+              <div>
+                <app-button-with-loader type="submit" class="relative block"
+                                        classes="w-full shadow-[0_0_10px_0_rgba(255,255,255,0.8)] bg-white px-4 py-2.5 rounded text-emerald-600"
+                                        bubble_color="bg-emerald-700"
+                                        loading_bg="bg-gray-200"
+                                        [loading]="submittingLeadForm"
+                                        [disabled]="submittingLeadForm">
+                  <div class="flex items-center justify-center gap-2.5">
+                    <span>دریافت مشاوره</span>
+                    <svg width="13" height="16" viewBox="0 0 13 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path class="fill-emerald-600"
+                            d="M5.63839 2.45498C5.52126 2.13611 5.28656 1.87414 4.98243 1.72282C4.6783 1.57149 4.3278 1.54227 4.00281 1.64115C2.46222 2.11615 1.38556 3.43823 1.61672 4.96773C1.87686 6.66488 2.45199 8.29844 3.31247 9.78423C4.16503 11.2661 5.28301 12.5783 6.61056 13.6555C7.80439 14.6213 9.47956 14.3553 10.6607 13.247C10.9092 13.0138 11.0599 12.695 11.0826 12.355C11.1052 12.015 10.998 11.6791 10.7826 11.4151L9.93714 10.3811C9.76779 10.1732 9.53988 10.021 9.28296 9.94422C9.02604 9.86743 8.75197 9.86961 8.49631 9.95048L6.54564 10.568L6.20522 10.2165C5.77648 9.77148 5.40132 9.27781 5.08739 8.74556C4.78336 8.20695 4.54622 7.63323 4.38122 7.03715L4.24981 6.57006L5.75397 5.18465C5.95299 5.00072 6.0926 4.76159 6.15494 4.49786C6.21727 4.23413 6.1995 3.9578 6.10389 3.70423L5.63839 2.45498ZM3.53731 0.127479C4.24847 -0.090106 5.01591 -0.0274826 5.68239 0.302517C6.34886 0.632517 6.86391 1.20491 7.12197 1.9024L7.58589 3.15006C7.79118 3.69812 7.82853 4.29491 7.69317 4.86428C7.5578 5.43366 7.25587 5.94979 6.82589 6.34681L6.05006 7.0609C6.14981 7.3364 6.28439 7.65148 6.45856 7.95706C6.63272 8.2579 6.83539 8.53181 7.02064 8.75506L8.01814 8.4384C8.57581 8.26233 9.17349 8.25769 9.73382 8.42509C10.2942 8.59248 10.7913 8.9242 11.1611 9.37731L12.0066 10.4112C12.4764 10.9858 12.7107 11.7174 12.6619 12.4581C12.6131 13.1987 12.2849 13.8932 11.7437 14.4012C10.1699 15.8785 7.60014 16.4912 5.61622 14.8857C4.13778 13.6866 2.8926 12.2257 1.94289 10.5759C0.982753 8.91878 0.341026 7.0967 0.0508063 5.20365C-0.329194 2.6814 1.48056 0.760813 3.53731 0.129063"/>
+                    </svg>
+                  </div>
+                </app-button-with-loader>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="w-full min-w-64 lg:max-w-64">
+        <img src="./assets/images/fd9956d4a5c65cbc510juy6f2da79781.png"
+             class="lg:absolute lg:bottom-0 lg:left-10 lg:w-[18rem] max-w-64 lg:max-w-none w-full mx-auto">
+      </div>
+    </div>
+  </div>
+
+  <app-testimonial-slider></app-testimonial-slider>
+</div>

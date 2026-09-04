@@ -1,0 +1,58 @@
+<section class="bg-gray-50 dark:bg-gray-900 min-h-screen flex items-center justify-center px-4" dir="rtl">
+  <div class="w-full max-w-md">
+
+    <!-- کارت اصلی -->
+    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+
+      <!-- نوار رنگی بالا -->
+      <div class="h-2 bg-gradient-to-l from-red-500 via-red-600 to-red-700"></div>
+
+      <div class="p-8 text-center">
+        <!-- آیکون -->
+        <div class="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-red-100 dark:bg-red-900/30">
+          <svg class="h-10 w-10 text-red-600 dark:text-red-400" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M12 21a9 9 0 100-18 9 9 0 000 18zm0 0c2.5-2.5 3.75-5.75 3.75-9S14.5 5.5 12 3m0 18c-2.5-2.5-3.75-5.75-3.75-9S9.5 5.5 12 3M3.6 9h16.8M3.6 15h16.8" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 4.5l15 15" class="text-red-500" />
+          </svg>
+        </div>
+
+        <!-- عنوان -->
+        <h1 class="mb-2 text-2xl font-bold text-gray-900 dark:text-white">
+          دسترسی محدود شده است
+        </h1>
+
+        <p class="mb-6 text-gray-500 dark:text-gray-400 leading-7">
+          دسترسی به سامانه <span class="font-semibold text-amber-600 dark:text-amber-400">طلای ژیک</span>
+          فقط از داخل ایران امکان‌پذیر است. لطفاً از یک اتصال اینترنت داخل کشور استفاده کنید.
+        </p>
+
+        <!-- هشدار Flowbite Alert -->
+        <div class="mb-6 flex items-center gap-3 rounded border border-red-300 bg-red-50 p-4 text-sm text-red-800 dark:border-red-800 dark:bg-gray-700 dark:text-red-400" role="alert">
+          <svg class="h-5 w-5 shrink-0" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+          </svg>
+          <span class="text-right">
+            در صورت استفاده از VPN یا پروکسی، لطفاً آن را غیرفعال کرده و دوباره تلاش کنید.
+          </span>
+        </div>
+
+        <!-- دکمه تلاش مجدد -->
+        <button type="button" (click)="retry()"
+                class="w-full rounded bg-amber-500 px-5 py-3 text-sm font-medium text-white hover:bg-amber-600 focus:outline-none focus:ring-4 focus:ring-amber-300 dark:focus:ring-amber-800 transition-colors">
+          تلاش مجدد
+        </button>
+
+        <!-- متن انگلیسی -->
+        <p class="mt-6 border-t border-gray-200 dark:border-gray-700 pt-4 text-xs text-gray-400 dark:text-gray-500" dir="ltr">
+          Access to ZhikGold is restricted to Iran. Please disable your VPN/proxy and try again.
+        </p>
+      </div>
+    </div>
+
+    <!-- کد خطا -->
+    <p class="mt-4 text-center text-xs text-gray-400 dark:text-gray-500" dir="ltr">
+      Error Code: <span class="font-mono">403 — GEO_BLOCKED</span>
+    </p>
+  </div>
+</section>

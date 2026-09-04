@@ -1,0 +1,71 @@
+<div class="flex items-center gap-1 border bg-gray-50 border-gray-300 p-1.5 rounded">
+  <div class="flex">
+    <input #inputRef
+           class="p-0 text-center w-5 border-none outline-none focus:outline-none focus:ring-0 focus:border-transparent bg-transparent text-gray-800"
+           type="text"
+           name="start-day"
+           [(ngModel)]="start.day"
+           [disabled]="disableDay"
+           (focus)="onFocus($event)"
+           mask="0?0"
+           (blur)="validateField('start', 'day')"
+           [inputTransformFn]="p2e"
+           (keydown.enter)="onEnter(0)">/
+    <input #inputRef
+           class="p-0 text-center w-5 border-none outline-none focus:outline-none focus:ring-0 focus:border-transparent bg-transparent text-gray-800"
+           type="text"
+           name="start-month"
+           [disabled]="disableMonth"
+           [(ngModel)]="start.month"
+           (focus)="onFocus($event)"
+           mask="0?0"
+           (blur)="validateField('start', 'month')"
+           [inputTransformFn]="p2e"
+           (keydown.enter)="onEnter(1)">/
+    <input #inputRef
+           class="p-0 text-center w-10 border-none outline-none focus:outline-none focus:ring-0 focus:border-transparent bg-transparent text-gray-800"
+           type="text"
+           name="start-year"
+           [disabled]="disableYear"
+           [(ngModel)]="start.year"
+           (focus)="onFocus($event)"
+           mask="0000"
+           [inputTransformFn]="p2e"
+           (keydown.enter)="onEnter(2)">
+  </div>
+  <div>تا</div>
+  <div class="flex">
+    <input #inputRef
+           class="p-0 text-center w-5 border-none outline-none focus:outline-none focus:ring-0 focus:border-transparent bg-transparent text-gray-800"
+           type="text"
+           name="end-day"
+           [disabled]="disableDay"
+           [(ngModel)]="end.day"
+           (focus)="onFocus($event)"
+           mask="0?0"
+           (blur)="validateField('end', 'day')"
+           [inputTransformFn]="p2e"
+           (keydown.enter)="onEnter(3)">/
+    <input #inputRef
+           class="p-0 text-center w-5 border-none outline-none focus:outline-none focus:ring-0 focus:border-transparent bg-transparent text-gray-800"
+           type="text"
+           name="end-month"
+           [disabled]="disableMonth"
+           [(ngModel)]="end.month"
+           (focus)="onFocus($event)"
+           mask="0?0"
+           (blur)="validateField('end', 'month')"
+           [inputTransformFn]="p2e"
+           (keydown.enter)="onEnter(4)">/
+    <input #inputRef
+           class="p-0 text-center w-10 border-none outline-none focus:outline-none focus:ring-0 focus:border-transparent bg-transparent text-gray-800"
+           type="text"
+           name="end-year"
+           [disabled]="disableYear"
+           [(ngModel)]="end.year"
+           (focus)="onFocus($event)"
+           mask="0000"
+           [inputTransformFn]="p2e"
+           (keydown.enter)="onEnter(5)">
+  </div>
+</div>

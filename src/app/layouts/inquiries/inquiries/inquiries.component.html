@@ -1,0 +1,146 @@
+<div class="space-y-4">
+  <div class="bg-white shadow rounded flex items-center justify-between px-4 py-2.5">
+    @if (user && user.inquiry_access) {
+      <div class="flex items-center text-xs font-medium text-gray-700">
+        <div class="w-6">
+          <svg class="text-gray-700 size-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+          </svg>
+        </div>
+        <span class="mr-1 line-clamp-1">موجودی سرویس استعلام</span>
+      </div>
+      <div class="flex items-center gap-1.5 lg:gap-2.5">
+        <span class="text-xs font-medium text-gray-700 line-clamp-1 lg:text-base">{{user.balance | number}} تومان</span>
+      </div>
+    }
+  </div>
+
+  <div class="shadow rounded">
+    <div
+      class="flex items-center rounded-t-sm border-b border-gray-200 bg-white pl-2 dark:border-gray-700 dark:bg-gray-800 lg:px-4">
+      <ul
+        class="mr-4 -mb-px flex flex-1 overflow-x-auto whitespace-nowrap text-center text-sm font-medium scrollbar-hide"
+        id="default-tab" data-tabs-toggle="#tabs" role="tablist">
+        <li class="whitespace-nowrap" role="presentation">
+          <button data-tabs-target="#cra-inquiry" type="button" role="tab" aria-controls="cra-inquiry"
+                  aria-selected="false" id="cra-inquiry-tab"
+                  class="inline-block cursor-pointer aria-selected:rounded-t aria-selected:border-x border-t-4 border-b border-white aria-selected:border-x-gray-200 border-t-white aria-selected:border-t-amber-400 aria-selected:border-b-white border-b-gray-200 bg-white px-4 pb-3 pt-2.5 hover:aria-selected:text-gray-700 dark:aria-selected:border-x-gray-600 dark:aria-selected:border-t-amber-400 dark:aria-selected:border-b-gray-800 dark:aria-selected:text-white dark:border-gray-700 dark:border-x-gray-800 dark:border-t-gray-800 dark:border-b-gray-700 dark:bg-gray-800 dark:hover:border-y-gray-700 dark:hover:aria-selected:text-gray-400 dark:hover:text-gray-400">
+            سامانه شاهکار
+          </button>
+        </li>
+        <li class="whitespace-nowrap" role="presentation">
+          <button data-tabs-target="#ncr-inquiry" type="button" role="tab" aria-controls="ncr-inquiry"
+                  aria-selected="false" id="ncr-inquiry-tab"
+                  class="inline-block cursor-pointer aria-selected:rounded-t aria-selected:border-x border-t-4 border-b border-white aria-selected:border-x-gray-200 border-t-white aria-selected:border-t-amber-400 aria-selected:border-b-white border-b-gray-200 bg-white px-4 pb-3 pt-2.5 hover:aria-selected:text-gray-700 dark:aria-selected:border-x-gray-600 dark:aria-selected:border-t-amber-400 dark:aria-selected:border-b-gray-800 dark:aria-selected:text-white dark:border-gray-700 dark:border-x-gray-800 dark:border-t-gray-800 dark:border-b-gray-700 dark:bg-gray-800 dark:hover:border-y-gray-700 dark:hover:aria-selected:text-gray-400 dark:hover:text-gray-400">
+            سامانه ثبت احوال
+          </button>
+        </li>
+        <li class="whitespace-nowrap" role="presentation">
+          <button data-tabs-target="#bank-inquiry" type="button" role="tab" aria-controls="bank-inquiry"
+                  aria-selected="false" id="bank-inquiry-tab"
+                  class="inline-block cursor-pointer aria-selected:rounded-t aria-selected:border-x border-t-4 border-b border-white aria-selected:border-x-gray-200 border-t-white aria-selected:border-t-amber-400 aria-selected:border-b-white border-b-gray-200 bg-white px-4 pb-3 pt-2.5 hover:aria-selected:text-gray-700 dark:aria-selected:border-x-gray-600 dark:aria-selected:border-t-amber-400 dark:aria-selected:border-b-gray-800 dark:aria-selected:text-white dark:border-gray-700 dark:border-x-gray-800 dark:border-t-gray-800 dark:border-b-gray-700 dark:bg-gray-800 dark:hover:border-y-gray-700 dark:hover:aria-selected:text-gray-400 dark:hover:text-gray-400">
+            استعلام بانکی
+          </button>
+        </li>
+      </ul>
+    </div>
+
+    <div id="tabs">
+      <div class="hidden rounded-b-sm bg-white p-4 dark:bg-gray-800" id="cra-inquiry" role="tabpanel"
+           aria-labelledby="cra-inquiry-tab">
+        @if (user && initialized) {
+          <app-cra-inquiry [fee]="costPerShahkarInquiry"
+                           [balance]="user.balance"
+                           (balanceChanged)="balanceChanged($event)"
+          ></app-cra-inquiry>
+        } @else {
+          <div class="space-y-4">
+            <div class="flex justify-between">
+              <div class="bg-gray-200 rounded h-3 w-48 animate-pulse"></div>
+              <div class="bg-gray-200 rounded h-3 w-20 animate-pulse"></div>
+            </div>
+            <div class="bg-gray-200 rounded h-10 animate-pulse"></div>
+            <div class="bg-gray-200 rounded h-10 animate-pulse"></div>
+            <div class="bg-gray-200 rounded h-10 animate-pulse"></div>
+          </div>
+        }
+      </div>
+      <div class="hidden rounded-b-sm bg-white p-4 dark:bg-gray-800" id="ncr-inquiry" role="tabpanel"
+           aria-labelledby="ncr-inquiry-tab">
+        @if (user && initialized) {
+          <app-ncr-inquiry [fee]="costPerSimilarityInquiry"
+                           [balance]="user.balance"
+                           (balanceChanged)="balanceChanged($event)"
+          ></app-ncr-inquiry>
+        } @else {
+          <div class="space-y-4">
+            <div class="flex justify-between">
+              <div class="bg-gray-200 rounded h-3 w-48 animate-pulse"></div>
+              <div class="bg-gray-200 rounded h-3 w-20 animate-pulse"></div>
+            </div>
+            <div class="bg-gray-200 rounded h-10 animate-pulse"></div>
+            <div class="bg-gray-200 rounded h-10 animate-pulse"></div>
+            <div class="bg-gray-200 rounded h-10 animate-pulse"></div>
+            <div class="bg-gray-200 rounded h-10 animate-pulse"></div>
+            <div class="bg-gray-200 rounded h-10 animate-pulse"></div>
+            <div class="bg-gray-200 rounded h-10 animate-pulse"></div>
+          </div>
+        }
+      </div>
+      <div class="hidden rounded-b-sm bg-white p-4 dark:bg-gray-800" id="bank-inquiry" role="tabpanel"
+           aria-labelledby="bank-inquiry-tab">
+        @if (user && initialized) {
+          <div class="flex flex-wrap gap-2 lg:gap-4 mb-4">
+            <button (click)="bankInquiryType = 'iban-from-card'"
+                    [ngClass]="{'text-gray-800' : bankInquiryType == 'iban-from-card'}"
+                    class="flex items-center gap-1.5 bg-slate-200 text-gray-500 rounded px-2 lg:px-2.5 py-1 text-xs lg:text-sm">
+              <div [ngClass]="bankInquiryType == 'iban-from-card'? 'bg-sky-500':'bg-slate-300'"
+                   class="w-2.5 h-2.5 aspect-square rounded-full"></div>
+              <span>تبدیل کارت به شبا</span>
+            </button>
+            <button (click)="bankInquiryType = 'iban'" [ngClass]="{'text-gray-800' : bankInquiryType == 'iban'}"
+                    class="flex items-center gap-1.5 bg-slate-200 text-gray-500 rounded px-2 lg:px-2.5 py-1 text-xs lg:text-sm">
+              <div [ngClass]="bankInquiryType == 'iban'? 'bg-sky-500' : 'bg-slate-300'"
+                   class="w-2.5 h-2.5 aspect-square rounded-full"></div>
+              <span>استعلام شبا یا کارت</span>
+            </button>
+            <button (click)="bankInquiryType = 'iban-with-national-code'"
+                    [ngClass]="{'text-gray-800' : bankInquiryType == 'iban-with-national-code'}"
+                    class="flex items-center gap-1.5 bg-slate-200 text-gray-500 rounded px-2 lg:px-2.5 py-1 text-xs lg:text-sm">
+              <div [ngClass]="bankInquiryType == 'iban-with-national-code'? 'bg-sky-500':'bg-slate-300'"
+                   class="w-2.5 h-2.5 aspect-square rounded-full"></div>
+              <span>تطابق شبا یا کارت با کد ملی</span>
+            </button>
+          </div>
+          @if (bankInquiryType == 'iban-from-card') {
+            <app-iban-from-card-inquiry [fee]="costPerIbanFromCardInquiry"
+                                        [balance]="user.balance"
+                                        (balanceChanged)="balanceChanged($event)"
+            ></app-iban-from-card-inquiry>
+          } @else if (bankInquiryType == 'iban') {
+            <app-iban-card-inquiry [fee]="costPerIbanOrCardInquiry"
+                                   [balance]="user.balance"
+                                   (balanceChanged)="balanceChanged($event)"
+            ></app-iban-card-inquiry>
+          } @else if (bankInquiryType == 'iban-with-national-code') {
+            <app-bank-inquiry [fee]="costPerMatchingInquiry"
+                              [balance]="user.balance"
+                              (balanceChanged)="balanceChanged($event)"
+            ></app-bank-inquiry>
+          }
+        } @else {
+          <div class="space-y-4">
+            <div class="flex justify-between">
+              <div class="bg-gray-200 rounded h-3 w-48 animate-pulse"></div>
+              <div class="bg-gray-200 rounded h-3 w-20 animate-pulse"></div>
+            </div>
+            <div class="bg-gray-200 rounded h-10 animate-pulse"></div>
+            <div class="bg-gray-200 rounded h-10 animate-pulse"></div>
+            <div class="bg-gray-200 rounded h-10 animate-pulse"></div>
+            <div class="bg-gray-200 rounded h-10 animate-pulse"></div>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</div>

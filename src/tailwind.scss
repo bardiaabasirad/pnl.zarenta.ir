@@ -1,0 +1,80 @@
+@use "tailwindcss";
+@use "flowbite/src/themes/default";
+
+@plugin "flowbite/plugin";
+
+@source "../node_modules/flowbite";
+
+//noinspection CssInvalidFunction
+@utility fade-edges-* {
+  --fade-size: --value(percentage, [percentage]);
+  mask-image: linear-gradient(
+      to left,
+      transparent 0%,
+      black var(--fade-size),
+      black calc(100% - var(--fade-size)),
+      transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+      to left,
+      transparent 0%,
+      black var(--fade-size),
+      black calc(100% - var(--fade-size)),
+      transparent 100%
+  );
+}
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  /* رنگ‌ها — در v4 یک namespace واحد همه‌ی bg-/text-/border- را تولید می‌کند */
+  --color-gold-500: #ECBD00;
+  --color-gold-300: #FFDF00;
+  --color-gold-200: #FFF294;
+  --color-gold-100: #FFEEB0;
+  --color-gold-50:  #FFF9EF;
+  --color-fresh-700: #148B57;
+  --color-fresh-50:  #FCFFFC;
+  --color-info-50:   #F4FCFF;
+  --color-link-500:  #00B1E9;
+  --color-link-400:  #49B8EB;
+
+  /* radius */
+  --radius-base: 10px;
+
+  /* سایه‌ها */
+  --shadow-t-sm:  0 -1px 2px 0 rgba(0,0,0,.05);
+  --shadow-t-md:  0 -4px 6px -1px rgba(0,0,0,.1), 0 2px 4px -1px rgba(0,0,0,.06);
+  --shadow-t-lg:  0 -10px 15px -3px rgba(0,0,0,.1), 0 4px 6px -2px rgba(0,0,0,.05);
+  --shadow-t-xl:  0 -20px 25px -5px rgba(0,0,0,.1), 0 10px 10px -5px rgba(0,0,0,.04);
+  --shadow-t-2xl: 0 -25px 50px -12px rgba(0,0,0,.25);
+  --shadow-t-3xl: 0 -35px 60px -15px rgba(0,0,0,.3);
+
+  --shadow-b-sm:  0 1px 2px 0 rgba(0,0,0,.05);
+  --shadow-b-md:  0 4px 6px -1px rgba(0,0,0,.1), 0 -2px 4px -1px rgba(0,0,0,.06);
+  --shadow-b-lg:  0 10px 15px -3px rgba(0,0,0,.1), 0 -4px 6px -2px rgba(0,0,0,.05);
+  --shadow-b-xl:  0 20px 25px -5px rgba(0,0,0,.1), 0 -10px 10px -5px rgba(0,0,0,.04);
+  --shadow-b-2xl: 0 25px 50px -12px rgba(0,0,0,.25);
+  --shadow-b-3xl: 0 35px 60px -15px rgba(0,0,0,.3);
+
+  --shadow-l-sm:  -1px 0 2px 0 rgba(0,0,0,.05);
+  --shadow-l-md:  -4px 0 6px -1px rgba(0,0,0,.1), 2px 0 4px -1px rgba(0,0,0,.06);
+  --shadow-l-lg:  -10px 0 15px -3px rgba(0,0,0,.1), 4px 0 6px -2px rgba(0,0,0,.05);
+  --shadow-l-xl:  -20px 0 25px -5px rgba(0,0,0,.1), 10px 0 10px -5px rgba(0,0,0,.04);
+  --shadow-l-2xl: -25px 0 50px -12px rgba(0,0,0,.25);
+  --shadow-l-3xl: -35px 0 60px -15px rgba(0,0,0,.3);
+
+  --shadow-r-sm:  1px 0 2px 0 rgba(0,0,0,.05);
+  --shadow-r-md:  4px 0 6px -1px rgba(0,0,0,.1), -2px 0 4px -1px rgba(0,0,0,.06);
+  --shadow-r-lg:  10px 0 15px -3px rgba(0,0,0,.1), -4px 0 6px -2px rgba(0,0,0,.05);
+  --shadow-r-xl:  20px 0 25px -5px rgba(0,0,0,.1), -10px 0 10px -5px rgba(0,0,0,.04);
+  --shadow-r-2xl: 25px 0 50px -12px rgba(0,0,0,.25);
+  --shadow-r-3xl: 35px 0 60px -15px rgba(0,0,0,.3);
+
+  --shadow-all-sm:  0 0 2px 0 rgba(0,0,0,.05);
+  --shadow-all-md:  0 0 6px -1px rgba(0,0,0,.1), 0 0 4px -1px rgba(0,0,0,.06);
+  --shadow-all-lg:  0 0 15px -3px rgba(0,0,0,.1), 0 0 6px -2px rgba(0,0,0,.05);
+  --shadow-all-xl:  0 0 25px -5px rgba(0,0,0,.1), 0 0 10px -5px rgba(0,0,0,.04);
+  --shadow-all-2xl: 0 0 50px -12px rgba(0,0,0,.25);
+  --shadow-all-3xl: 0 0 60px -15px rgba(0,0,0,.3);
+}

@@ -1,0 +1,9 @@
+<div class="relative flex items-center px-4" [ngClass]="mb">
+  @if (text) {
+    <div class="text-sm font-medium">{{text}}</div>
+  }
+  <div class="relative flex-1 border-t-2 border-dashed h-0.5 mr-3.5 thin-border"></div>
+
+  <span class="absolute right-0 h-5 w-5 translate-x-6 rounded-full drop-shadow-none bg-gold-50"></span>
+  <span class="absolute left-0 h-5 w-5 -translate-x-6 rounded-full drop-shadow-none bg-gold-50"></span>
+</div>

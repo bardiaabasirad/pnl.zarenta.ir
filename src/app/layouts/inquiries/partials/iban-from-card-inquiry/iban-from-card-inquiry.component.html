@@ -1,0 +1,255 @@
+<div class="space-y-4">
+
+  @if (isBalanceSufficient) {
+    <div class="text-sm px-4 py-2.5 bg-sky-50 text-sky-800 rounded">  هزینه انجام هر استعلام از بانک مبلغ {{ fee | number }} تومان می‌باشد</div>
+  }
+  @else {
+  <div class="text-sm px-4 py-2.5 bg-yellow-50 text-yellow-800 rounded">  هزینه انجام هر استعلام از بانک مبلغ {{ fee | number }} تومان می‌باشد و موجودی حساب شما برای این استعلام کافی نمی‌باشد</div>
+}
+
+<form [formGroup]="form" class="space-y-4">
+
+  <div class="grid gap-4 lg:grid-cols-3">
+    <div class="lg:col-span-3">
+      <label for="card" class="sr-only">شماره کارت</label>
+      <input formControlName="card"
+        mask="0000-0000-0000-0000"
+        [inputTransformFn]="e2p"
+        placeholder="شماره کارت را وارد کنید"
+        type="text"
+        id="card"
+        dir="ltr"
+        class="ltr rtl-placeholder bg-transparent border border-gray-300 text-gray-900 text-sm rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+      </div>
+    </div>
+
+    <div class="flex justify-end">
+      @if (form.invalid || Number(balance) < Number(fee)) {
+        <button class="w-full lg:max-w-72 bg-emerald-500/25 text-white px-6 rounded py-2 flex justify-center items-center">
+          <svg width="15" height="11" viewBox="0 0 15 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.22754 6.625L4.54727 10L13.3999 1" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span class="mr-2.5">استعلام</span>
+        </button>
+      } @else {
+        <app-button-with-loader type="submit" class="relative w-full lg:max-w-72" classes="bg-emerald-500 text-white px-6 rounded w-full py-2" [loading]="loading" [disabled]="loading" (clicked)="inquiry()">
+          <svg width="15" height="11" viewBox="0 0 15 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.22754 6.625L4.54727 10L13.3999 1" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span class="mr-2.5">استعلام</span>
+        </app-button-with-loader>
+      }
+    </div>
+
+  </form>
+
+  @if (inquiryResponse) {
+    <div>
+      @switch (inquiryResponse.code){
+        @case ('valid'){
+          <div class="space-y-4">
+            <div>نتیجه استعلام</div>
+            <div class="flex justify-between items-center p-4 bg-gray-100 rounded">
+              <div class="text-sm">وضعیت حساب</div>
+              @switch (inquiryResponse.info.response.ibanInfo.status){
+                @case ('ACTIVE'){
+                  <div class="text-xs bg-emerald-400 p-2 rounded">حساب فعال</div>
+                }
+                @case ('BLOCK_WITH_DEPOSIT'){
+                  <div class="text-xs bg-sky-400 p-2 rounded">حساب بلاک شده است اما قابلیت واریز دارد</div>
+                }
+                @case ('BLOCK_WITHOUT_DEPOSIT'){
+                  <div class="text-xs bg-yellow-400 p-2 rounded">حساب بلاک شده است و قابلیت واریز ندارد</div>
+                }
+                @case ('IDLE'){
+                  <div class="text-xs bg-red-400 p-2 rounded">حساب راکد</div>
+                }
+                @case ('UNKNOWN'){
+                  <div class="text-xs bg-slate-400 p-2 rounded">نامشخص</div>
+                }
+              }
+            </div>
+            <div class="flex justify-between items-center p-4 bg-gray-100 rounded">
+              <div class="text-sm">نام و نام خانوادگی صاحبان حساب</div>
+              <div>
+                @for (account of inquiryResponse.info.response.ibanInfo.owners; track account.id) {
+                  <div>{{account.firstName + ' ' + account.lastName}}</div>
+                }
+              </div>
+            </div>
+            <div class="flex justify-between items-center p-4 bg-gray-100 rounded">
+              <div class="text-sm">شماره شبا</div>
+              <div>{{inquiryResponse.info.response.ibanInfo.iban}}</div>
+            </div>
+            <div class="flex justify-between items-center p-4 bg-gray-100 rounded">
+              <div class="text-sm">شماره حساب</div>
+              <div>{{inquiryResponse.info.response.ibanInfo.depositNumber}}</div>
+            </div>
+            <div class="flex justify-between items-center p-4 bg-gray-100 rounded">
+              <div class="text-sm">نام بانک</div>
+              @switch (inquiryResponse.info.response.ibanInfo.bank) {
+                @case ('MARKAZI'){
+                  <div>بانک مرکزی</div>
+                }
+                @case ('SANAT_VA_MADAN'){
+                  <div>بانک صنعت و معدن</div>
+                }
+                @case ('MELLAT'){
+                  <div>بانک ملت</div>
+                }
+                @case ('REFAH'){
+                  <div>بانک رفاه</div>
+                }
+                @case ('MASKAN'){
+                  <div>بانک مسکن</div>
+                }
+                @case ('SEPAH'){
+                  <div>بانک سپه</div>
+                }
+                @case ('KESHAVARZI'){
+                  <div>بانک کشاورزی</div>
+                }
+                @case ('MELLI'){
+                  <div>بانک ملی</div>
+                }
+                @case ('TEJARAT'){
+                  <div>بانک تجارت</div>
+                }
+                @case ('SADERAT'){
+                  <div>بانک صادرات</div>
+                }
+                @case ('TOSEAH_SADERAT'){
+                  <div>بانک توسعه صادرات</div>
+                }
+                @case ('POST'){
+                  <div>پست بانک ایران</div>
+                }
+                @case ('TOSEAH_TAAVON'){
+                  <div>بانک توسعه تعاون</div>
+                }
+                @case ('KARAFARIN'){
+                  <div>بانک کارآفرین</div>
+                }
+                @case ('PARSIAN'){
+                  <div>بانک پارسیان</div>
+                }
+                @case ('EGHTESAD_NOVIN'){
+                  <div>بانک اقتصاد نوین</div>
+                }
+                @case ('SAMAN'){
+                  <div>بانک سامان</div>
+                }
+                @case ('PASARGAD'){
+                  <div>بانک پاسارگاد</div>
+                }
+                @case ('SARMAYEH'){
+                  <div>بانک سرمایه</div>
+                }
+                @case ('SINA'){
+                  <div>بانک سینا</div>
+                }
+                @case ('MEHR_IRAN'){
+                  <div>بانک مهر</div>
+                }
+                @case ('SHAHR'){
+                  <div>بانک شهر</div>
+                }
+                @case ('AYANDEH'){
+                  <div>بانک آینده</div>
+                }
+                @case ('GARDESHGARI'){
+                  <div>بانک گردشگری</div>
+                }
+                @case ('DAY'){
+                  <div>بانک دی</div>
+                }
+                @case ('IRANZAMIN'){
+                  <div>بانک ایران زمین</div>
+                }
+                @case ('RESALAT'){
+                  <div>بانک رسالت</div>
+                }
+                @case ('MELAL'){
+                  <div>بانک ملی</div>
+                }
+                @case ('KHAVARMIANEH'){
+                  <div>بانک خاورمیانه</div>
+                }
+                @case ('NOOR'){
+                  <div>موسسه مالی و اعتباری نور</div>
+                }
+                @case ('IRAN_VENEZUELA'){
+                  <div>بانک مشترک ایران ونزوئلا</div>
+                }
+                @case ('UNKNOWN'){
+                  <div>نامشخص</div>
+                }
+              }
+            </div>
+          </div>
+        }
+        @case ('card_registered_as_lost'){
+          <div class="p-4 bg-yellow-300 rounded text-yellow-600">این کارت به عنوان کارت گمشده ثبت شده است</div>
+        }
+        @case ('card_registered_as_stolen'){
+          <div class="p-4 bg-yellow-300 rounded text-yellow-600">این کارت به عنوان کارت مسروقه ثبت شده است</div>
+        }
+        @case ('card_source_bank_is_not_active'){
+          <div class="p-4 bg-yellow-300 rounded text-yellow-600">بانک مربوط به کارت فعال نیست</div>
+        }
+        @case ('card_provider_is_not_active'){
+          <div class="p-4 bg-yellow-300 rounded text-yellow-600">سرویس دهنده مربوط به کارت غیر فعال است</div>
+        }
+        @case ('iban_not_found'){
+          <div class="p-4 bg-yellow-300 rounded text-yellow-600">شماره شبا یافت نشد</div>
+        }
+        @case ('iban_not_valid'){
+          <div class="p-4 bg-yellow-300 rounded text-yellow-600">شبا نامعتبر است</div>
+        }
+        @case ('iban_owner_not_found'){
+          <div class="p-4 bg-yellow-300 rounded text-yellow-600">صاحب شبا یافت نشد</div>
+        }
+        @case ('conversion_failed'){
+          <div class="p-4 bg-yellow-300 rounded text-yellow-600">تبدیل امکان پذیر نیست</div>
+        }
+        @case ('card_is_required'){
+          <div class="p-4 bg-yellow-300 rounded text-yellow-600">کارت الزامی است</div>
+        }
+        @case ('card_not_valid'){
+          <div class="p-4 bg-yellow-300 rounded text-yellow-600">کارت نامعتبر است</div>
+        }
+        @case ('card_type_not_supported'){
+          <div class="p-4 bg-yellow-300 rounded text-yellow-600">نوع کارت ورودی پشتیبانی نمی‌شود</div>
+        }
+        @case ('parameters_not_acceptable'){
+          <div class="p-4 bg-yellow-300 rounded text-yellow-600">تنها یکی از موارد شبا، حساب و کد ملی باید true تنظیم شوند</div>
+        }
+        @case ('card_not_active'){
+          <div class="p-4 bg-yellow-300 rounded text-yellow-600">کارت غیر فعال است</div>
+        }
+        @case ('card_is_expired'){
+          <div class="p-4 bg-yellow-300 rounded text-yellow-600">کارت منقضی شده است</div>
+        }
+        @case ('card_account_number_not_valid'){
+          <div class="p-4 bg-yellow-300 rounded text-yellow-600">شماره حساب مربوط به کارت معتبر نیست</div>
+        }
+        @case ('card_owner_not_authorized'){
+          <div class="p-4 bg-yellow-300 rounded text-yellow-600">هویت دارنده کارت در سیستم بانکی نامعتبر است</div>
+        }
+        @case ('invalid_request_body'){
+          <div class="p-4 bg-yellow-300 rounded text-yellow-600">بدنه درخواست نامعتبر است</div>
+        }
+        @case ('forbidden'){
+          <div class="p-4 bg-yellow-300 rounded text-yellow-600">عدم دسترسی به سرویس</div>
+        }
+        @case ('daily_limit_reached'){
+          <div class="p-4 bg-yellow-300 rounded text-yellow-600">محدودیت روزانه سرویس استعلام</div>
+        }
+        @case ('unknown_error'){
+          <div class="p-4 bg-yellow-300 rounded text-yellow-600">خطای ناشناخته</div>
+        }
+      }
+    </div>
+  }
+
+</div>

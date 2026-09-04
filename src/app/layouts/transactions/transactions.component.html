@@ -1,0 +1,215 @@
+<div class="lg:block pb-2 px-2 overflow-hidden">
+
+  <div #expandableContainer
+       (keyup.escape)="toggleExpand()"
+       [ngClass]="isExpanded ? 'fixed top-0 right-0 w-full z-50 min-h-dvh h-dvh overflow-auto' : 'shadow p-4 rounded'"
+       class="bg-white space-y-4">
+
+    @if (initialized()) {
+      <div [ngClass]="isExpanded ? 'p-4' : ''" class="space-y-4">
+        <div class="flex items-center justify-between">
+          <strong class="text-sm lg:text-base">صورت‌حساب</strong>
+          <div class="text-sm">تمامی مبالغ به تومان می باشد</div>
+        </div>
+
+        <div class="flex items-center flex-wrap gap-2.5">
+
+          <div>
+            <app-range-date-input
+              [disableYear]="true"
+              [startDate]="start_date ? moment(start_date).format('jYYYY/jMM/jDD') : ''"
+              [endDate]="end_date ? moment(end_date).format('jYYYY/jMM/jDD') : ''"
+              (dateRangeSelected)="onRangeSelected($event)"
+              (dateRangeChanged)="onRangeSelected($event, false)">
+            </app-range-date-input>
+          </div>
+
+          <div class="max-w-44 w-full">
+            <select
+              [(ngModel)]="rangeType"
+              (ngModelChange)="onRangeTypeChange($event)"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded
+                         focus:ring-blue-500 focus:border-blue-500 block w-full p-2
+                         dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
+                         dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+              <option value="">دستی</option>
+              <option value="today">فقط امروز</option>
+              <option value="yesterday">از دیروز</option>
+              <option value="month">از ابتدای برج</option>
+              <option value="year">از ابتدای سال</option>
+            </select>
+          </div>
+
+          <button (click)="getTransactions()" [disabled]="loading()" class="cursor-pointer bg-gray-100 rounded border border-gray-300 dark:border-gray-600 p-2">
+            @if (loading()) {
+              <svg aria-hidden="true" class="size-5 text-gray-500 animate-spin dark:text-gray-600 fill-gray-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
+                <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>
+              </svg>
+            }
+            @else{
+              <svg class="size-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+              </svg>
+            }
+          </button>
+          <div class="flex gap-2.5">
+            <button (click)="toggleExpand()" class="cursor-pointer bg-gray-100 rounded border border-gray-300 dark:border-gray-600 p-2">
+              @if (isExpanded) {
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 9V4.5M9 9H4.5M9 9 3.75 3.75M9 15v4.5M9 15H4.5M9 15l-5.25 5.25M15 9h4.5M15 9V4.5M15 9l5.25-5.25M15 15h4.5M15 15v4.5m0-4.5 5.25 5.25" />
+                </svg>
+              } @else {
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15" />
+                </svg>
+              }
+            </button>
+            <button (click)="generateAutoPDF()" [disabled]="generatingPDF()" class="cursor-pointer bg-gray-100 rounded border border-gray-300 dark:border-gray-600 p-2">
+              @if (generatingPDF()) {
+                <svg aria-hidden="true" class="size-5 text-gray-500 animate-spin dark:text-gray-600 fill-gray-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
+                  <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>
+                </svg>
+              }
+              @else{
+                <svg class="size-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+                  <path class="fill-gray-800" d="M4.5 2C3.6774686 2 3 2.6774686 3 3.5L3 8L4 8L4 3.5C4 3.2185314 4.2185314 3 4.5 3L9 3L9 6L12 6L12 8L13 8L13 5.2929688L9.7070312 2L4.5 2 z M 10 3.7070312L11.292969 5L10 5L10 3.7070312 z M 3 9L3 14L4 14L4 12L4.5 12C5.3225314 12 6 11.322531 6 10.5C6 9.6774686 5.3225314 9 4.5 9L3 9 z M 7 9L7 14L8.5 14C9.3225314 14 10 13.322531 10 12.5L10 10.5C10 9.6774686 9.3225314 9 8.5 9L7 9 z M 11 9L11 14L12 14L12 12L13 12L13 11L12 11L12 10L14 10L14 9L11 9 z M 4 10L4.5 10C4.7814686 10 5 10.218531 5 10.5C5 10.781469 4.7814686 11 4.5 11L4 11L4 10 z M 8 10L8.5 10C8.7814686 10 9 10.218531 9 10.5L9 12.5C9 12.781469 8.7814686 13 8.5 13L8 13L8 10 z"/>
+                </svg>
+              }
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div [ngClass]="isExpanded ? '' : 'overflow-auto max-h-[calc(100vh-360px)] lg:max-h-[calc(100vh-200px)]'">
+        <table #transactionsTable id="transactions-table" dir="rtl" class="w-full min-w-full border border-gray-300 dark:border-gray-600 border-separate border-spacing-0 text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+          <thead class="sticky top-0 text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 z-10">
+          <tr>
+            <th rowspan="2" scope="col" class="px-2 py-2 whitespace-nowrap border border-gray-300 dark:border-gray-600">
+              ردیف
+            </th>
+            <th rowspan="2" scope="col" class="px-2 py-2 whitespace-nowrap border border-gray-300 dark:border-gray-600">
+              تاریخ
+            </th>
+            <th rowspan="2" scope="col" class="px-2 py-2 whitespace-nowrap border border-gray-300 dark:border-gray-600">
+              شرح
+            </th>
+            <th rowspan="2" scope="col" class="px-2 py-2 whitespace-nowrap border border-gray-300 dark:border-gray-600">
+              وزن
+            </th>
+            <th colspan="3" scope="col" class="px-2 py-2 whitespace-nowrap border border-gray-300 dark:border-gray-600 text-center">
+              وزن ۷۵۰
+            </th>
+            <th colspan="3" scope="col" class="px-2 py-2 whitespace-nowrap border border-gray-300 dark:border-gray-600 text-center">
+              مبلغ
+            </th>
+            <th rowspan="2" scope="col" class="px-2 py-2 whitespace-nowrap border border-gray-300 dark:border-gray-600">
+              ارز
+            </th>
+          </tr>
+          <tr>
+            <th class="px-2 py-2 whitespace-nowrap border border-gray-300 dark:border-gray-600">دریافتی</th>
+            <th class="px-2 py-2 whitespace-nowrap border border-gray-300 dark:border-gray-600">پرداختی</th>
+            <th class="px-2 py-2 whitespace-nowrap border border-gray-300 dark:border-gray-600">مانده</th>
+
+            <th class="px-2 py-2 whitespace-nowrap border border-gray-300 dark:border-gray-600">دریافتی</th>
+            <th class="px-2 py-2 whitespace-nowrap border border-gray-300 dark:border-gray-600">پرداختی</th>
+            <th class="px-2 py-2 whitespace-nowrap border border-gray-300 dark:border-gray-600">مانده</th>
+          </tr>
+          </thead>
+          <tbody>
+            @if (transactions) {
+              @for (item of transactions.Items; track i; let i = $index) {
+                <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800
+                      bg-white border-b dark:bg-gray-800 dark:border-gray-600 border-gray-200">
+                  <th class="px-2 py-2 whitespace-nowrap border border-gray-300 dark:border-gray-600">{{i + 1}}</th>
+                  <td class="px-2 py-2 whitespace-nowrap border border-gray-300 dark:border-gray-600" dir="ltr">{{item.Date | jalali: 'YYYY/MM/DD'}}</td>
+                  <td class="px-2 py-2 text-start border border-gray-300 dark:border-gray-600 min-w-20">{{ toBidiSafe(item | transactionDescription) }}</td>
+                  <td class="px-2 py-2 border border-gray-300 dark:border-gray-600">{{ Math.abs(item.Weight) | number:'1.3-3' }}</td>
+                  <td class="px-2 py-2 whitespace-nowrap border border-gray-300 dark:border-gray-600">{{ item.Weight750 > 0 ? ( item.Weight750 | number:'1.3-3' ) : '' }}</td>
+                  <td class="px-2 py-2 whitespace-nowrap border border-gray-300 dark:border-gray-600">{{ item.Weight750 < 0 ? ( Math.abs(item.Weight750) | number:'1.3-3' ) : '' }}</td>
+                  <td class="px-2 py-2 whitespace-nowrap border border-gray-300 dark:border-gray-600" [ngClass]="item.CumulativeWeight750 > 0 ? 'text-blue-500' : item.CumulativeWeight750 < 0 ? 'text-red-500' : ''">{{ item.CumulativeWeight750 > 0 ? 'بس ':'بد ' }} {{ Math.abs(item.CumulativeWeight750) | number:'1.3-3' }}</td>
+                  <td class="px-2 py-2 whitespace-nowrap border border-gray-300 dark:border-gray-600">
+                    @if (item.SumMoney > 0) {
+                      @if (![15, 16, 17, 18].includes(item.CurrencyId)) {
+                        {{ Math.round(item.SumMoney / 10) | number }}
+                      } @else {
+                        {{ item.SumMoney | number }}
+                      }
+                    }
+                  </td>
+                  <td class="px-2 py-2 whitespace-nowrap border border-gray-300 dark:border-gray-600">
+                    @if (item.SumMoney < 0) {
+                      @if (![15, 16, 17, 18].includes(item.CurrencyId)) {
+                        {{ Math.round(Math.abs(item.SumMoney) / 10) | number }}
+                      } @else {
+                        {{ Math.abs(item.SumMoney) | number }}
+                      }
+                    }
+                  </td>
+                  <td class="px-2 py-2 whitespace-nowrap border border-gray-300 dark:border-gray-600" [ngClass]="item.CumulativeSumMoney > 0 ? 'text-blue-500' : item.CumulativeSumMoney < 0 ? 'text-red-500' : ''">
+                    {{ item.CumulativeSumMoney > 0 ? 'بس ':'بد ' }}
+                    @if (![15, 16, 17, 18].includes(item.CurrencyId)) {
+                      {{ Math.round(Math.abs(item.CumulativeSumMoney) / 10) | number }}
+                    } @else {
+                      {{ Math.abs(item.CumulativeSumMoney) | number }}
+                    }
+                  </td>
+                  <td class="px-2 py-2 whitespace-nowrap border border-gray-300 dark:border-gray-600">
+                    @switch (item.CurrencyId){
+                      @case (11){تومان}
+                      @case (15){تمام سکه قدیم}
+                      @case (16){تمام سکه ۸۶}
+                      @case (17){نیم سکه ۸۶}
+                      @case (18){ربع سکه ۸۶}
+                      @default {
+                        {{ item.CurrencySymbol }}
+                      }
+                    }
+                  </td>
+                </tr>
+              }
+            }
+          </tbody>
+        </table>
+      </div>
+    } @else {
+      <div class="relative space-y-4">
+        <div class="flex items-center justify-between mb-8">
+          <div class="h-3 rounded bg-gray-200 animate-pulse max-w-48 w-full"></div>
+          <div class="h-3 rounded bg-gray-200 animate-pulse max-w-24 w-full"></div>
+        </div>
+        <div class="flex flex-wrap gap-2.5">
+          <div class="h-9 rounded bg-gray-200 animate-pulse w-52"></div>
+          <div class="h-9 rounded bg-gray-200 animate-pulse w-44"></div>
+          <div class="rounded bg-gray-200 animate-pulse w-9 h-9 aspect-square"></div>
+          <div class="rounded bg-gray-200 animate-pulse w-9 h-9 aspect-square"></div>
+          <div class="rounded bg-gray-200 animate-pulse w-9 h-9 aspect-square"></div>
+        </div>
+        <div class="space-y-1">
+          <div class="h-9 rounded bg-gray-200 animate-pulse w-full"></div>
+          <div class="h-9 rounded bg-gray-200 animate-pulse w-full"></div>
+          <div class="h-9 rounded bg-gray-200 animate-pulse w-full"></div>
+          <div class="h-9 rounded bg-gray-200 animate-pulse w-full"></div>
+          <div class="h-9 rounded bg-gray-200 animate-pulse w-full"></div>
+          <div class="h-9 rounded bg-gray-200 animate-pulse w-full"></div>
+          <div class="h-9 rounded bg-gray-200 animate-pulse w-full"></div>
+        </div>
+
+        @if (loadError) {
+          <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+            <button (click)="getTransactions()" [disabled]="loading()" class="p-2 rounded bg-white flex gap-1 items-center">
+              <svg [ngClass]="{'animate-spin' : loading()}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" class="size-4 stroke-blue-500">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99"></path>
+              </svg>
+              <span class="text-sm text-blue-500">تلاش مجدد</span>
+            </button>
+          </div>
+        }
+      </div>
+    }
+
+  </div>
+
+</div>

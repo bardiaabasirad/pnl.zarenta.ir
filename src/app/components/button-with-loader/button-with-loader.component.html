@@ -1,0 +1,11 @@
+<button (click)="clickedOn()" [type]="type" [disabled]="disabled || loading"
+        [ngClass]="{'!bg-gray-400/50 !hover:bg-gray-400/50': disabled}"
+        class="cursor-pointer tv-button--loader relative overflow-hidden {{classes}} {{loading?'i-loading':'' }}"
+        type="submit">
+  <span class="relative flex items-center justify-center tv-button__text"><ng-content></ng-content></span>
+  <span class="tv-button__loader justify-center items-center flex bottom-0 h-full left-0 my-0 mx-auto opacity-0 absolute right-0 text-center top-0 {{loading_bg}}">
+    <span class="tv-button__loader-item {{bubble_color}}"></span>
+    <span class="tv-button__loader-item {{bubble_color}}"></span>
+    <span class="tv-button__loader-item {{bubble_color}}"></span>
+  </span>
+</button>

@@ -1,0 +1,9 @@
+@if (control() && control()!.invalid && control()!.dirty && control()!.touched) {
+  <div>
+    @for (error of errors(); track error) {
+      <div class="{{style()}}">
+        {{ error.message }}
+      </div>
+    }
+  </div>
+}

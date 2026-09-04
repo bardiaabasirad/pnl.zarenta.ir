@@ -1,0 +1,80 @@
+<div class="flex gap-8 border border-gray-300 text-gray-900 text-sm rounded w-full px-4 py-[0.063rem]">
+  <div class="flex gap-4 items-center">
+    <div>تاریخ</div>
+    <div class="flex gap-2 items-center">
+      <div class="flex justify-center items-center flex-col p-1">
+        <button (click)="increaseDay()" class="w-8 flex justify-center bg-gray-200 rounded-t-lg py-0.5 mb-0.5">
+          <svg width="7" height="4" viewBox="0 0 7 4" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3.87553 0.756035C3.67788 0.596296 3.3569 0.596296 3.15925 0.756035L1.13534 2.39176C0.989872 2.50933 0.94718 2.6844 1.02624 2.83775C1.1053 2.9911 1.28871 3.09078 1.49427 3.09078H5.54209C5.74606 3.09078 5.93106 2.9911 6.01012 2.83775C6.08918 2.6844 6.04491 2.50933 5.90102 2.39176L3.87711 0.756035H3.87553Z" fill="white"/>
+          </svg>
+        </button>
+        <input [(ngModel)]="day" (ngModelChange)="onDayChange($event)" min="1" [max]="maxDaysInMonth" type="text" class="text-center w-8 text-sm h-4 p-0 border-0 focus:border-0 focus:ring-0 focus-visible:border-0 focus-visible:stroke-none">
+        <button (click)="decreaseDay()" class="w-8 flex justify-center bg-gray-200 rounded-b-lg py-0.5">
+          <svg width="6" height="4" viewBox="0 0 6 4" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2.50924 3.24397C2.70689 3.4037 3.02787 3.4037 3.22551 3.24397L5.24943 1.60824C5.39489 1.49067 5.43759 1.3156 5.35853 1.16225C5.27947 1.0089 5.09605 0.909224 4.8905 0.909224L0.842673 0.909224C0.638701 0.909224 0.453702 1.0089 0.374643 1.16225C0.295584 1.3156 0.339857 1.49067 0.483745 1.60824L2.50766 3.24397L2.50924 3.24397Z" fill="white"/>
+          </svg>
+        </button>
+      </div>
+      <span>/</span>
+      <div class="flex justify-center items-center flex-col p-1">
+        <button (click)="increaseMonth()" class="w-8 flex justify-center bg-gray-200 rounded-t-lg py-0.5 mb-0.5">
+          <svg width="7" height="4" viewBox="0 0 7 4" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3.87553 0.756035C3.67788 0.596296 3.3569 0.596296 3.15925 0.756035L1.13534 2.39176C0.989872 2.50933 0.94718 2.6844 1.02624 2.83775C1.1053 2.9911 1.28871 3.09078 1.49427 3.09078H5.54209C5.74606 3.09078 5.93106 2.9911 6.01012 2.83775C6.08918 2.6844 6.04491 2.50933 5.90102 2.39176L3.87711 0.756035H3.87553Z" fill="white"/>
+          </svg>
+        </button>
+        <input [(ngModel)]="month" (ngModelChange)="onMonthChange($event)" min="1" max="12" type="text" class="text-center w-8 text-sm h-4 p-0 border-0 focus:border-0 focus:ring-0 focus-visible:border-0 focus-visible:stroke-none">
+        <button (click)="decreaseMonth()" class="w-8 flex justify-center bg-gray-200 rounded-b-lg py-0.5">
+          <svg width="6" height="4" viewBox="0 0 6 4" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2.50924 3.24397C2.70689 3.4037 3.02787 3.4037 3.22551 3.24397L5.24943 1.60824C5.39489 1.49067 5.43759 1.3156 5.35853 1.16225C5.27947 1.0089 5.09605 0.909224 4.8905 0.909224L0.842673 0.909224C0.638701 0.909224 0.453702 1.0089 0.374643 1.16225C0.295584 1.3156 0.339857 1.49067 0.483745 1.60824L2.50766 3.24397L2.50924 3.24397Z" fill="white"/>
+          </svg>
+        </button>
+      </div>
+      <span>/</span>
+      <div class="flex justify-center items-center flex-col p-1">
+        <button (click)="increaseYear()" class="w-12 flex justify-center bg-gray-200 rounded-t-lg py-0.5 mb-0.5">
+          <svg width="7" height="4" viewBox="0 0 7 4" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3.87553 0.756035C3.67788 0.596296 3.3569 0.596296 3.15925 0.756035L1.13534 2.39176C0.989872 2.50933 0.94718 2.6844 1.02624 2.83775C1.1053 2.9911 1.28871 3.09078 1.49427 3.09078H5.54209C5.74606 3.09078 5.93106 2.9911 6.01012 2.83775C6.08918 2.6844 6.04491 2.50933 5.90102 2.39176L3.87711 0.756035H3.87553Z" fill="white"/>
+          </svg>
+        </button>
+        <input [(ngModel)]="year" (ngModelChange)="onYearChange($event)" type="text" class="text-center w-12 text-sm h-4 p-0 border-0 focus:border-0 focus:ring-0 focus-visible:border-0 focus-visible:stroke-none">
+        <button (click)="decreaseYear()" class="w-12 flex justify-center bg-gray-200 rounded-b-lg py-0.5">
+          <svg width="6" height="4" viewBox="0 0 6 4" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2.50924 3.24397C2.70689 3.4037 3.02787 3.4037 3.22551 3.24397L5.24943 1.60824C5.39489 1.49067 5.43759 1.3156 5.35853 1.16225C5.27947 1.0089 5.09605 0.909224 4.8905 0.909224L0.842673 0.909224C0.638701 0.909224 0.453702 1.0089 0.374643 1.16225C0.295584 1.3156 0.339857 1.49067 0.483745 1.60824L2.50766 3.24397L2.50924 3.24397Z" fill="white"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="flex gap-4 items-center">
+    <div>ساعت</div>
+    <div class="flex gap-2 items-center">
+      <div class="flex justify-center items-center flex-col p-1">
+        <button (click)="increaseMinute()" class="w-8 flex justify-center bg-gray-200 rounded-t-lg py-0.5 mb-0.5">
+          <svg width="7" height="4" viewBox="0 0 7 4" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3.87553 0.756035C3.67788 0.596296 3.3569 0.596296 3.15925 0.756035L1.13534 2.39176C0.989872 2.50933 0.94718 2.6844 1.02624 2.83775C1.1053 2.9911 1.28871 3.09078 1.49427 3.09078H5.54209C5.74606 3.09078 5.93106 2.9911 6.01012 2.83775C6.08918 2.6844 6.04491 2.50933 5.90102 2.39176L3.87711 0.756035H3.87553Z" fill="white"/>
+          </svg>
+        </button>
+        <input [(ngModel)]="minute" (ngModelChange)="onMinuteChange($event)" min="0" max="59" type="text" class="text-center w-8 text-sm h-4 p-0 border-0 focus:border-0 focus:ring-0 focus-visible:border-0 focus-visible:stroke-none">
+        <button (click)="decreaseMinute()" class="w-8 flex justify-center bg-gray-200 rounded-b-lg py-0.5">
+          <svg width="6" height="4" viewBox="0 0 6 4" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2.50924 3.24397C2.70689 3.4037 3.02787 3.4037 3.22551 3.24397L5.24943 1.60824C5.39489 1.49067 5.43759 1.3156 5.35853 1.16225C5.27947 1.0089 5.09605 0.909224 4.8905 0.909224L0.842673 0.909224C0.638701 0.909224 0.453702 1.0089 0.374643 1.16225C0.295584 1.3156 0.339857 1.49067 0.483745 1.60824L2.50766 3.24397L2.50924 3.24397Z" fill="white"/>
+          </svg>
+        </button>
+      </div>
+      <span>/</span>
+      <div class="flex justify-center items-center flex-col p-1">
+        <button (click)="increaseHour()" class="w-8 flex justify-center bg-gray-200 rounded-t-lg py-0.5 mb-0.5">
+          <svg width="7" height="4" viewBox="0 0 7 4" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3.87553 0.756035C3.67788 0.596296 3.3569 0.596296 3.15925 0.756035L1.13534 2.39176C0.989872 2.50933 0.94718 2.6844 1.02624 2.83775C1.1053 2.9911 1.28871 3.09078 1.49427 3.09078H5.54209C5.74606 3.09078 5.93106 2.9911 6.01012 2.83775C6.08918 2.6844 6.04491 2.50933 5.90102 2.39176L3.87711 0.756035H3.87553Z" fill="white"/>
+          </svg>
+        </button>
+        <input [(ngModel)]="hour" (ngModelChange)="onHourChange($event)" min="0" max="23" type="text" class="text-center w-8 text-sm h-4 p-0 border-0 focus:border-0 focus:ring-0 focus-visible:border-0 focus-visible:stroke-none">
+        <button (click)="decreaseHour()" class="w-8 flex justify-center bg-gray-200 rounded-b-lg py-0.5">
+          <svg width="6" height="4" viewBox="0 0 6 4" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2.50924 3.24397C2.70689 3.4037 3.02787 3.4037 3.22551 3.24397L5.24943 1.60824C5.39489 1.49067 5.43759 1.3156 5.35853 1.16225C5.27947 1.0089 5.09605 0.909224 4.8905 0.909224L0.842673 0.909224C0.638701 0.909224 0.453702 1.0089 0.374643 1.16225C0.295584 1.3156 0.339857 1.49067 0.483745 1.60824L2.50766 3.24397L2.50924 3.24397Z" fill="white"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
