@@ -1,7 +1,41 @@
-<div class="mx-auto bg-gradient-to-br from-yellow-50 to-white flex min-h-screen flex-col justify-between max-w-screen">
-  <div class="w-full max-w-7xl mx-auto">
-    <app-auth-entry-header></app-auth-entry-header>
-    <router-outlet></router-outlet>
+<main class="w-full min-h-screen h-dvh lg:grid lg:grid-cols-1 lg:grid-cols-2">
+
+  <!-- سکشن ۱ -->
+  <div class="relative w-full h-full overflow-hidden flex items-center justify-center p-6">
+    <!-- تصویر پس‌زمینه با آبجکت-کاور -->
+    <img
+      src="/assets/images/ZbWMoOVMH3yS-dy4SBVI09B5kEA-aWcnZABGQ06Ks_4FTtBlgw.png"
+      alt="پس‌زمینه اول"
+      class="absolute inset-0 w-full h-full object-cover z-10"
+      loading="eager"
+    />
+
+    <!-- لایه تاریک‌کننده برای کنتراست -->
+    <div class="absolute top-0 right-0 w-full inset-0 bg-gray-900/50 z-20"></div>
+
+    <!-- محتوای شما -->
+    <div class="z-30 text-white text-center">
+      <div class="mx-auto size-36 flex justify-center items-center rounded-full shadow border border-gray-700 -mb-20 relative">
+        <div class="absolute rounded-t-full top-0 right-0 w-full inset-0 h-[63px] bg-gray-900/70 z-10"></div>
+        <img src="/assets/images/WAaHrWBHLd3tuxql846EdE8Iu0c-ozBLfFqhTDuSLG0GylDzBg.png" class="w-24 z-20">
+      </div>
+      <router-outlet></router-outlet>
+    </div>
   </div>
-  <app-auth-footer></app-auth-footer>
-</div>
+
+  <!-- سکشن ۲ -->
+  <div class="hidden relative w-full h-full overflow-hidden lg:flex items-center justify-center p-6">
+    <img
+      src="/assets/images/sdf32sdf4rtjk45wqfds.webp"
+      alt="پس‌زمینه دوم"
+      class="absolute inset-0 w-full h-full object-cover"
+      loading="eager"
+    />
+    <div class="absolute inset-0 bg-black/35 -z-10"></div>
+
+    <div class="z-10 text-white text-center">
+      <h3 class="text-2xl font-bold"></h3>
+    </div>
+  </div>
+
+</main>

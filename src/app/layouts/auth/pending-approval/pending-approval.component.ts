@@ -8,6 +8,6 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
   styleUrl: './pending-approval.component.scss',
 })
 export class PendingApprovalComponent {
-  stepTitle: string = 'اطلاعات شما با موفقیت ثبت شد';
-  stepMsg: string = 'کارشناسان ژیک به زودی برای تکمیل فرآیند عضویت و راهنمایی شما تماس خواهند گرفت';
+  stepTitle: string = 'درخواست شما با موفقیت ثبت شد';
+  stepMsg: string = 'اطلاعات شما به دست ما رسید؛ همکاران ما در زرنتا به‌زودی برای ادامه مراحل و پاسخ به سوالاتتان با شما تماس خواهند گرفت.';
 }

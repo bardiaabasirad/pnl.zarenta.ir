@@ -1,34 +1,40 @@
-<div class="px-4 mb-6">
-  <div class="w-full max-w-lg mx-auto p-6 shadow-[0_0_10px_0_rgba(0,0,0,0.2)] rounded-2xl bg-white">
+<div class="p-6 border-r border-l border-b border-gray-700 rounded-lg w-full max-w-96 relative pt-24">
 
-    <div class="space-y-8 text-center">
-      <div class="mb-6 flex justify-center">
-        <div class="size-20 rounded-full bg-red-50 mx-auto flex justify-center items-center text-red-700">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+  <div class="absolute inset-0 bg-gray-900/70 rounded-lg -z-10"></div>
+  <div
+    class="absolute bottom-0 w-1/2 h-0.5 shadow rounded-t-lg bg-linear-to-r from-transparent via-yellow-200 to-transparent right-1/2 translate-x-1/2"></div>
+
+  <div class="absolute right-0 top-0 w-24 border-t rounded-r-lg h-full border-gray-700 -z-10"></div>
+  <div class="absolute left-0 top-0 w-30 border-t rounded-l-lg h-full border-gray-700 -z-10"></div>
+
+  <div class="space-y-8 text-center">
+    <div class="space-y-2.5">
+      <div class="flex items-center gap-2.5">
+        <div class="bg-red-500/70 flex justify-center items-center size-6 rounded">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+               class="size-5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"/>
           </svg>
         </div>
+        <div class="font-semibold">درخواست شما رد شده است</div>
       </div>
-      <div class="space-y-2.5">
-        <div class="font-semibold text-xl">درخواست شما رد شده است</div>
-        <div class="text-gray-600">متأسفانه درخواست ثبت‌نام شما مورد پذیرش قرار نگرفته و دسترسی به پنل کاربری برای شما مسدود است. چنانچه فکر می‌کنید این تصمیم نیاز به بررسی مجدد دارد، می‌توانید از طریق دکمه زیر درخواست بازبینی ارسال کنید.</div>
-        <div>
-          <app-button-with-loader type="submit" class="relative block"
-                                  classes="bg-yellow-300 rounded w-full py-2.5"
-                                  loading_bg="bg-yellow-200"
-                                  [loading]="isSubmitting"
-                                  [disabled]="isSubmitting"
-                                  (clicked)="onRequestReview()">
-            <div class="flex items-center justify-center gap-2.5">
-              <span class="text-base font-bold text-white">درخواست بررسی مجدد</span>
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 text-white">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 15.75 3 12m0 0 3.75-3.75M3 12h18" />
-              </svg>
-            </div>
-          </app-button-with-loader>
-        </div>
+      <div class="text-gray-300">متأسفانه درخواست ثبت‌نام شما مورد پذیرش قرار نگرفته و دسترسی به پنل کاربری برای شما
+        مسدود است. چنانچه فکر می‌کنید این تصمیم نیاز به بررسی مجدد دارد، می‌توانید از طریق دکمه زیر درخواست بازبینی
+        ارسال کنید.
+      </div>
+      <div>
+        <app-button-with-loader type="submit" class="relative block"
+                                classes="bg-linear-to-r from-yellow-500 via-yellow-200 to-yellow-500 shadow rounded w-full py-2.5"
+                                loading_bg="bg-linear-to-r from-yellow-500 via-yellow-200 to-yellow-500 shadow"
+                                [loading]="isSubmitting"
+                                [disabled]="isSubmitting"
+                                (clicked)="onRequestReview()">
+          <div class="flex items-center justify-center gap-2.5">
+            <span class="text-base font-bold text-gray-700 ml-2.5">درخواست بررسی مجدد</span>
+          </div>
+        </app-button-with-loader>
       </div>
     </div>
-
   </div>
+
 </div>

@@ -2,7 +2,7 @@ import {Component, DestroyRef, inject, ChangeDetectionStrategy} from '@angular/c
 import {ButtonWithLoaderComponent} from '../../../components/button-with-loader/button-with-loader.component';
 import {ErrorDisplayComponent} from '../../../components/error-display/error-display.component';
 import {FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
-import {Router, RouterLink} from '@angular/router';
+import {Router} from '@angular/router';
 import {AuthService} from '../../../services/auth.service';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {ValidationService} from '../../../services/validation.service';
@@ -15,8 +15,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
     ButtonWithLoaderComponent,
     ErrorDisplayComponent,
     FormsModule,
-    ReactiveFormsModule,
-    RouterLink
+    ReactiveFormsModule
   ],
   templateUrl: './password-step.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,

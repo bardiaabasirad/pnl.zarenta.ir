@@ -1,35 +1,25 @@
-<div class="mx-auto flex min-h-screen flex-col justify-between max-w-screen">
-  <div>
-    <app-header></app-header>
-    <main class="py-4 lg:mx-auto lg:grid lg:max-w-screen-xl lg:grid-cols-3 lg:gap-4 lg:px-12 xl:max-w-screen-2xl">
+<div class="p-6 border-r border-l border-b border-gray-700 rounded-lg w-full max-w-96 relative pt-24">
 
-      <div class="mb-4 px-4 lg:col-span-2 lg:px-0">
-        <div class="flex flex-col items-center rounded bg-white p-4 shadow-box">
-          <div>
-            <img src="/assets/svg/announcement.svg">
-          </div>
-          <div class="text-center text-base font-bold mb-2.5">حساب کاربری شما <span class="text-red-500">مسدود</span> می باشد</div>
+  <div class="absolute inset-0 bg-gray-900/70 rounded-lg -z-10"></div>
+  <div
+    class="absolute bottom-0 w-1/2 h-0.5 shadow rounded-t-lg bg-linear-to-r from-transparent via-yellow-200 to-transparent right-1/2 translate-x-1/2"></div>
 
-          <div class="mb-4 flex items-start rounded bg-sky-500/5 p-4">
-            <i class="rotate-180 text-sky-500 fa-light fa-exclamation-circle mt-0.5"></i>
-            <div class="mr-1 font-medium text-sky-500 text-xsl">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای </div>
-          </div>
+  <div class="absolute right-0 top-0 w-24 border-t rounded-r-lg h-full border-gray-700 -z-10"></div>
+  <div class="absolute left-0 top-0 w-30 border-t rounded-l-lg h-full border-gray-700 -z-10"></div>
 
-          <div class="mb-3 font-medium text-gray-500 text-sml">برای کسب اطلاعات بیشتر با پشتیبانی تماس بگیرید</div>
-
-          <div class="flex items-center text-sky-400">
-            <span class="mt-1"><i class="fa-light fa-phone"></i></span>
-            <span class="mr-1.5">اطلاعات بیشتر</span>
-          </div>
+  <div class="space-y-8 text-center">
+    <div class="space-y-2.5">
+      <div class="flex items-center gap-2.5">
+        <div class="bg-red-500/70 flex justify-center items-center size-6 rounded">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+               class="size-5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"/>
+          </svg>
         </div>
+        <div class="font-semibold">حساب کاربری شما موقتاً غیرفعال شده است</div>
       </div>
-
-      <div class="mb-4 px-4 lg:col-span-1 lg:mb-0 lg:px-0">
-        <div class="whitespace-normal rounded bg-white p-4 shadow-box text-xsl">لطفاً پیش از استفاده از سایت خرید و فروش طلا،
-          <a routerLink="/" class="inline-block text-link-500">قوانین و مقررات</a> آن را به دقت مطالعه کرده و از رعایت آنها در تمام فعالیت‌های خود اطمینان حاصل کنید تا از مسدودیت حساب کاربری خود جلوگیری کنید.</div>
-      </div>
-
-    </main>
+      <div class="text-gray-300">دسترسی شما به حساب کاربری به دلیل عدم تطابق با قوانین و مقررات زرنتا یا وجود مغایرت‌های مالی/قراردادی به حالت تعلیق درآمده است. چنانچه فکر می‌کنید این تصمیم به اشتباه اتخاذ شده یا تمایل به رفع مسدودی و تسویه دارید، لطفاً با تیم پشتیبانی در ارتباط باشید.</div>
+    </div>
   </div>
-  <app-footer></app-footer>
+
 </div>

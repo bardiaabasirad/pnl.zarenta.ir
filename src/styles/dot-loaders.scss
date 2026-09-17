@@ -1,0 +1,13 @@
+/* HTML: <div class="loader"></div> */
+.dot-loader {
+  width: 7px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  animation: l5 1s infinite linear alternate;
+}
+@keyframes l5 {
+  0%  {box-shadow: 10px 0 #0d4980, -10px 0 #0d498022; background: #0d4980 }
+  33% {box-shadow: 10px 0 #0d4980, -10px 0 #0d498022; background: #0d498022}
+  66% {box-shadow: 10px 0 #0d498022, -10px 0 #0d4980; background: #0d498022}
+  100%{box-shadow: 10px 0 #0d498022, -10px 0 #0d4980; background: #0d4980 }
+}

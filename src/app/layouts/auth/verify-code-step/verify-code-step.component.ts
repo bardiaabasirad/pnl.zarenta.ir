@@ -186,7 +186,7 @@ export class VerifyCodeStepComponent implements OnInit, OnDestroy {
             this.statusError = err.error?.message ?? 'کد وارد شده نادرست است.';
           }
         } else if (err.status === 403) {
-          // حساب غیرفعال — inactive
+          this.router.navigate(['/auth/banned']);
           this.statusError = err.error?.message ?? 'حساب کاربری شما غیرفعال است. با پشتیبانی تماس بگیرید.';
         } else if (err.status === 429) {
           this.statusError = 'تعداد تلاش‌های مجاز تجاوز کرده. لطفاً چند دقیقه صبر کنید.';

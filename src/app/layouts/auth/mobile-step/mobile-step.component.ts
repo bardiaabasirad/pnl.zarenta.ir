@@ -1,6 +1,6 @@
 import {Component, inject, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {AuthService} from '../../../services/auth.service';
-import {Router, RouterLink} from '@angular/router';
+import {Router} from '@angular/router';
 import {AuthFlowService} from '../../../services/auth-flow.service';
 import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {ButtonWithLoaderComponent} from '../../../components/button-with-loader/button-with-loader.component';
@@ -10,7 +10,6 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 import {ValidationService} from '../../../services/validation.service';
 import {ErrorDisplayComponent} from '../../../components/error-display/error-display.component';
 import {maskCompleteValidator} from '../../../validators/mask-complete-validator';
-import {TestimonialSliderComponent} from '../partials/testimonial-slider/testimonial-slider.component';
 
 @Component({
   selector: 'app-mobile-step',
@@ -18,9 +17,7 @@ import {TestimonialSliderComponent} from '../partials/testimonial-slider/testimo
     ButtonWithLoaderComponent,
     NgxMaskDirective,
     ReactiveFormsModule,
-    RouterLink,
-    ErrorDisplayComponent,
-    TestimonialSliderComponent
+    ErrorDisplayComponent
   ],
   templateUrl: './mobile-step.component.html',
   styleUrl: './mobile-step.component.scss',

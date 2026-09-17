@@ -46,7 +46,7 @@ export class CompleteProfileComponent {
     },
     {
       value: 'trader',
-      label: 'تریدر/معامله‌گر',
+      label: 'معامله‌گر',
       description: 'خرید و فروش طلا و مدیریت معاملات',
       img_src: '/assets/images/9cc4f9ed02c220ea49166ced033bf7802fcf3ba9.png',
     },

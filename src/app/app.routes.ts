@@ -49,14 +49,7 @@ export const routes: Routes = [
       {
         path: 'mobile',
         loadComponent: () => import('./layouts/auth/mobile-step/mobile-step.component').then(m => m.MobileStepComponent),
-      }
-    ],
-  },
-  {
-    path: 'auth',
-    loadComponent: () => import('./layouts/auth/auth-flow-layout/auth-flow-layout.component').then(m => m.AuthFlowLayoutComponent),
-    canActivateChild: [guestGuard],
-    children: [
+      },
       {
         path: 'password',
         loadComponent: () => import('./layouts/auth/password-step/password-step.component').then(m => m.PasswordStepComponent),
@@ -84,6 +77,10 @@ export const routes: Routes = [
         path: 'rejected',
         loadComponent: () => import('./layouts/auth/rejected-request/rejected-request.component').then(m => m.RejectedRequestComponent),
       },
+      {
+        path: 'banned',
+        loadComponent: () => import('./layouts/auth/banned/banned.component').then(m => m.BannedComponent),
+      }
     ],
   },
   {

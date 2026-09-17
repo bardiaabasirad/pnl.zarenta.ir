@@ -1,15 +1,20 @@
-<div class="px-4 mb-6">
-  <div class="w-full max-w-lg mx-auto p-6 shadow-[0_0_10px_0_rgba(0,0,0,0.2)] rounded-2xl bg-white">
+<div class="p-6 border-r border-l border-b border-gray-700 rounded-lg max-w-96 min-w-96 relative pt-24">
 
-    <div class="space-y-8 text-center">
-      <div class="mb-6 flex justify-center">
-        <img src="./assets/images/0209db21ca55d3fd729785d42c16cdb33133d7c6.png" class="w-44" alt="">
-      </div>
-      <div class="space-y-2.5">
-        <div class="font-semibold text-xl">{{ stepTitle }}</div>
-        <div class="text-gray-600">{{ stepMsg }}</div>
-      </div>
+  <div class="absolute inset-0 bg-gray-900/70 rounded-lg -z-10"></div>
+  <div
+    class="absolute bottom-0 w-1/2 h-0.5 shadow rounded-t-lg bg-linear-to-r from-transparent via-yellow-200 to-transparent right-1/2 translate-x-1/2"></div>
+
+  <div class="absolute right-0 top-0 w-24 border-t rounded-r-lg h-full border-gray-700 -z-10"></div>
+  <div class="absolute left-0 top-0 w-30 border-t rounded-l-lg h-full border-gray-700 -z-10"></div>
+
+  <div class="space-y-8 text-center">
+    <div class="mb-6 flex justify-center">
+      <img src="./assets/images/0209db21ca55d3fd729785d42c16cdb33133d7c6.png" class="w-44" alt="">
     </div>
-
+    <div class="space-y-2.5">
+      <div class="font-semibold text-xl">{{ stepTitle }}</div>
+      <div class="text-gray-300">{{ stepMsg }}</div>
+    </div>
   </div>
+
 </div>
