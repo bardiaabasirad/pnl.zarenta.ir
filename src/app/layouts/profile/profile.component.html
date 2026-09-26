@@ -1,7 +1,7 @@
 @let user_data = user();
 
 <div class="space-y-4">
-  <div class="rounded bg-white p-4 shadow">
+  <div class="rounded-lg bg-white p-4 border border-gray-200">
     <strong class="mb-5 block text-sm lg:text-base">اطلاعات فردی</strong>
     <div class="space-y-4 lg:space-y-0 lg:grid lg:grid-cols-1 lg:gap-4">
       <div class="flex items-center justify-between rounded border border-gray-300 dark:border-gray-600 px-4 py-2.5">
@@ -15,10 +15,6 @@
         </div>
         <div class="flex items-center gap-1.5 lg:gap-2.5">
           <span class="text-xs font-medium text-gray-700 line-clamp-1 lg:text-base">{{user_data?.name}}</span>
-          <svg class="h-4 w-4 min-w-4 min-h-4" viewBox="0 0 16 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M1 11C1 10.4696 1.21071 9.96086 1.58579 9.58579C1.96086 9.21071 2.46957 9 3 9H13C13.5304 9 14.0391 9.21071 14.4142 9.58579C14.7893 9.96086 15 10.4696 15 11V17C15 17.5304 14.7893 18.0391 14.4142 18.4142C14.0391 18.7893 13.5304 19 13 19H3C2.46957 19 1.96086 18.7893 1.58579 18.4142C1.21071 18.0391 1 17.5304 1 17V11Z" stroke="#A7A9AC" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M4 9V5C4 3.93913 4.42143 2.92172 5.17157 2.17157C5.92172 1.42143 6.93913 1 8 1C9.06087 1 10.0783 1.42143 10.8284 2.17157C11.5786 2.92172 12 3.93913 12 5V9M7 14C7 14.2652 7.10536 14.5196 7.29289 14.7071C7.48043 14.8946 7.73478 15 8 15C8.26522 15 8.51957 14.8946 8.70711 14.7071C8.89464 14.5196 9 14.2652 9 14C9 13.7348 8.89464 13.4804 8.70711 13.2929C8.51957 13.1054 8.26522 13 8 13C7.73478 13 7.48043 13.1054 7.29289 13.2929C7.10536 13.4804 7 13.7348 7 14Z" stroke="#A7A9AC" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
         </div>
       </div>
 
@@ -33,44 +29,33 @@
         </div>
         <div class="flex items-center gap-1.5 lg:gap-2.5">
           <span class="text-xs font-medium text-gray-700 line-clamp-1 lg:text-base">0{{user_data?.phone}}</span>
-
-          <svg class="h-4 w-4 min-w-4 min-h-4" viewBox="0 0 16 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M1 11C1 10.4696 1.21071 9.96086 1.58579 9.58579C1.96086 9.21071 2.46957 9 3 9H13C13.5304 9 14.0391 9.21071 14.4142 9.58579C14.7893 9.96086 15 10.4696 15 11V17C15 17.5304 14.7893 18.0391 14.4142 18.4142C14.0391 18.7893 13.5304 19 13 19H3C2.46957 19 1.96086 18.7893 1.58579 18.4142C1.21071 18.0391 1 17.5304 1 17V11Z" stroke="#A7A9AC" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M4 9V5C4 3.93913 4.42143 2.92172 5.17157 2.17157C5.92172 1.42143 6.93913 1 8 1C9.06087 1 10.0783 1.42143 10.8284 2.17157C11.5786 2.92172 12 3.93913 12 5V9M7 14C7 14.2652 7.10536 14.5196 7.29289 14.7071C7.48043 14.8946 7.73478 15 8 15C8.26522 15 8.51957 14.8946 8.70711 14.7071C8.89464 14.5196 9 14.2652 9 14C9 13.7348 8.89464 13.4804 8.70711 13.2929C8.51957 13.1054 8.26522 13 8 13C7.73478 13 7.48043 13.1054 7.29289 13.2929C7.10536 13.4804 7 13.7348 7 14Z" stroke="#A7A9AC" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
         </div>
       </div>
 
-<!--      <div class="flex items-center justify-between rounded border border-gray-300 dark:border-gray-600 px-4 py-2.5">-->
-<!--        <div class="flex items-center text-xs lg:text-sm font-medium text-gray-700">-->
-<!--          <div class="w-6">-->
-<!--            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" class="size-5">-->
-<!--              <path class="fill-gray-700" d="M16 3C12.15625 3 9 6.15625 9 10L9 12.875C7.152344 14.691406 6 17.214844 6 20C6 25.511719 10.488281 30 16 30C21.511719 30 26 25.511719 26 20C26 17.214844 24.847656 14.691406 23 12.875L23 10C23 6.15625 19.84375 3 16 3 Z M 16 5C18.753906 5 21 7.246094 21 10L21 11.375C19.523438 10.515625 17.824219 10 16 10C14.175781 10 12.476563 10.515625 11 11.375L11 10C11 7.246094 13.246094 5 16 5 Z M 16 12C20.429688 12 24 15.570313 24 20C24 24.429688 20.429688 28 16 28C11.570313 28 8 24.429688 8 20C8 15.570313 11.570313 12 16 12 Z M 16 18C14.894531 18 14 18.894531 14 20C14 20.738281 14.402344 21.371094 15 21.71875L15 25L17 25L17 21.71875C17.597656 21.371094 18 20.738281 18 20C18 18.894531 17.105469 18 16 18Z"/>-->
-<!--            </svg>-->
-<!--          </div>-->
-<!--          <span class="mr-1 line-clamp-1">رمز ورود</span>-->
-<!--        </div>-->
-<!--        <div class="flex items-center gap-1.5 lg:gap-2.5">-->
-<!--          <span class="text-xs text-gray-700 line-clamp-1"> * * * * * </span>-->
+      <div class="flex items-center justify-between rounded border border-gray-300 dark:border-gray-600 px-4 py-2.5">
+        <div class="flex items-center text-xs lg:text-sm font-medium text-gray-700">
+          <div class="w-6">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
+            </svg>
+          </div>
+          <span class="mr-1 line-clamp-1">رمز ورود</span>
+        </div>
+        <div class="flex items-center gap-1.5 lg:gap-2.5">
+          <span class="text-xs text-gray-700 line-clamp-1"> * * * * * </span>
 
-<!--          <button (click)="showChangePasswordModal()" class="cursor-pointer">-->
-<!--            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="size-5">-->
-<!--              <path class="fill-gray-700" d="M1.5 3C0.6774686 3 0 3.6774686 0 4.5L0 9.5C0 10.322531 0.6774686 11 1.5 11L8 11L8 10L1.5 10C1.2185314 10 1 9.7814686 1 9.5L1 4.5C1 4.2185314 1.2185314 4 1.5 4L13.5 4C13.781469 4 14 4.2185314 14 4.5L14 8L15 8L15 4.5C15 3.6774686 14.322531 3 13.5 3L1.5 3 z M 3 6 A 1 1 0 0 0 2 7 A 1 1 0 0 0 3 8 A 1 1 0 0 0 4 7 A 1 1 0 0 0 3 6 z M 6 6 A 1 1 0 0 0 5 7 A 1 1 0 0 0 6 8 A 1 1 0 0 0 7 7 A 1 1 0 0 0 6 6 z M 9 6 A 1 1 0 0 0 8 7 A 1 1 0 0 0 9 8 A 1 1 0 0 0 10 7 A 1 1 0 0 0 9 6 z M 12 6 A 1 1 0 0 0 11 7 A 1 1 0 0 0 12 8 A 1 1 0 0 0 13 7 A 1 1 0 0 0 12 6 z M 12.5 9C10.744116 9 9.2967432 10.310272 9.0507812 12L6.5 12L9.5 15L12.5 12L10.050781 12C10.280654 10.855042 11.284533 10 12.5 10C13.886833 10 15 11.113167 15 12.5C15 13.886833 13.886833 15 12.5 15L12.5 16C14.427167 16 16 14.427167 16 12.5C16 10.572833 14.427167 9 12.5 9 z"/>-->
-<!--            </svg>-->
-<!--          </button>-->
-<!--        </div>-->
-<!--      </div>-->
+          <button (click)="showChangePasswordModal()" class="cursor-pointer">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="size-5">
+              <path class="fill-gray-700" d="M1.5 3C0.6774686 3 0 3.6774686 0 4.5L0 9.5C0 10.322531 0.6774686 11 1.5 11L8 11L8 10L1.5 10C1.2185314 10 1 9.7814686 1 9.5L1 4.5C1 4.2185314 1.2185314 4 1.5 4L13.5 4C13.781469 4 14 4.2185314 14 4.5L14 8L15 8L15 4.5C15 3.6774686 14.322531 3 13.5 3L1.5 3 z M 3 6 A 1 1 0 0 0 2 7 A 1 1 0 0 0 3 8 A 1 1 0 0 0 4 7 A 1 1 0 0 0 3 6 z M 6 6 A 1 1 0 0 0 5 7 A 1 1 0 0 0 6 8 A 1 1 0 0 0 7 7 A 1 1 0 0 0 6 6 z M 9 6 A 1 1 0 0 0 8 7 A 1 1 0 0 0 9 8 A 1 1 0 0 0 10 7 A 1 1 0 0 0 9 6 z M 12 6 A 1 1 0 0 0 11 7 A 1 1 0 0 0 12 8 A 1 1 0 0 0 13 7 A 1 1 0 0 0 12 6 z M 12.5 9C10.744116 9 9.2967432 10.310272 9.0507812 12L6.5 12L9.5 15L12.5 12L10.050781 12C10.280654 10.855042 11.284533 10 12.5 10C13.886833 10 15 11.113167 15 12.5C15 13.886833 13.886833 15 12.5 15L12.5 16C14.427167 16 16 14.427167 16 12.5C16 10.572833 14.427167 9 12.5 9 z"/>
+            </svg>
+          </button>
+        </div>
+      </div>
 
     </div>
   </div>
 
-  @if(user_data?.kimi_account_id){
-    <div class="lg:hidden">
-      <app-balance></app-balance>
-    </div>
-  }
-
-  <div class="rounded bg-white p-4 shadow">
+  <div class="rounded-lg bg-white p-4 border border-gray-200">
 
     <a routerLink="/settings" class="flex items-center justify-between rounded py-3 group active:text-gray-900">
       <div class="flex gap-1 items-center text-xs lg:text-sm font-medium text-gray-700">
@@ -126,103 +111,132 @@
 
 
 <!-- change-password modal -->
-<!--<div id="change-password-modal"-->
-<!--     class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">-->
-<!--  <div class="relative max-h-full w-full max-w-lg p-4">-->
-<!--    &lt;!&ndash; Modal content &ndash;&gt;-->
-<!--    <div class="relative rounded-sm bg-white shadow dark:bg-gray-800">-->
-<!--      &lt;!&ndash; Modal header &ndash;&gt;-->
-<!--      <div class="p-4 md:p-5">-->
-<!--        <div class="mb-4 mx-auto size-16 flex items-center justify-center bg-green-100 rounded-full text-green-800">-->
-<!--          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" class="size-8">-->
-<!--            <path d="M16 3C12.15625 3 9 6.15625 9 10L9 12.875C7.152344 14.691406 6 17.214844 6 20C6 25.511719 10.488281 30 16 30C21.511719 30 26 25.511719 26 20C26 17.214844 24.847656 14.691406 23 12.875L23 10C23 6.15625 19.84375 3 16 3 Z M 16 5C18.753906 5 21 7.246094 21 10L21 11.375C19.523438 10.515625 17.824219 10 16 10C14.175781 10 12.476563 10.515625 11 11.375L11 10C11 7.246094 13.246094 5 16 5 Z M 16 12C20.429688 12 24 15.570313 24 20C24 24.429688 20.429688 28 16 28C11.570313 28 8 24.429688 8 20C8 15.570313 11.570313 12 16 12 Z M 16 18C14.894531 18 14 18.894531 14 20C14 20.738281 14.402344 21.371094 15 21.71875L15 25L17 25L17 21.71875C17.597656 21.371094 18 20.738281 18 20C18 18.894531 17.105469 18 16 18Z" class="fill-gray-700"></path>-->
-<!--          </svg>-->
-<!--        </div>-->
-<!--        <div class="text-center mb-2.5 font-semibold text-gray-700">تغییر رمز ورود</div>-->
-<!--      </div>-->
+<div id="change-password-modal"
+     class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+  <div class="relative max-h-full w-full max-w-md p-4">
+    <!-- Modal content -->
+    <div class="relative rounded-lg bg-white shadow dark:bg-gray-800">
 
-<!--      <form [formGroup]="changePasswordForm" class="px-4 space-y-4 md:px-5">-->
+      <div class="px-4 py-3 bg-teal-50 flex gap-2.5 rounded-t-lg">
+        <div class="flex items-center justify-center p-1.5 bg-teal-200/50 rounded-full">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+               class="size-5 text-teal-800">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
+          </svg>
+        </div>
+        <div class="font-semibold text-gray-700 pt-1">تغییر رمز ورود</div>
+      </div>
 
-<!--        &lt;!&ndash; رمز فعلی (اختیاری) &ndash;&gt;-->
-<!--        <div>-->
-<!--          <label for="current-password" class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">-->
-<!--            رمز فعلی-->
-<!--            <span class="text-xs text-gray-400">(در صورت نداشتن رمز، خالی بگذارید)</span>-->
-<!--          </label>-->
-<!--          <input type="password" id="current-password" formControlName="currentPassword"-->
-<!--                 autocomplete="current-password" dir="ltr"-->
-<!--                 class="w-full border border-gray-300 dark:border-gray-600 bg-transparent px-4 rounded text-sm text-gray-900 py-2.5 focus:ring-0">-->
+      <form [formGroup]="changePasswordForm" class="p-4 space-y-4">
 
-<!--          @if (changePasswordForm.controls.currentPassword.touched) {-->
-<!--            @if (changePasswordForm.controls.currentPassword.hasError('server')) {-->
-<!--              <p class="mt-1 text-xs text-red-500">{{ changePasswordForm.controls.currentPassword.getError('server') }}</p>-->
-<!--            }-->
-<!--          }-->
-<!--        </div>-->
+        <div>
+          <div class="flex items-center border border-gray-200 rounded px-2">
+            <button (click)="togglePassword()"
+                    [attr.aria-label]="showPassword() ? 'مخفی کردن رمز جدید' : 'نمایش رمز جدید'"
+                    class="cursor-pointer bg-gray-100 rounded-lg flex items-center justify-center p-1">
+              @if (showPassword()) {
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4 text-gray-500">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M3.98 8.223A10.477 10.477 0 0 0 1.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.451 10.451 0 0 1 12 4.5c4.756 0 8.773 3.162 10.065 7.498a10.522 10.522 0 0 1-4.293 5.774M6.228 6.228 3 3m3.228 3.228 3.65 3.65m7.894 7.894L21 21m-3.228-3.228-3.65-3.65m0 0a3 3 0 1 0-4.243-4.243m4.242 4.242L9.88 9.88" />
+                </svg>
+              } @else {
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4 text-gray-500">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                </svg>
+              }
+            </button>
+            <label for="new-password" class="sr-only">رمز جدید</label>
+            <input [type]="showPassword() ? 'text':'password'"
+                   id="new-password"
+                   formControlName="newPassword"
+                   autocomplete="new-password"
+                   dir="ltr"
+                   placeholder="رمز جدید"
+                   class="w-full text-right bg-transparent text-sm text-gray-900 py-2.5 border-0 focus:ring-0">
+            <div class="bg-gray-100 rounded-lg flex items-center justify-center p-1">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-4 text-gray-400">
+                <path fill-rule="evenodd" d="M15.75 1.5a6.75 6.75 0 0 0-6.651 7.906c.067.39-.032.717-.221.906l-6.5 6.499a3 3 0 0 0-.878 2.121v2.818c0 .414.336.75.75.75H6a.75.75 0 0 0 .75-.75v-1.5h1.5A.75.75 0 0 0 9 19.5V18h1.5a.75.75 0 0 0 .53-.22l2.658-2.658c.19-.189.517-.288.906-.22A6.75 6.75 0 1 0 15.75 1.5Zm0 3a.75.75 0 0 0 0 1.5A2.25 2.25 0 0 1 18 8.25a.75.75 0 0 0 1.5 0 3.75 3.75 0 0 0-3.75-3.75Z" clip-rule="evenodd" />
+              </svg>
+            </div>
+          </div>
+          @if (changePasswordForm.controls.newPassword.touched && changePasswordForm.controls.newPassword.errors; as errors) {
+            <p class="mt-1 text-xs text-red-500">
+              @if (errors['required']) { وارد کردن رمز جدید الزامی است. }
+              @else if (errors['minlength']) { رمز جدید باید حداقل ۸ کاراکتر باشد. }
+              @else if (errors['same']) { رمز جدید نباید با رمز فعلی یکسان باشد. }
+            </p>
+          }
+        </div>
 
-<!--        &lt;!&ndash; رمز جدید &ndash;&gt;-->
-<!--        <div>-->
-<!--          <label for="new-password" class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">-->
-<!--            رمز جدید <span class="text-red-500">*</span>-->
-<!--          </label>-->
-<!--          <input type="password" id="new-password"-->
-<!--                 formControlName="newPassword"-->
-<!--                 autocomplete="new-password" dir="ltr"-->
-<!--                 class="w-full border border-gray-300 dark:border-gray-600 bg-transparent px-4 rounded text-sm text-gray-900 py-2.5 focus:ring-0">-->
-<!--          @if (changePasswordForm.controls.newPassword.touched && changePasswordForm.controls.newPassword.errors; as errors) {-->
-<!--            <p class="mt-1 text-xs text-red-500">-->
-<!--              @if (errors['required']) { وارد کردن رمز جدید الزامی است. }-->
-<!--              @else if (errors['minlength']) { رمز جدید باید حداقل ۸ کاراکتر باشد. }-->
-<!--              @else if (errors['same']) { رمز جدید نباید با رمز فعلی یکسان باشد. }-->
-<!--            </p>-->
-<!--          }-->
-<!--        </div>-->
+        <div>
+          <div class="flex items-center border border-gray-200 rounded px-2">
+            <button (click)="toggleConfirmPassword()"
+                    [attr.aria-label]="showConfirmPassword() ? 'مخفی کردن تکرار رمز جدید' : 'نمایش تکرار رمز جدید'"
+                    class="cursor-pointer bg-gray-100 rounded-lg flex items-center justify-center p-1">
+              @if (showConfirmPassword()) {
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4 text-gray-500">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M3.98 8.223A10.477 10.477 0 0 0 1.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.451 10.451 0 0 1 12 4.5c4.756 0 8.773 3.162 10.065 7.498a10.522 10.522 0 0 1-4.293 5.774M6.228 6.228 3 3m3.228 3.228 3.65 3.65m7.894 7.894L21 21m-3.228-3.228-3.65-3.65m0 0a3 3 0 1 0-4.243-4.243m4.242 4.242L9.88 9.88" />
+                </svg>
+              } @else {
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                     stroke="currentColor" class="size-4 text-gray-500">
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z"/>
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
+                </svg>
+              }
+            </button>
+            <label for="confirm-password" class="sr-only">تکرار رمز جدید</label>
+            <input [type]="showConfirmPassword() ? 'text':'password'"
+                   id="confirm-password"
+                   formControlName="confirmPassword"
+                   autocomplete="confirm-password"
+                   dir="ltr"
+                   placeholder="تکرار رمز جدید"
+                   class="w-full text-right bg-transparent text-sm text-gray-900 py-2.5 border-0 focus:ring-0">
+            <div class="bg-gray-100 rounded-lg flex items-center justify-center p-1">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-4 text-gray-400">
+                <path fill-rule="evenodd" d="M15.75 1.5a6.75 6.75 0 0 0-6.651 7.906c.067.39-.032.717-.221.906l-6.5 6.499a3 3 0 0 0-.878 2.121v2.818c0 .414.336.75.75.75H6a.75.75 0 0 0 .75-.75v-1.5h1.5A.75.75 0 0 0 9 19.5V18h1.5a.75.75 0 0 0 .53-.22l2.658-2.658c.19-.189.517-.288.906-.22A6.75 6.75 0 1 0 15.75 1.5Zm0 3a.75.75 0 0 0 0 1.5A2.25 2.25 0 0 1 18 8.25a.75.75 0 0 0 1.5 0 3.75 3.75 0 0 0-3.75-3.75Z" clip-rule="evenodd" />
+              </svg>
+            </div>
+          </div>
+          @if (changePasswordForm.controls.confirmPassword.touched) {
+            @if (changePasswordForm.controls.confirmPassword.hasError('required')) {
+              <p class="mt-1 text-xs text-red-500">تکرار رمز جدید الزامی است.</p>
+            } @else if (changePasswordForm.hasError('passwordMismatch')) {
+              <p class="mt-1 text-xs text-red-500">رمز جدید و تکرار آن یکسان نیستند.</p>
+            }
+          }
+        </div>
 
-<!--        &lt;!&ndash; تکرار رمز جدید &ndash;&gt;-->
-<!--        <div>-->
-<!--          <label for="confirm-password" class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">-->
-<!--            تکرار رمز جدید <span class="text-red-500">*</span>-->
-<!--          </label>-->
-<!--          <input type="password" id="confirm-password" formControlName="confirmPassword"-->
-<!--                 autocomplete="new-password" dir="ltr"-->
-<!--                 class="w-full border border-gray-300 dark:border-gray-600 bg-transparent px-4 rounded text-sm text-gray-900 py-2.5 focus:ring-0">-->
-<!--          @if (changePasswordForm.controls.confirmPassword.touched) {-->
-<!--            @if (changePasswordForm.controls.confirmPassword.hasError('required')) {-->
-<!--              <p class="mt-1 text-xs text-red-500">تکرار رمز جدید الزامی است.</p>-->
-<!--            } @else if (changePasswordForm.hasError('passwordMismatch')) {-->
-<!--              <p class="mt-1 text-xs text-red-500">رمز جدید و تکرار آن یکسان نیستند.</p>-->
-<!--            }-->
-<!--          }-->
-<!--        </div>-->
-
-<!--        &lt;!&ndash; خطای سرور &ndash;&gt;-->
-<!--        @if (changePasswordError) {-->
-<!--          <div class="rounded-sm bg-red-50 p-3 text-sm text-red-600 dark:bg-red-900/20 dark:text-red-400">-->
-<!--            {{ changePasswordError }}-->
-<!--          </div>-->
-<!--        }-->
-<!--      </form>-->
-<!--      &lt;!&ndash; Modal footer &ndash;&gt;-->
-<!--      <div class="flex gap-4 rounded-b p-4 dark:border-gray-600 md:p-5">-->
-<!--        <button (click)="changePasswordModal?.hide()" class="cursor-pointer flex-1 flex items-center justify-center rounded-sm gap-2 border border-gray-100 text-gay-600 hover:text-gray-700">-->
-<!--          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">-->
-<!--            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />-->
-<!--          </svg>-->
-<!--          بی‌خیال-->
-<!--        </button>-->
-<!--        <div class="flex-1">-->
-<!--          <app-button-with-loader (clicked)="onSubmitChangePassword()"-->
-<!--                                  [loading]="changePasswordLoading"-->
-<!--                                  [disabled]="changePasswordLoading"-->
-<!--                                  type="submit"-->
-<!--                                  class="relative block" classes="bg-green-500 text-white py-2 rounded w-full">-->
-<!--            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">-->
-<!--              <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />-->
-<!--            </svg>-->
-<!--            <span class="mr-2">تغییر رمز ورود</span>-->
-<!--          </app-button-with-loader>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</div>-->
+        <!-- خطای سرور -->
+        @if (changePasswordError) {
+          <div class="rounded-sm bg-red-50 p-3 text-sm text-red-600 dark:bg-red-900/20 dark:text-red-400">
+            {{ changePasswordError }}
+          </div>
+        }
+      </form>
+      <!-- Modal footer -->
+      <div class="flex gap-4 rounded-b p-4 dark:border-gray-600 md:p-5">
+        <button (click)="changePasswordModal?.hide()" class="cursor-pointer flex-1 flex items-center justify-center rounded gap-2 border border-gray-200 text-gay-600 hover:text-gray-700">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
+            <path d="M6.28 5.22a.75.75 0 0 0-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 1 0 1.06 1.06L10 11.06l3.72 3.72a.75.75 0 1 0 1.06-1.06L11.06 10l3.72-3.72a.75.75 0 0 0-1.06-1.06L10 8.94 6.28 5.22Z" />
+          </svg>
+          بی‌خیال
+        </button>
+        <div class="flex-1">
+          <app-button-with-loader (clicked)="onSubmitChangePassword()"
+                                  [loading]="changePasswordLoading"
+                                  [disabled]="changePasswordLoading"
+                                  type="submit"
+                                  class="relative block" classes="bg-teal-700 text-white py-2 rounded w-full">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+            </svg>
+            <span class="mr-2">تغییر رمز ورود</span>
+          </app-button-with-loader>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

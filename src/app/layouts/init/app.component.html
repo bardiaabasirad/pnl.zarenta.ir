@@ -1,10 +1,10 @@
-<div class="min-h-screen w-full bg-gold-50">
+<div class="min-h-screen w-full">
   <router-outlet></router-outlet>
 </div>
 
 @if (navigationLoader.loading()) {
   <div
-    class="fixed inset-0 z-[9999] flex items-center justify-center bg-gold-50/90 backdrop-blur-sm"
+    class="fixed inset-0 z-[9999] flex items-center justify-center backdrop-blur-sm"
     role="status"
     aria-live="polite"
   >

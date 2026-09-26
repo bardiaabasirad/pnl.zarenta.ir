@@ -6,7 +6,6 @@ import {from, Subscription} from 'rxjs';
 import {AuthService} from '../../../services/auth.service';
 import {EventService} from '../../../services/event.service';
 import {StorageKey, StorageService} from '../../../services/storage.service';
-import {BalanceComponent} from '../../balance/balance.component';
 import {ContactComponent} from '../contact/contact.component';
 import {filter} from 'rxjs/operators';
 import {OrderStateService} from '../../../services/order-state.service';
@@ -17,7 +16,6 @@ import {OrderStateService} from '../../../services/order-state.service';
   imports: [
     CommonModule,
     RouterLink,
-    BalanceComponent,
     ContactComponent
   ],
   templateUrl: './sidebar.component.html',

@@ -6,8 +6,8 @@
 
 @if (market_status == 'active' && product_status && price && metal_item_config) {
   <button (click)="openModal()"
-       [ngClass]="order_type == 'buy' ? 'bg-emerald-100 text-emerald-900' : 'bg-red-100 text-red-900'"
-       class="cursor-pointer w-full select-none rounded px-1 text-center text-sm font-medium py-2.5 lg:text-base">
+       [class]="order_type == 'buy' ? 'bg-emerald-500 text-white' : 'bg-rose-500 text-white'"
+       class="cursor-pointer w-full select-none rounded-full px-1 text-center text-sm font-medium py-2.5 lg:text-base">
     @if (metal_item_config.display_mode == 'quotation') {
       @if (order_type == 'buy') {
         {{ price | ceil | number }}
@@ -25,8 +25,8 @@
   </button>
 } @else if (market_status == 'inactive' && product_status && price) {
   <button
-    [ngClass]="order_type == 'buy' ? 'bg-emerald-50 text-emerald-300' : 'bg-red-50 text-red-300'"
-    class="cursor-pointer w-full select-none rounded px-1 text-center text-sm font-medium py-2.5 lg:text-base">
+    [class]="order_type == 'buy' ? 'bg-emerald-200 text-white' : 'bg-rose-200 text-white'"
+    class="cursor-pointer w-full select-none rounded-full px-1 text-center text-sm font-medium py-2.5 lg:text-base">
     @if (metal_item_config.display_mode == 'quotation') {
       @if (order_type == 'buy') {
         {{ price | ceil | number }}
@@ -44,8 +44,8 @@
   </button>
 } @else {
   <div
-    [ngClass]="order_type == 'buy' ? 'bg-emerald-50 text-emerald-300' : 'bg-red-50 text-red-300'"
-    class="cursor-pointer select-none rounded px-1 text-center text-sm font-medium py-2.5 lg:text-base">
+    [class]="order_type == 'buy' ? 'bg-emerald-200 text-white' : 'bg-rose-200 text-white'"
+    class="cursor-pointer select-none rounded-full px-1 text-center text-sm font-medium py-2.5 lg:text-base">
     -
   </div>
 }

@@ -1,21 +1,18 @@
-import {Component, inject, ChangeDetectionStrategy} from '@angular/core';
-import {NavigationEnd, Router} from '@angular/router';
+import {Component, inject, OnInit} from '@angular/core';
+import {NavigationEnd, Router, RouterLink} from "@angular/router";
 import {SiteInfo} from '../../../interfaces/site-info';
-import {SettingService} from '../../../services/setting.service';
-import {from} from 'rxjs';
-import {filter} from 'rxjs/operators';
 import {OrderStateService} from '../../../services/order-state.service';
-import {environment} from '../../../../environments/environment';
+import {SettingService} from '../../../services/setting.service';
+import {filter} from 'rxjs/operators';
+import {from} from 'rxjs';
 
 @Component({
-  selector: 'app-footer',
-  standalone: true,
-  imports: [],
-  templateUrl: './footer.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrl: './footer.component.scss'
+  selector: 'app-bottom-nav',
+  imports: [RouterLink],
+  templateUrl: './bottom-nav.component.html',
+  styleUrl: './bottom-nav.component.scss',
 })
-export class FooterComponent {
+export class BottomNavComponent implements OnInit {
   siteInfo: SiteInfo | undefined
   private router = inject(Router);
   currentUrl = '';
@@ -60,10 +57,11 @@ export class FooterComponent {
         return 1;
       case '/orders':
         return 2;
+      case '/assets':
+        return 3;
       default:
         return -1; // هیچ آیتمی فعال نیست
     }
   }
-
-  protected readonly environment = environment;
 }
+

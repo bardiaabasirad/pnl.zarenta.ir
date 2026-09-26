@@ -159,7 +159,7 @@ export class TransactionsComponent implements OnInit, OnDestroy {
         next: () => {
           this.user = this.authService.getUser();
 
-          if (this.user && this.user.kimi_account_id) {
+          if (this.user) {
             this.getTransactions();
           } else {
             this.router.navigate(['/']);

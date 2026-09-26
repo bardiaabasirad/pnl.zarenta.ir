@@ -1,6 +1,8 @@
+@let metal_trader = user();
+
 <div class="space-y-4">
-  <div class="bg-white shadow rounded flex items-center justify-between px-4 py-2.5">
-    @if (user && user.inquiry_access) {
+  <div class="bg-white border border-gray-200 rounded-lg flex items-center justify-between px-4 py-2.5">
+    @if (metal_trader && metal_trader.inquiry_access) {
       <div class="flex items-center text-xs font-medium text-gray-700">
         <div class="w-6">
           <svg class="text-gray-700 size-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -10,14 +12,14 @@
         <span class="mr-1 line-clamp-1">موجودی سرویس استعلام</span>
       </div>
       <div class="flex items-center gap-1.5 lg:gap-2.5">
-        <span class="text-xs font-medium text-gray-700 line-clamp-1 lg:text-base">{{user.balance | number}} تومان</span>
+        <span class="text-xs font-medium text-gray-700 line-clamp-1 lg:text-base">{{metal_trader.balance | number}} تومان</span>
       </div>
     }
   </div>
 
-  <div class="shadow rounded">
+  <div class="rounded-lg border border-gray-200">
     <div
-      class="flex items-center rounded-t-sm border-b border-gray-200 bg-white pl-2 dark:border-gray-700 dark:bg-gray-800 lg:px-4">
+      class="flex items-center rounded-t-lg border-b border-gray-200 bg-white pl-2 dark:border-gray-700 dark:bg-gray-800 lg:px-4">
       <ul
         class="mr-4 -mb-px flex flex-1 overflow-x-auto whitespace-nowrap text-center text-sm font-medium scrollbar-hide"
         id="default-tab" data-tabs-toggle="#tabs" role="tablist">
@@ -46,11 +48,11 @@
     </div>
 
     <div id="tabs">
-      <div class="hidden rounded-b-sm bg-white p-4 dark:bg-gray-800" id="cra-inquiry" role="tabpanel"
+      <div class="hidden rounded-b-lg bg-white p-4 dark:bg-gray-800" id="cra-inquiry" role="tabpanel"
            aria-labelledby="cra-inquiry-tab">
-        @if (user && initialized) {
+        @if (metal_trader && initialized()) {
           <app-cra-inquiry [fee]="costPerShahkarInquiry"
-                           [balance]="user.balance"
+                           [balance]="metal_trader.balance"
                            (balanceChanged)="balanceChanged($event)"
           ></app-cra-inquiry>
         } @else {
@@ -65,11 +67,11 @@
           </div>
         }
       </div>
-      <div class="hidden rounded-b-sm bg-white p-4 dark:bg-gray-800" id="ncr-inquiry" role="tabpanel"
+      <div class="hidden rounded-b-lg bg-white p-4 dark:bg-gray-800" id="ncr-inquiry" role="tabpanel"
            aria-labelledby="ncr-inquiry-tab">
-        @if (user && initialized) {
+        @if (metal_trader && initialized()) {
           <app-ncr-inquiry [fee]="costPerSimilarityInquiry"
-                           [balance]="user.balance"
+                           [balance]="metal_trader.balance"
                            (balanceChanged)="balanceChanged($event)"
           ></app-ncr-inquiry>
         } @else {
@@ -87,9 +89,9 @@
           </div>
         }
       </div>
-      <div class="hidden rounded-b-sm bg-white p-4 dark:bg-gray-800" id="bank-inquiry" role="tabpanel"
+      <div class="hidden rounded-b-lg bg-white p-4 dark:bg-gray-800" id="bank-inquiry" role="tabpanel"
            aria-labelledby="bank-inquiry-tab">
-        @if (user && initialized) {
+        @if (metal_trader && initialized()) {
           <div class="flex flex-wrap gap-2 lg:gap-4 mb-4">
             <button (click)="bankInquiryType = 'iban-from-card'"
                     [ngClass]="{'text-gray-800' : bankInquiryType == 'iban-from-card'}"
@@ -114,17 +116,17 @@
           </div>
           @if (bankInquiryType == 'iban-from-card') {
             <app-iban-from-card-inquiry [fee]="costPerIbanFromCardInquiry"
-                                        [balance]="user.balance"
+                                        [balance]="metal_trader.balance"
                                         (balanceChanged)="balanceChanged($event)"
             ></app-iban-from-card-inquiry>
           } @else if (bankInquiryType == 'iban') {
             <app-iban-card-inquiry [fee]="costPerIbanOrCardInquiry"
-                                   [balance]="user.balance"
+                                   [balance]="metal_trader.balance"
                                    (balanceChanged)="balanceChanged($event)"
             ></app-iban-card-inquiry>
           } @else if (bankInquiryType == 'iban-with-national-code') {
             <app-bank-inquiry [fee]="costPerMatchingInquiry"
-                              [balance]="user.balance"
+                              [balance]="metal_trader.balance"
                               (balanceChanged)="balanceChanged($event)"
             ></app-bank-inquiry>
           }

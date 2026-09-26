@@ -2,7 +2,6 @@ export interface User {
   id: number,
   name: string,
   api_key: string,
-  kimi_account_id: string,
   phone: string,
   balance: number,
   request_made: number,

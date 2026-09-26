@@ -6,11 +6,12 @@ import {RouterOutlet} from '@angular/router';
 import {FooterComponent} from '../partials/footer/footer.component';
 import {HeaderComponent} from '../partials/header/header.component';
 import {SidebarComponent} from '../partials/sidebar/sidebar.component';
+import {BottomNavComponent} from '../partials/bottom-nav/bottom-nav.component';
 
 @Component({
   selector: 'app-main-layout',
   standalone: true,
-  imports: [RouterOutlet, FooterComponent, HeaderComponent, SidebarComponent],
+  imports: [RouterOutlet, FooterComponent, HeaderComponent, SidebarComponent, BottomNavComponent],
   templateUrl: './main-layout.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './main-layout.scss',

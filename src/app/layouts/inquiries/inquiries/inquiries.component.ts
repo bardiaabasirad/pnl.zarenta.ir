@@ -1,4 +1,4 @@
-import {Component, inject, OnInit, ChangeDetectionStrategy} from '@angular/core';
+import {Component, inject, OnInit, ChangeDetectionStrategy, signal} from '@angular/core';
 import {CraInquiryComponent} from "../partials/cra-inquiry/cra-inquiry.component";
 import {NcrInquiryComponent} from "../partials/ncr-inquiry/ncr-inquiry.component";
 import {BankInquiryComponent} from "../partials/bank-inquiry/bank-inquiry.component";
@@ -38,12 +38,12 @@ import {environment} from '../../../../environments/environment';
 })
 
 export class InquiriesComponent implements OnInit {
-  user: User | null | undefined;
+  user = signal<User | null | undefined>(undefined);
   private title = inject(Title);
   private inquiryService = inject(InquiryService);
   private authService = inject(AuthService);
   private router = inject(Router);
-  initialized = false;
+  initialized = signal<boolean>(false);
   costPerMatchingInquiry: number = 0;
   costPerSimilarityInquiry: number = 0;
   costPerShahkarInquiry: number = 0;
@@ -63,7 +63,7 @@ export class InquiriesComponent implements OnInit {
         this.costPerShahkarInquiry = data.cost_per_shahkar_inquiry;
         this.costPerIbanOrCardInquiry = data.cost_per_iban_or_card_inquiry;
         this.costPerIbanFromCardInquiry = data.cost_per_iban_from_card_inquiry;
-        this.initialized = true;
+        this.initialized.set(true);
 
         initFlowbite();
       },
@@ -77,28 +77,30 @@ export class InquiriesComponent implements OnInit {
     if (this.authService.isLoggedIn()) {
       from(this.authService.getUserInfo()).subscribe({
         next: () => {
-          this.user = this.authService.getUser();
+          this.user.set(this.authService.getUser());
 
           // 🔹 بررسی دسترسی دقیقاً بعد از دریافت user
-          if (!this.user?.inquiry_access) {
+          if (!this.user()?.inquiry_access) {
             this.router.navigate(['/']);
             return;
           }
         },
         error: (error) => {
           if (error === 'Token expired') {
-            this.user = undefined;
+            this.user.set(undefined);
             StorageService.removeCookie(StorageKey.ACCESS_TOKEN);
           }
         }
       });
     } else {
-      this.user = null;
+      this.user.set(null);
     }
   }
 
   balanceChanged(e: any) {
-    if (this.user) this.user.balance = e;
+    if (this.user()) {
+      this.user.update(u => u ? { ...u, balance: e } : u);
+    }
     this.authService.updateBalance(e);
   }
 }
