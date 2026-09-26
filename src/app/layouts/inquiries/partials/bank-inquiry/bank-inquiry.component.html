@@ -11,7 +11,7 @@
       <label for="national_code" class="sr-only">کد ملی</label>
       <input formControlName="national_code"
         mask="0000000000"
-        [inputTransformFn]="e2p"
+        [inputTransformFn]="p2e"
         placeholder="کد ملی را وارد کنید"
         type="text"
         id="national_code"
@@ -32,7 +32,7 @@
       <div class="lg:col-span-3">
         <label for="iban" class="sr-only">شماره شبا یا کارت</label>
         <input formControlName="iban"
-          [inputTransformFn]="e2p"
+          [inputTransformFn]="p2e"
           [mask]="currentMask"
           placeholder="شماره شبا یا کارت را وارد کنید"
           type="text"

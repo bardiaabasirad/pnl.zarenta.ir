@@ -5,7 +5,6 @@ import { AuthService } from './auth.service';
 import { environment } from '../../environments/environment';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { filter, take } from 'rxjs/operators';
-import { ApiConfig } from '../configs/api.config';
 
 // ═══════════════════════════════════════════════════════════════════════════
 // INTERFACES
@@ -247,7 +246,7 @@ export class WebSocketService implements OnDestroy {
           Accept: 'application/json',
         },
       },
-      authEndpoint: `${ApiConfig.api}/v1/clients/broadcasting/auth`,
+      authEndpoint: `${environment.apiUrl}/v1/clients/broadcasting/auth`,
       activityTimeout: 120000,
       pongTimeout: 30000,
       disableStats: true,

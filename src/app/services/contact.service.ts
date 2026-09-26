@@ -1,8 +1,8 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ApiConfig } from '../configs/api.config';
 import { tap } from 'rxjs/operators';
 import {of} from 'rxjs';
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +22,7 @@ export class ContactService {
       return of(this._contacts());
     }
 
-    return this.http.get<any[]>(`${ApiConfig.api}/v1/clients/contacts`).pipe(
+    return this.http.get<any[]>(`${environment.apiUrl}/v1/clients/contacts`).pipe(
       tap(data => this._contacts.set(data)) // ذخیره در سیگنال
     );
   }

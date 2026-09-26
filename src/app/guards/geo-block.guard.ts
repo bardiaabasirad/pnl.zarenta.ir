@@ -8,7 +8,7 @@ export const geoBlockGuard: CanActivateFn = () => {
   const http = inject(HttpClient);
   const router = inject(Router);
 
-  return http.get(`${environment.apiUrl}/api/ping`).pipe(
+  return http.get(`${environment.apiUrl}/ping`).pipe(
     map(() => router.createUrlTree(['/'])),
     catchError((err) =>
       of(err.status === 403 && err.error?.code === 'GEO_BLOCKED'

@@ -18,6 +18,7 @@ import {SettingService} from '../../services/setting.service';
 import {toSignal} from '@angular/core/rxjs-interop';
 import {ButtonWithLoaderComponent} from '../../components/button-with-loader/button-with-loader.component';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {environment} from '../../../environments/environment';
 
 @Component({
   selector: 'app-settings',
@@ -226,6 +227,6 @@ export class SettingsComponent implements OnInit {
   }
 
   setTitleAndMetaTags() {
-    this.title.setTitle('سامانه معاملات ژیک');
+    this.title.setTitle(`سامانه معاملات ${environment.appTitle}`);
   }
 }

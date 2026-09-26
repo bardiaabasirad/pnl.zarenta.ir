@@ -14,6 +14,7 @@ import {IbanCardInquiryComponent} from '../partials/iban-card-inquiry/iban-card-
 import {IbanFromCardInquiryComponent} from '../partials/iban-from-card-inquiry/iban-from-card-inquiry.component';
 import {Router} from '@angular/router';
 import {initFlowbite} from 'flowbite';
+import {environment} from '../../../../environments/environment';
 
 @Component({
   selector: 'app-inquiries',
@@ -51,7 +52,7 @@ export class InquiriesComponent implements OnInit {
   bankInquiryType: string = 'iban-from-card';
 
   ngOnInit() {
-    this.title.setTitle('سامانه معاملات ژیک | استعلام‌ها');
+    this.title.setTitle(`سامانه معاملات ${environment.appTitle} | استعلام‌ها`);
 
     this.getUserInfo();
 

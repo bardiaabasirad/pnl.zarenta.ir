@@ -1,6 +1,5 @@
 import {Component, ElementRef, EventEmitter, inject, Input, OnDestroy, OnInit, Output, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {UtilityService} from '../../../../services/utility.service';
 import {InquiryService} from '../../../../services/inquiry.service';
 import {ErrorHandlingService} from '../../../../services/error-handling.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
@@ -8,6 +7,7 @@ import {NgxMaskDirective} from 'ngx-mask';
 import { CommonModule, DecimalPipe } from '@angular/common';
 import {ButtonWithLoaderComponent} from '../../../../components/button-with-loader/button-with-loader.component';
 import {Subscription} from 'rxjs';
+import {convertToEnglishNumbersUtil} from '../../../../utils/convert-to-english-numbers.util';
 
 @Component({
   selector: 'app-iban-card-inquiry',
@@ -34,7 +34,6 @@ export class IbanCardInquiryComponent implements OnInit, OnDestroy {
   private valueChangesSub!: Subscription;
   currentMask: string = '';
   private formBuilder = inject(FormBuilder);
-  private utilityService = inject(UtilityService);
   private inquiryService = inject(InquiryService);
   public errorHandlingService = inject(ErrorHandlingService);
   private matSnackBar = inject(MatSnackBar);
@@ -132,6 +131,6 @@ export class IbanCardInquiryComponent implements OnInit, OnDestroy {
     }
   }
 
-  public e2p = (value: unknown): string => this.utilityService.convertToEnglishNumbers(String(value).toUpperCase());
+  public p2e = (value: unknown): string => convertToEnglishNumbersUtil(String(value));
   protected readonly Number = Number;
 }

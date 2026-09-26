@@ -3,12 +3,11 @@ import {HttpClient} from "@angular/common/http";
 import {BehaviorSubject, catchError, from, Observable, throwError} from "rxjs";
 import {StorageKey, StorageService} from "./storage.service";
 import {EventService} from "./event.service";
-import {ApiConfig} from '../configs/api.config';
 import {User} from '../interfaces/user';
 import {Router} from '@angular/router';
 import {WebSocketService} from './web-socket.service';
 import {EncryptionService} from './encryption.service';
-import {data} from 'autoprefixer';
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -106,23 +105,23 @@ export class AuthService {
   }
 
   sendOtp(data: any): Observable<any> {
-    return this.http.post(`${ApiConfig.api}/v1/clients/auth/otp/send`, data);
+    return this.http.post(`${environment.apiUrl}/v1/clients/auth/otp/send`, data);
   }
 
   lead(data: any): Observable<any> {
-    return this.http.post(`${ApiConfig.api}/v1/clients/lead`, data);
+    return this.http.post(`${environment.apiUrl}/v1/clients/lead`, data);
   }
 
   completeProfile(data: any): Observable<any> {
-    return this.http.post(`${ApiConfig.api}/v1/clients/auth/complete-profile`, data);
+    return this.http.post(`${environment.apiUrl}/v1/clients/auth/complete-profile`, data);
   }
 
   passwordLogin(data: any): Observable<any> {
-    return this.http.post(`${ApiConfig.api}/v1/clients/auth/password/login`, data);
+    return this.http.post(`${environment.apiUrl}/v1/clients/auth/password/login`, data);
   }
 
   requestReview(reviewToken: string): Observable<any> {
-    return this.http.post(`${ApiConfig.api}/v1/clients/auth/request-review`, {
+    return this.http.post(`${environment.apiUrl}/v1/clients/auth/request-review`, {
         _method: "PATCH",
       },
       {
@@ -135,7 +134,7 @@ export class AuthService {
 
   changePassword(data: any, resetToken: string) {
     return this.http.post(
-      `${ApiConfig.api}/v1/clients/auth/change-password`,
+      `${environment.apiUrl}/v1/clients/auth/change-password`,
       data,
       {
         headers: {
@@ -146,11 +145,11 @@ export class AuthService {
   }
 
   verify(data: any): Observable<any> {
-    return this.http.post(`${ApiConfig.api}/v1/clients/auth/verify`, data);
+    return this.http.post(`${environment.apiUrl}/v1/clients/auth/verify`, data);
   }
 
   verifyOtp(data: any): Observable<any> {
-    return this.http.post(`${ApiConfig.api}/v1/clients/auth/otp/verify`, data);
+    return this.http.post(`${environment.apiUrl}/v1/clients/auth/otp/verify`, data);
   }
 
   changePasswordByProfile(payload: {
@@ -158,11 +157,11 @@ export class AuthService {
     password: string;
     password_confirmation: string;
   }) {
-    return this.http.post(`${ApiConfig.api}/v1/clients/change-password`, payload);
+    return this.http.post(`${environment.apiUrl}/v1/clients/change-password`, payload);
   }
 
   logout(): Observable<any> {
-    return this.http.post(`${ApiConfig.api}/v1/clients/auth/logout`, {});
+    return this.http.post(`${environment.apiUrl}/v1/clients/auth/logout`, {});
   }
 
   unsetUser() {
@@ -195,7 +194,7 @@ export class AuthService {
     }
 
     this.initializedPromise = new Promise<void>((resolve, reject) => {
-      from(this.http.get<any>(ApiConfig.api + '/v1/clients/auth/info'))
+      from(this.http.get<any>(environment.apiUrl + '/v1/clients/auth/info'))
         .pipe(
           catchError((error) => {
             return throwError(error);

@@ -3,10 +3,10 @@ import { CommonModule, DecimalPipe } from '@angular/common';
 import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {NgxMaskDirective} from 'ngx-mask';
 import {ButtonWithLoaderComponent} from '../../../../components/button-with-loader/button-with-loader.component';
-import {UtilityService} from '../../../../services/utility.service';
 import {InquiryService} from '../../../../services/inquiry.service';
 import {ErrorHandlingService} from '../../../../services/error-handling.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {convertToEnglishNumbersUtil} from '../../../../utils/convert-to-english-numbers.util';
 
 @Component({
   selector: 'app-iban-from-card-inquiry',
@@ -31,7 +31,6 @@ export class IbanFromCardInquiryComponent {
   card = new FormControl('',{validators: [Validators.required]});
   @Output() balanceChanged: EventEmitter<number> = new EventEmitter();
   private formBuilder = inject(FormBuilder);
-  private utilityService = inject(UtilityService);
   private inquiryService = inject(InquiryService);
   public errorHandlingService = inject(ErrorHandlingService);
   private matSnackBar = inject(MatSnackBar);
@@ -91,6 +90,6 @@ export class IbanFromCardInquiryComponent {
     }
   }
 
-  public e2p = (value: unknown): string => this.utilityService.convertToEnglishNumbers(String(value).toUpperCase());
+  public p2e = (value: unknown): string => convertToEnglishNumbersUtil(String(value));
   protected readonly Number = Number;
 }

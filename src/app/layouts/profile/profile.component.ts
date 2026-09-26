@@ -7,11 +7,10 @@ import {AuthService} from '../../services/auth.service';
 import {EventService} from '../../services/event.service';
 import {RouterLink} from "@angular/router";
 import {BalanceComponent} from '../balance/balance.component';
-// import {Modal, ModalInterface, ModalOptions} from 'flowbite';
 import {
   ReactiveFormsModule,
 } from '@angular/forms';
-import {MatSnackBar} from '@angular/material/snack-bar';
+import {environment} from '../../../environments/environment';
 
 @Component({
   selector: 'app-profile',
@@ -32,8 +31,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   // services
   private authService = inject(AuthService);
   private eventService = inject(EventService);
-  private matSnackBar = inject(MatSnackBar);
-  private title = inject(Title);
+  private readonly titleService = inject(Title);
 
   ngOnInit() {
     this.setTitleAndMetaTags();
@@ -87,7 +85,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   }
 
   setTitleAndMetaTags() {
-    this.title.setTitle('سامانه معاملات ژیک');
+    this.titleService.setTitle(`سامانه معاملات ${environment.appTitle}`);
   }
 
 

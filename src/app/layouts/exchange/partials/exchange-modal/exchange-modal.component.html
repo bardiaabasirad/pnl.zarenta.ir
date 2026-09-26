@@ -32,7 +32,7 @@
 
             {{ metal_item.title }}
 
-            از <span class="text-amber-400">ژیک</span>
+            از <span class="text-amber-400">{{ environment.appTitle }}</span>
           </div>
         </div>
 
@@ -52,7 +52,7 @@
               }
               معادل
               <span class="inline font-medium">{{ metal_order.product.amount | number }} تومان </span>
-              در ژیک ثبت شد.
+              در {{ environment.appTitle }} ثبت شد.
             </div>
             <div>
               <div class="mb-2">

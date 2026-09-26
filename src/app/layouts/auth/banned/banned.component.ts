@@ -1,4 +1,5 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
+import {environment} from '../../../../environments/environment';
 
 @Component({
   selector: 'app-banned',
@@ -9,5 +10,5 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
   styleUrl: './banned.component.scss'
 })
 export class BannedComponent {
-
+  protected readonly environment = environment;
 }

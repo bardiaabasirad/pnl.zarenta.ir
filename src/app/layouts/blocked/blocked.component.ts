@@ -1,5 +1,6 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import {Router} from "@angular/router";
+import {environment} from '../../../environments/environment';
 
 @Component({
   selector: 'app-blocked',
@@ -15,4 +16,6 @@ export class BlockedComponent {
     // بازگشت به صفحه اصلی؛ اگر همچنان بلاک باشد، interceptor دوباره به /blocked هدایت می‌کند
     this.router.navigateByUrl('/', { replaceUrl: true });
   }
+
+  protected readonly environment = environment;
 }

@@ -4,7 +4,6 @@ import { routes } from './app.routes';
 import {provideHttpClient, withInterceptors, withXhr} from '@angular/common/http';
 import {authInterceptor} from './interceptors/auth.interceptor';
 import {authErrorInterceptor} from './interceptors/auth-error.interceptor';
-import {geoBlockInterceptor} from './interceptors/geo-block.interceptor';
 import {ViewportScroller} from '@angular/common';
 
 export const appConfig: ApplicationConfig = {

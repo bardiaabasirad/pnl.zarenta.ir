@@ -4,6 +4,8 @@ import { AuthService } from '../../services/auth.service';
 import { Subscription } from 'rxjs';
 import { NavigationLoaderService } from '../../services/navigation-loader.service';
 import {RouterOutlet} from '@angular/router';
+import {environment} from '../../../environments/environment';
+import {Title} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-root',
@@ -19,11 +21,12 @@ export class AppComponent implements OnInit, OnDestroy {
   readonly navigationLoader = inject(NavigationLoaderService);
   private presenceService = inject(OnlinePresenceService);
   private authService = inject(AuthService);
+  private readonly titleService = inject(Title);
   private authSub?: Subscription;
 
-  title = 'سامانه معاملات ژیک';
-
   ngOnInit(): void {
+    this.titleService.setTitle(`سامانه معاملات ${environment.appTitle}`);
+
     if (this.authService.isLoggedIn()) {
       this.presenceService.startPresence();
     }

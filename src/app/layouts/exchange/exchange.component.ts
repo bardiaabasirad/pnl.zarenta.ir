@@ -18,12 +18,14 @@ import {AuthService} from '../../services/auth.service';
 import {User} from '../../interfaces/user';
 import {WebSocketConnectionStatus, WebSocketService} from '../../services/web-socket.service';
 import {EncryptionService} from '../../services/encryption.service';
-import {AppConstants} from '../../constants/app-constants';
 import {MetalItemGroup} from '../../interfaces/metal-item-group';
 import {ExchangeBtnComponent} from './partials/exchange-btn/exchange-btn.component';
 import {JalaliPipe} from '../../pipes/jalali.pipe';
 import {ExchangeModalComponent} from './partials/exchange-modal/exchange-modal.component';
 import { viewChild } from '@angular/core';
+import {DomSanitizer, SafeHtml, Title} from '@angular/platform-browser';
+import {RouterLinkHandlerDirective} from '../../directives/router-link-handler.directive';
+import {environment} from '../../../environments/environment';
 
 @Component({
   selector: 'app-exchange',
@@ -32,7 +34,8 @@ import { viewChild } from '@angular/core';
     ReactiveFormsModule,
     ExchangeBtnComponent,
     JalaliPipe,
-    ExchangeModalComponent
+    ExchangeModalComponent,
+    RouterLinkHandlerDirective
   ],
   templateUrl: './exchange.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
@@ -43,7 +46,7 @@ export class ExchangeComponent implements OnInit, OnDestroy {
   metalItemGroups = signal<MetalItemGroup[]>([]);
   expirationTime = signal<number>(0);
   initialized = signal<boolean>(false);
-  messages = signal<string[]>([]);
+  messages = signal<string>('');
   user = signal<User | undefined>(undefined);
   baseOrderData = signal<{orderType: 'buy' | 'sell';metal_item_id?: number} | undefined>(undefined);
 
@@ -59,14 +62,33 @@ export class ExchangeComponent implements OnInit, OnDestroy {
   private webSocketService = inject(WebSocketService);
   private authService = inject(AuthService);
   private encryptionService = inject(EncryptionService);
+  private readonly sanitizer = inject(DomSanitizer);
+  private readonly titleService = inject(Title);
+
   private wsCleanupFunctions: (() => void)[] = [];
 
   expanded = signal(false);
   showToggle = signal(false);
-  collapsedHeight = signal(0);
   contentHeight = signal<number | null>(null);
 
-  maxLines = 3;          // خطوطی که همیشه نمایش داده می‌شود
+  private readonly BUTTON_AREA_HEIGHT = 40;
+
+  private readonly isMobile = signal(typeof window !== 'undefined' && window.innerWidth < 768);
+
+  private readonly LINE_HEIGHT = 24;
+  private readonly DESKTOP_LINES = 3;
+  private readonly MOBILE_LINES = 5;
+
+  collapsedHeight = computed(() =>
+    this.LINE_HEIGHT * (this.isMobile() ? this.MOBILE_LINES : this.DESKTOP_LINES)
+  );
+
+  // --- آیا واقعاً ارزش نمایش دکمه را دارد؟ ---
+  effectiveShowToggle = computed(() =>
+    this.showToggle() &&
+    (this.contentHeight() ?? 0) - this.collapsedHeight() > this.BUTTON_AREA_HEIGHT
+  );
+
   hiddenLineLimit = 2;   // اگر خطوط پنهان ≤ این مقدار باشد، دکمه نمایش داده نمی‌شود
 
   contentBox = viewChild<ElementRef<HTMLDivElement>>('contentBox');
@@ -86,6 +108,11 @@ export class ExchangeComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
 
   constructor() {
+    if (typeof window !== 'undefined') {
+      const mql = window.matchMedia('(max-width: 767px)');
+      mql.addEventListener('change', e => this.isMobile.set(e.matches));
+    }
+
     effect(() => {
       // ایجاد وابستگی به پیام‌ها؛ هر زمان پیام‌ها تغییر کنند این افکت اجرا می‌شود
       const currentMessages = this.messages();
@@ -116,6 +143,11 @@ export class ExchangeComponent implements OnInit, OnDestroy {
     });
   }
 
+  readonly safeMessages = computed<SafeHtml>(() => {
+    const html = this.messages() ?? '';
+    return this.sanitizer.bypassSecurityTrustHtml(html);
+  });
+
   private checkIfExpandable(): void {
     const el = this.contentBox()?.nativeElement;   // ← () اضافه شد
     if (!el) return;
@@ -126,8 +158,6 @@ export class ExchangeComponent implements OnInit, OnDestroy {
       // اگر line-height روی normal باشد
       lineHeight = parseFloat(style.fontSize) * 1.2;
     }
-
-    this.collapsedHeight.set(lineHeight * this.maxLines); // ۳ خط = ۶۰px
 
     const fullHeight = el.scrollHeight;
     const hiddenHeight = fullHeight - this.collapsedHeight();
@@ -141,6 +171,8 @@ export class ExchangeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.titleService.setTitle(`سامانه معاملات ${environment.appTitle}`);
+
     this.getUserInfo();
     this.fetchData();
     this.setupConnectionMonitoring();
@@ -477,11 +509,6 @@ export class ExchangeComponent implements OnInit, OnDestroy {
       from(this.authService.getUserInfo()).subscribe({
         next: () => {
           this.user.set(this.authService.getUser());
-          setTimeout(() => {
-            // this.listenToPriceChanges();
-            // this.listenToMetalTraderChanges();
-            // this.listenToDealingGroupChanges();
-          }, 1000);
         },
         error: (error) => {
           if (error === 'Token expired') {
@@ -501,6 +528,4 @@ export class ExchangeComponent implements OnInit, OnDestroy {
       date.getMonth() === today.getMonth() &&
       date.getFullYear() === today.getFullYear();
   }
-
-  protected readonly AppConstants = AppConstants;
 }

@@ -7,9 +7,9 @@ import {NgxMaskDirective} from "ngx-mask";
 import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {nationalCodeValidator} from "../../../../validators/national-code-validator";
 import {ErrorHandlingService} from "../../../../services/error-handling.service";
-import {UtilityService} from "../../../../services/utility.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import moment from "jalali-moment";
+import {convertToEnglishNumbersUtil} from '../../../../utils/convert-to-english-numbers.util';
 
 @Component({
   selector: 'app-ncr-inquiry',
@@ -36,7 +36,6 @@ export class NcrInquiryComponent {
   private inquiryService = inject(InquiryService);
   private formBuilder = inject(FormBuilder);
   public errorHandlingService = inject(ErrorHandlingService);
-  public utilityService = inject(UtilityService);
   private snackBar = inject(MatSnackBar);
   private datePipe = inject(DatePipe);
 
@@ -116,7 +115,7 @@ export class NcrInquiryComponent {
     this.datePicker.resetDate();
   }
 
-  public e2p = (value: unknown): string => this.utilityService.convertToEnglishNumbers(String(value).toUpperCase());
+  public p2e = (value: unknown): string => convertToEnglishNumbersUtil(String(value));
 
   protected readonly Number = Number;
 }

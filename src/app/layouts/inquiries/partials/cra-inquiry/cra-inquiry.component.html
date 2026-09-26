@@ -12,7 +12,7 @@
       <label for="national_code" class="sr-only">کد ملی</label>
       <input [formControl]="national_code"
         mask="0000000000"
-        [inputTransformFn]="e2p"
+        [inputTransformFn]="p2e"
         placeholder="کد ملی را وارد کنید"
         type="text"
         id="national_code"
@@ -27,7 +27,7 @@
         <input [formControl]="phone"
           prefix="0"
           mask="0000000000"
-          [inputTransformFn]="e2p"
+          [inputTransformFn]="p2e"
           placeholder="شماره تلفن را وارد کنید"
           type="text"
           id="phone"

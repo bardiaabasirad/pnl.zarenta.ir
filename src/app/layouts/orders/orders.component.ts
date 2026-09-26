@@ -6,6 +6,7 @@ import {PageEvent} from '@angular/material/paginator';
 import {Title} from '@angular/platform-browser';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {OrderStateService} from '../../services/order-state.service';
+import {environment} from '../../../environments/environment';
 
 @Component({
   selector: 'app-orders',
@@ -38,7 +39,7 @@ export class OrdersComponent implements OnInit {
 
   // services
   private orderService = inject(OrderService);
-  private title = inject(Title);
+  private readonly titleService = inject(Title);
   private matSnackBar = inject(MatSnackBar);
   private orderState = inject(OrderStateService);
 
@@ -49,7 +50,7 @@ export class OrdersComponent implements OnInit {
     this.fetchData();
     // کاربر وارد صفحه سفارشات شده، اعلان قرمز فوتر را ریست می‌کنیم
     this.orderState.markSeen();
-    this.title.setTitle('طلای ژیک | سفارشات آبشده');
+    this.titleService.setTitle(`سامانه معاملات ${environment.appTitle}`);
   }
 
   fetchData(page: number = 1): void {

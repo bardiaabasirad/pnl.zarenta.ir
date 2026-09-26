@@ -5,12 +5,12 @@ import {FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, V
 import {ErrorHandlingService} from "../../../../services/error-handling.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {ButtonWithLoaderComponent} from "../../../../components/button-with-loader/button-with-loader.component";
-import {UtilityService} from "../../../../services/utility.service";
 import {DatePickerComponent} from "../../../../components/date-picker/date-picker.component";
 import {NgxMaskDirective} from "ngx-mask";
 import {nationalCodeValidator} from "../../../../validators/national-code-validator";
 import {Subscription} from "rxjs";
 import moment from "jalali-moment";
+import {convertToEnglishNumbersUtil} from '../../../../utils/convert-to-english-numbers.util';
 
 @Component({
   selector: 'app-bank-inquiry',
@@ -37,7 +37,6 @@ export class BankInquiryComponent implements OnInit, OnDestroy {
   private inquiryService = inject(InquiryService);
   private formBuilder = inject(FormBuilder);
   public errorHandlingService = inject(ErrorHandlingService);
-  public utilityService = inject(UtilityService);
   private snackBar = inject(MatSnackBar);
   private datePipe = inject(DatePipe);
 
@@ -153,7 +152,7 @@ export class BankInquiryComponent implements OnInit, OnDestroy {
     this.datePicker.resetDate();
   }
 
-  public e2p = (value: unknown): string => this.utilityService.convertToEnglishNumbers(String(value).toUpperCase());
+  public p2e = (value: unknown): string => convertToEnglishNumbersUtil(String(value));
 
   protected readonly Number = Number;
 }

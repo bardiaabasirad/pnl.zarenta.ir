@@ -5,6 +5,7 @@ import {SettingService} from '../../../services/setting.service';
 import {from} from 'rxjs';
 import {filter} from 'rxjs/operators';
 import {OrderStateService} from '../../../services/order-state.service';
+import {environment} from '../../../../environments/environment';
 
 @Component({
   selector: 'app-footer',
@@ -66,4 +67,5 @@ export class FooterComponent {
     }
   }
 
+  protected readonly environment = environment;
 }

@@ -34,6 +34,7 @@ import {AppConstants} from '../../../../constants/app-constants';
 import {removeTrailingZeros} from '../../../../utils/remove-trailing-zeros.util';
 import {OrderStateService} from '../../../../services/order-state.service';
 import {Subscription} from 'rxjs';
+import {environment} from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-exchange-modal',
@@ -677,4 +678,5 @@ export class ExchangeModalComponent implements OnInit, AfterViewInit, OnDestroy 
   public p2e = (value: unknown): string => convertToEnglishNumbersUtil(String(value));
   protected readonly Math = Math;
   protected readonly AppConstants = AppConstants;
+  protected readonly environment = environment;
 }
