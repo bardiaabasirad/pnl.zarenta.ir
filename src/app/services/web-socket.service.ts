@@ -246,7 +246,7 @@ export class WebSocketService implements OnDestroy {
           Accept: 'application/json',
         },
       },
-      authEndpoint: `${environment.apiUrl}/v1/clients/broadcasting/auth`,
+      authEndpoint: `${environment.apiUrl}/v1/traders/broadcasting/auth`,
       activityTimeout: 120000,
       pongTimeout: 30000,
       disableStats: true,

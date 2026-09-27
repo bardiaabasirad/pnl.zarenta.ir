@@ -33,7 +33,7 @@ export class SettingService {
 
     // If not initialized yet, fetch siteInfo info.
     this.initializedPromise = new Promise<void>((resolve, reject) => {
-      from(this.http.get<any>(`${environment.apiUrl}/v1/clients/site-info`))
+      from(this.http.get<any>(`${environment.apiUrl}/v1/traders/site-info`))
         .pipe(
           catchError((error) => {
             // Handle specific errors, e.g., token expiration
@@ -65,12 +65,12 @@ export class SettingService {
 
   public updateAggregatedViewOfInvoices(params: any): Observable<any> {
     params.append('_method', 'PATCH');
-    return this.http.post<any>(`${environment.apiUrl}/v1/clients/settings/aggregated-view-of-invoices`, params);
+    return this.http.post<any>(`${environment.apiUrl}/v1/traders/settings/aggregated-view-of-invoices`, params);
   }
 
   public updateMarketOpeningNotification(params: any): Observable<any> {
     params.append('_method', 'PATCH');
-    return this.http.post<any>(`${environment.apiUrl}/v1/clients/settings/market-opening-notification`, params);
+    return this.http.post<any>(`${environment.apiUrl}/v1/traders/settings/market-opening-notification`, params);
   }
 
 }

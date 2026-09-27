@@ -22,7 +22,7 @@ export class ContactService {
       return of(this._contacts());
     }
 
-    return this.http.get<any[]>(`${environment.apiUrl}/v1/clients/contacts`).pipe(
+    return this.http.get<any[]>(`${environment.apiUrl}/v1/traders/contacts`).pipe(
       tap(data => this._contacts.set(data)) // ذخیره در سیگنال
     );
   }

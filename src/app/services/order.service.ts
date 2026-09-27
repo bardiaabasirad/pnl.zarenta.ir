@@ -10,14 +10,14 @@ export class OrderService {
   private http = inject(HttpClient);
 
   public index(filters: string){
-    return this.http.get(`${environment.apiUrl}/v1/clients/orders?${filters}`);
+    return this.http.get(`${environment.apiUrl}/v1/traders/orders?${filters}`);
   }
 
   public store(data: any) {
-    return this.http.post(`${environment.apiUrl}/v1/clients/orders`, data);
+    return this.http.post(`${environment.apiUrl}/v1/traders/orders`, data);
   }
 
   public show(id: any){
-    return this.http.get(`${environment.apiUrl}/v1/clients/orders/${id}`);
+    return this.http.get(`${environment.apiUrl}/v1/traders/orders/${id}`);
   }
 }

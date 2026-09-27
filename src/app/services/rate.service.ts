@@ -18,7 +18,7 @@ export class RateService {
       return this.rate$;
     }
 
-    this.rate$ = this.http.get<any>(`${environment.apiUrl}/v1/clients/rate`).pipe(
+    this.rate$ = this.http.get<any>(`${environment.apiUrl}/v1/traders/rate`).pipe(
       shareReplay(1),
       finalize(() => {
         this.rate$ = null;

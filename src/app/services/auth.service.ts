@@ -105,23 +105,23 @@ export class AuthService {
   }
 
   sendOtp(data: any): Observable<any> {
-    return this.http.post(`${environment.apiUrl}/v1/clients/auth/otp/send`, data);
+    return this.http.post(`${environment.apiUrl}/v1/traders/auth/otp/send`, data);
   }
 
   lead(data: any): Observable<any> {
-    return this.http.post(`${environment.apiUrl}/v1/clients/lead`, data);
+    return this.http.post(`${environment.apiUrl}/v1/traders/lead`, data);
   }
 
   completeProfile(data: any): Observable<any> {
-    return this.http.post(`${environment.apiUrl}/v1/clients/auth/complete-profile`, data);
+    return this.http.post(`${environment.apiUrl}/v1/traders/auth/complete-profile`, data);
   }
 
   passwordLogin(data: any): Observable<any> {
-    return this.http.post(`${environment.apiUrl}/v1/clients/auth/password/login`, data);
+    return this.http.post(`${environment.apiUrl}/v1/traders/auth/password/login`, data);
   }
 
   requestReview(reviewToken: string): Observable<any> {
-    return this.http.post(`${environment.apiUrl}/v1/clients/auth/request-review`, {
+    return this.http.post(`${environment.apiUrl}/v1/traders/auth/request-review`, {
         _method: "PATCH",
       },
       {
@@ -134,7 +134,7 @@ export class AuthService {
 
   changePassword(data: any, resetToken: string) {
     return this.http.post(
-      `${environment.apiUrl}/v1/clients/auth/change-password`,
+      `${environment.apiUrl}/v1/traders/auth/change-password`,
       data,
       {
         headers: {
@@ -145,11 +145,11 @@ export class AuthService {
   }
 
   verify(data: any): Observable<any> {
-    return this.http.post(`${environment.apiUrl}/v1/clients/auth/verify`, data);
+    return this.http.post(`${environment.apiUrl}/v1/traders/auth/verify`, data);
   }
 
   verifyOtp(data: any): Observable<any> {
-    return this.http.post(`${environment.apiUrl}/v1/clients/auth/otp/verify`, data);
+    return this.http.post(`${environment.apiUrl}/v1/traders/auth/otp/verify`, data);
   }
 
   changePasswordByProfile(payload: {
@@ -157,11 +157,11 @@ export class AuthService {
     password: string;
     password_confirmation: string;
   }) {
-    return this.http.post(`${environment.apiUrl}/v1/clients/change-password`, payload);
+    return this.http.post(`${environment.apiUrl}/v1/traders/change-password`, payload);
   }
 
   logout(): Observable<any> {
-    return this.http.post(`${environment.apiUrl}/v1/clients/auth/logout`, {});
+    return this.http.post(`${environment.apiUrl}/v1/traders/auth/logout`, {});
   }
 
   unsetUser() {
@@ -194,7 +194,7 @@ export class AuthService {
     }
 
     this.initializedPromise = new Promise<void>((resolve, reject) => {
-      from(this.http.get<any>(environment.apiUrl + '/v1/clients/auth/info'))
+      from(this.http.get<any>(environment.apiUrl + '/v1/traders/auth/info'))
         .pipe(
           catchError((error) => {
             return throwError(error);

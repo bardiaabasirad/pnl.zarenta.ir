@@ -13,23 +13,23 @@ export class InquiryService {
   ) { }
 
   public fee(): Observable<any> {
-    return this.http.get<any>(`${environment.apiUrl}/v1/clients/inquiries/fee`);
+    return this.http.get<any>(`${environment.apiUrl}/v1/traders/inquiries/fee`);
   }
 
   public matching(params: any): Observable<any> {
-    return this.http.post<any>(`${environment.apiUrl}/v1/clients/inquiries/matching`, params)
+    return this.http.post<any>(`${environment.apiUrl}/v1/traders/inquiries/matching`, params)
   }
 
   public similarity(params: any): Observable<any> {
-    return this.http.post<any>(`${environment.apiUrl}/v1/clients/inquiries/similarity`, params)
+    return this.http.post<any>(`${environment.apiUrl}/v1/traders/inquiries/similarity`, params)
   }
 
   public iban(params: any): Observable<any> {
-    return this.http.post<any>(`${environment.apiUrl}/v1/clients/inquiries/iban`, params)
+    return this.http.post<any>(`${environment.apiUrl}/v1/traders/inquiries/iban`, params)
   }
 
   public ibanFromCard(params: any): Observable<any> {
-    return this.http.post<any>(`${environment.apiUrl}/v1/clients/inquiries/iban-from-card`, params)
+    return this.http.post<any>(`${environment.apiUrl}/v1/traders/inquiries/iban-from-card`, params)
   }
 
 }

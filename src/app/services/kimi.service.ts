@@ -10,14 +10,14 @@ export class KimiaService {
   private http = inject(HttpClient);
 
   public getVoucherBalance(id: any): Observable<any> {
-    return this.http.get<any>(`${environment.apiUrl}/v1/clients/balance/${id}`);
+    return this.http.get<any>(`${environment.apiUrl}/v1/traders/balance/${id}`);
   }
 
   public getVoucherTransactions(params: any): Observable<any> {
-    return this.http.get<any>(`${environment.apiUrl}/v1/clients/transactions`, { params: params });
+    return this.http.get<any>(`${environment.apiUrl}/v1/traders/transactions`, { params: params });
   }
 
   public generatePDF(params: any) {
-    return this.http.get(`${environment.apiUrl}/v1/clients/transactions/pdf`, {params: params, responseType: 'blob'});
+    return this.http.get(`${environment.apiUrl}/v1/traders/transactions/pdf`, {params: params, responseType: 'blob'});
   }
 }
