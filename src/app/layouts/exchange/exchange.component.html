@@ -20,23 +20,23 @@
     </div>
 
     @if (effectiveShowToggle() && !expanded()) {
-      <div class="pointer-events-none absolute inset-x-0 bottom-12 h-8
-                  bg-gradient-to-t from-sky-50 to-transparent"></div>
+      <div class="pointer-events-none absolute inset-x-0 bottom-13 h-8
+                  bg-gradient-to-t from-amber-50 to-transparent"></div>
     }
 
     @if (effectiveShowToggle()) {
       <div class="flex justify-center mt-3">
         <button (click)="expanded.set(!expanded())"
-                class="cursor-pointer px-2 py-1 text-sky-700 flex items-center gap-2 text-xs">
+                class="cursor-pointer px-2 py-1 text-amber-700 flex items-center gap-2 text-xs">
           @if (expanded()) {
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                 stroke-width="1.5" stroke="currentColor" class="text-sky-700 size-3.5">
+                 stroke-width="1.5" stroke="currentColor" class="text-amber-700 size-3.5">
               <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 15.75 7.5-7.5 7.5 7.5"/>
             </svg>
             مشاهده کمتر
           } @else {
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                 stroke-width="1.5" stroke="currentColor" class="text-sky-700 size-3.5">
+                 stroke-width="1.5" stroke="currentColor" class="text-amber-700 size-3.5">
               <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/>
             </svg>
             مشاهده بیشتر

@@ -1,8 +1,8 @@
-<div class="lg:block pb-2 px-2 overflow-hidden">
+<div class="space-y-4 rounded-lg bg-white p-4 border border-gray-200 overflow-hidden">
 
   <div #expandableContainer
        (keyup.escape)="toggleExpand()"
-       [ngClass]="isExpanded ? 'fixed top-0 right-0 w-full z-50 min-h-dvh h-dvh overflow-auto' : 'shadow p-4 rounded'"
+       [ngClass]="isExpanded ? 'fixed top-0 right-0 w-full z-50 min-h-dvh h-dvh overflow-auto' : ''"
        class="bg-white space-y-4">
 
     @if (initialized()) {
@@ -118,41 +118,47 @@
                   <td class="px-2 py-2 text-start border border-gray-300 dark:border-gray-600 min-w-20">{{ item.description }}</td>
                   <td class="px-2 py-2 border border-gray-300 dark:border-gray-600">
                     <span dir="ltr">{{ item.amount | number }}</span>
-                    @if (item.type == 'metal_commitment_in' || item.type == 'metal_commitment_out') {
+                    @if (item.type == 'metal_commitment_in' || item.type == 'metal_commitment_out' || item.type == 'settlement_metal_out' || item.type == 'settlement_metal_in') {
                       @if (item.metal_item_unit == 'gram') {
                         گرم
                       } @else if (item.metal_item_unit == 'count') {
                         عدد
                       }
-                    } @else if (item.type == 'fiat_debt_in' || item.type == 'fiat_credit_in') {
+                    } @else if (item.type == 'fiat_debt_in' || item.type == 'fiat_credit_in' || item.type == 'settlement_fiat_transfer') {
                       تومان
                     }
                   </td>
                   <td class="px-2 py-2 whitespace-nowrap border border-gray-300 dark:border-gray-600">
                     <span dir="ltr">{{ item.balance_before | number }}</span>
-                    @if (item.type == 'metal_commitment_in' || item.type == 'metal_commitment_out') {
+                    @if (item.type == 'metal_commitment_in' || item.type == 'metal_commitment_out' || item.type == 'settlement_metal_out' || item.type == 'settlement_metal_in') {
                       @if (item.metal_item_unit == 'gram') {
                         گرم
                       } @else if (item.metal_item_unit == 'count') {
                         عدد
                       }
-                    } @else if (item.type == 'fiat_debt_in' || item.type == 'fiat_credit_in') {
+                    } @else if (item.type == 'fiat_debt_in' || item.type == 'fiat_credit_in' || item.type == 'settlement_fiat_transfer') {
                       تومان
                     }
                   </td>
                   <td class="px-2 py-2 whitespace-nowrap border border-gray-300 dark:border-gray-600">
                     <span dir="ltr">{{ item.balance_after | number }}</span>
-                    @if (item.type == 'metal_commitment_in' || item.type == 'metal_commitment_out') {
+                    @if (item.type == 'metal_commitment_in' || item.type == 'metal_commitment_out' || item.type == 'settlement_metal_out' || item.type == 'settlement_metal_in') {
                       @if (item.metal_item_unit == 'gram') {
                         گرم
                       } @else if (item.metal_item_unit == 'count') {
                         عدد
                       }
-                    } @else if (item.type == 'fiat_debt_in' || item.type == 'fiat_credit_in') {
+                    } @else if (item.type == 'fiat_debt_in' || item.type == 'fiat_credit_in' || item.type == 'settlement_fiat_transfer') {
                       تومان
                     }
                   </td>
-                  <td class="px-2 py-2 whitespace-nowrap border border-gray-300 dark:border-gray-600">{{ item.metal_item_title }}</td>
+                  <td class="px-2 py-2 whitespace-nowrap border border-gray-300 dark:border-gray-600">
+                    @if (item.metal_item_title) {
+                      {{ item.metal_item_title }}
+                    } @else {
+                      کیف پول
+                    }
+                  </td>
                 </tr>
               }
             }

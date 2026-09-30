@@ -6,6 +6,7 @@ export interface MetalItem {
   id: number,
   is_buy_active: boolean,
   is_sell_active: boolean,
+  is_spot: boolean,
   metal_item_group_id: boolean,
   price_change_threshold: number,
   buy_sell_spread: number,

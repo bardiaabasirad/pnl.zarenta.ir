@@ -16,14 +16,16 @@ export class AssetsComponent implements OnInit {
 
   readonly assetService = inject(AssetService);
 
-  assets = signal<Asset[]>([]);
+  spotAndCash = signal<Asset[]>([]);
+  others = signal<Asset[]>([]);
 
   ngOnInit() {
     this.assetService.assets().subscribe({
       next: asset => {
         this.initialized.set(true);
 
-        this.assets.set(asset);
+        this.spotAndCash.set(asset.spot_and_cash);
+        this.others.set(asset.forward_items);
       },
       error: err => {
         this.initialized.set(true);
