@@ -1,101 +1,117 @@
 <div class="p-4 rounded-lg border border-gray-200">
   @if (initialized()) {
     <div class="space-y-4">
-      <div class="text-sm lg:text-xl font-medium">دارایی‌های من</div>
-      <div class="space-y-2.5">
-        <div class="text-sm font-medium">موجودی حاضر</div>
-        <div class="grid gap-4 lg:grid-cols-2">
-          @for (asset of spotAndCash(); track asset.id) {
-            <div class="p-4 rounded-lg border border-gray-200">
-              <div class="flex items-center gap-4 mb-4">
-                <div class="size-7 rounded-lg bg-gray-200 flex justify-center items-center">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="-32 -32 1088 1088"
-                       class="size-4 fill-gray-800">
-                    <g transform="translate(0, 960) scale(1, -1)">
-                      <path
-                        d="M164.978 938.667h772.551v-327.68h-773.689c-45.779 2.885-86.119 24.024-114.204 56.15l-0.165 0.193c-25.277 28.427-40.718 66.088-40.718 107.356 0 3.22 0.094 6.418 0.279 9.591l-0.020-0.438c4.111 83.754 70.984 150.627 154.359 154.723l0.378 0.015zM869.262 870.4h-701.918c-49.057-2.425-88.152-41.868-90.016-90.847l-0.005-0.175c-0.079-1.433-0.124-3.111-0.124-4.799 0-23.919 9.010-45.733 23.82-62.235l-0.077 0.087c16.409-18.826 39.765-31.234 66.031-33.204l0.324-0.020h702.009zM816.924 415.289h207.076v-241.209h-207.076c-66.577 0.078-120.527 54.028-120.604 120.597v0.007c0 0.027 0 0.058 0 0.090 0 32.644 12.984 62.256 34.070 83.952l-0.028-0.028c21.706 22.464 52.103 36.411 85.756 36.411 0.251 0 0.502-0.001 0.753-0.002h-0.038zM955.733 347.023h-138.809c-0.118 0.001-0.258 0.002-0.399 0.002-14.545 0-27.681-6.033-37.042-15.733l-0.015-0.015c-9.093-9.437-14.74-22.25-14.882-36.381v-0.028c0.077-28.874 23.464-52.26 52.33-52.338h138.816zM0 772.551h68.267c-0.003-0.291-0.005-0.634-0.005-0.978 0-52.259 41.353-94.86 93.12-96.865l0.182-0.006h828.302v-29.582h34.133v-730.453h-903.396c-66.577 0.078-120.527 54.028-120.604 120.597v0.007zM955.733 606.436h-794.169c-35.171 0.271-67.563 11.952-93.712 31.517l0.414-0.297v-602.385c0.077-28.874 23.464-52.26 52.33-52.338h835.136z"/>
-                    </g>
-                  </svg>
-                </div>
-                <div class="text-sm">
-                  @if (asset.metal_item) {
-                    <span>{{ asset.metal_item.title }}</span>
-                  } @else {
-                    <span>موجودی نقدی</span>
-                  }
-                </div>
-              </div>
-              <div>
-                <div class="flex items-center gap-2"
-                     [class.text-teal-700]="asset.total_balance > 0"
-                     [class.text-rose-600]="asset.total_balance < 0">
-                  <span dir="ltr" class="text-xl">{{ asset.total_balance | number }}</span>
-                  @if (asset.metal_item && asset.metal_item?.unit == 'gram') {
-                    <span>گرم</span>
-                  } @else if (asset.metal_item && asset.metal_item?.unit == 'count') {
-                    <span>عدد</span>
-                  } @else {
-                    <span>تومان</span>
-                  }
-                </div>
-                @if (asset.metal_item && ! asset.metal_item.is_spot && asset.fiat_balance) {
-                  <div class="flex gap-1" [class]="asset.fiat_balance > 0 ? 'text-teal-700' : 'text-rose-600'">
-                    <div dir="ltr">{{ asset.fiat_balance | number }}</div>
-                    <div>تومان</div>
+      @if (spotAndCash() || others()) {
+        <div class="text-sm lg:text-xl font-medium">دارایی‌های من</div>
+        @if (spotAndCash()) {
+          <div class="space-y-2.5">
+            <div class="text-sm font-medium">موجودی حاضر</div>
+            <div class="grid gap-4 lg:grid-cols-2">
+              @for (asset of spotAndCash(); track asset.id) {
+                <div class="p-4 rounded-lg border border-gray-200">
+                  <div class="flex items-center gap-4 mb-4">
+                    <div class="size-7 rounded-lg bg-gray-200 flex justify-center items-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="-32 -32 1088 1088"
+                           class="size-4 fill-gray-800">
+                        <g transform="translate(0, 960) scale(1, -1)">
+                          <path
+                            d="M164.978 938.667h772.551v-327.68h-773.689c-45.779 2.885-86.119 24.024-114.204 56.15l-0.165 0.193c-25.277 28.427-40.718 66.088-40.718 107.356 0 3.22 0.094 6.418 0.279 9.591l-0.020-0.438c4.111 83.754 70.984 150.627 154.359 154.723l0.378 0.015zM869.262 870.4h-701.918c-49.057-2.425-88.152-41.868-90.016-90.847l-0.005-0.175c-0.079-1.433-0.124-3.111-0.124-4.799 0-23.919 9.010-45.733 23.82-62.235l-0.077 0.087c16.409-18.826 39.765-31.234 66.031-33.204l0.324-0.020h702.009zM816.924 415.289h207.076v-241.209h-207.076c-66.577 0.078-120.527 54.028-120.604 120.597v0.007c0 0.027 0 0.058 0 0.090 0 32.644 12.984 62.256 34.070 83.952l-0.028-0.028c21.706 22.464 52.103 36.411 85.756 36.411 0.251 0 0.502-0.001 0.753-0.002h-0.038zM955.733 347.023h-138.809c-0.118 0.001-0.258 0.002-0.399 0.002-14.545 0-27.681-6.033-37.042-15.733l-0.015-0.015c-9.093-9.437-14.74-22.25-14.882-36.381v-0.028c0.077-28.874 23.464-52.26 52.33-52.338h138.816zM0 772.551h68.267c-0.003-0.291-0.005-0.634-0.005-0.978 0-52.259 41.353-94.86 93.12-96.865l0.182-0.006h828.302v-29.582h34.133v-730.453h-903.396c-66.577 0.078-120.527 54.028-120.604 120.597v0.007zM955.733 606.436h-794.169c-35.171 0.271-67.563 11.952-93.712 31.517l0.414-0.297v-602.385c0.077-28.874 23.464-52.26 52.33-52.338h835.136z"/>
+                        </g>
+                      </svg>
+                    </div>
+                    <div class="text-sm">
+                      @if (asset.metal_item) {
+                        <span>{{ asset.metal_item.title }}</span>
+                      } @else {
+                        <span>موجودی نقدی</span>
+                      }
+                    </div>
                   </div>
-                }
-              </div>
-            </div>
-          }
-        </div>
-      </div>
-      <div class="space-y-2.5">
-        <div class="text-sm font-medium">معاملات تعهدی</div>
-        <div class="grid gap-4 lg:grid-cols-2">
-          @for (asset of others(); track asset.id) {
-            <div class="p-4 rounded-lg border border-gray-200">
-              <div class="flex items-center gap-4 mb-4">
-                <div class="size-7 rounded-lg bg-gray-200 flex justify-center items-center">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="-32 -32 1088 1088"
-                       class="size-4 fill-gray-800">
-                    <g transform="translate(0, 960) scale(1, -1)">
-                      <path
-                        d="M164.978 938.667h772.551v-327.68h-773.689c-45.779 2.885-86.119 24.024-114.204 56.15l-0.165 0.193c-25.277 28.427-40.718 66.088-40.718 107.356 0 3.22 0.094 6.418 0.279 9.591l-0.020-0.438c4.111 83.754 70.984 150.627 154.359 154.723l0.378 0.015zM869.262 870.4h-701.918c-49.057-2.425-88.152-41.868-90.016-90.847l-0.005-0.175c-0.079-1.433-0.124-3.111-0.124-4.799 0-23.919 9.010-45.733 23.82-62.235l-0.077 0.087c16.409-18.826 39.765-31.234 66.031-33.204l0.324-0.020h702.009zM816.924 415.289h207.076v-241.209h-207.076c-66.577 0.078-120.527 54.028-120.604 120.597v0.007c0 0.027 0 0.058 0 0.090 0 32.644 12.984 62.256 34.070 83.952l-0.028-0.028c21.706 22.464 52.103 36.411 85.756 36.411 0.251 0 0.502-0.001 0.753-0.002h-0.038zM955.733 347.023h-138.809c-0.118 0.001-0.258 0.002-0.399 0.002-14.545 0-27.681-6.033-37.042-15.733l-0.015-0.015c-9.093-9.437-14.74-22.25-14.882-36.381v-0.028c0.077-28.874 23.464-52.26 52.33-52.338h138.816zM0 772.551h68.267c-0.003-0.291-0.005-0.634-0.005-0.978 0-52.259 41.353-94.86 93.12-96.865l0.182-0.006h828.302v-29.582h34.133v-730.453h-903.396c-66.577 0.078-120.527 54.028-120.604 120.597v0.007zM955.733 606.436h-794.169c-35.171 0.271-67.563 11.952-93.712 31.517l0.414-0.297v-602.385c0.077-28.874 23.464-52.26 52.33-52.338h835.136z"/>
-                    </g>
-                  </svg>
-                </div>
-                <div class="text-sm">
-                  @if (asset.metal_item) {
-                    <span>{{ asset.metal_item.title }}</span>
-                  } @else {
-                    <span>موجودی نقدی</span>
-                  }
-                </div>
-              </div>
-              <div>
-                <div class="flex items-center gap-2"
-                     [class.text-teal-700]="asset.total_balance > 0"
-                     [class.text-rose-600]="asset.total_balance < 0">
-                  <span dir="ltr" class="text-xl">{{ asset.total_balance | number }}</span>
-                  @if (asset.metal_item && asset.metal_item?.unit == 'gram') {
-                    <span>گرم</span>
-                  } @else if (asset.metal_item && asset.metal_item?.unit == 'count') {
-                    <span>عدد</span>
-                  } @else {
-                    <span>تومان</span>
-                  }
-                </div>
-                @if (asset.metal_item && ! asset.metal_item.is_spot && asset.fiat_balance) {
-                  <div class="flex gap-1" [class]="asset.fiat_balance > 0 ? 'text-teal-700' : 'text-rose-600'">
-                    <div dir="ltr">{{ asset.fiat_balance | number }}</div>
-                    <div>تومان</div>
+                  <div>
+                    <div class="flex items-center gap-2"
+                         [class.text-teal-700]="asset.total_balance > 0"
+                         [class.text-rose-600]="asset.total_balance < 0">
+                      <span dir="ltr" class="text-xl">{{ asset.total_balance | number }}</span>
+                      @if (asset.metal_item && asset.metal_item?.unit == 'gram') {
+                        <span>گرم</span>
+                      } @else if (asset.metal_item && asset.metal_item?.unit == 'count') {
+                        <span>عدد</span>
+                      } @else {
+                        <span>تومان</span>
+                      }
+                    </div>
+                    @if (asset.metal_item && ! asset.metal_item.is_spot && asset.fiat_balance) {
+                      <div class="flex gap-1" [class]="asset.fiat_balance > 0 ? 'text-teal-700' : 'text-rose-600'">
+                        <div dir="ltr">{{ asset.fiat_balance | number }}</div>
+                        <div>تومان</div>
+                      </div>
+                    }
                   </div>
-                }
-              </div>
+                </div>
+              }
             </div>
-          }
+          </div>
+        }
+        @if (others()) {
+          <div class="space-y-2.5">
+            <div class="text-sm font-medium">معاملات تعهدی</div>
+            <div class="grid gap-4 lg:grid-cols-2">
+              @for (asset of others(); track asset.id) {
+                <div class="p-4 rounded-lg border border-gray-200">
+                  <div class="flex items-center gap-4 mb-4">
+                    <div class="size-7 rounded-lg bg-gray-200 flex justify-center items-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="-32 -32 1088 1088"
+                           class="size-4 fill-gray-800">
+                        <g transform="translate(0, 960) scale(1, -1)">
+                          <path
+                            d="M164.978 938.667h772.551v-327.68h-773.689c-45.779 2.885-86.119 24.024-114.204 56.15l-0.165 0.193c-25.277 28.427-40.718 66.088-40.718 107.356 0 3.22 0.094 6.418 0.279 9.591l-0.020-0.438c4.111 83.754 70.984 150.627 154.359 154.723l0.378 0.015zM869.262 870.4h-701.918c-49.057-2.425-88.152-41.868-90.016-90.847l-0.005-0.175c-0.079-1.433-0.124-3.111-0.124-4.799 0-23.919 9.010-45.733 23.82-62.235l-0.077 0.087c16.409-18.826 39.765-31.234 66.031-33.204l0.324-0.020h702.009zM816.924 415.289h207.076v-241.209h-207.076c-66.577 0.078-120.527 54.028-120.604 120.597v0.007c0 0.027 0 0.058 0 0.090 0 32.644 12.984 62.256 34.070 83.952l-0.028-0.028c21.706 22.464 52.103 36.411 85.756 36.411 0.251 0 0.502-0.001 0.753-0.002h-0.038zM955.733 347.023h-138.809c-0.118 0.001-0.258 0.002-0.399 0.002-14.545 0-27.681-6.033-37.042-15.733l-0.015-0.015c-9.093-9.437-14.74-22.25-14.882-36.381v-0.028c0.077-28.874 23.464-52.26 52.33-52.338h138.816zM0 772.551h68.267c-0.003-0.291-0.005-0.634-0.005-0.978 0-52.259 41.353-94.86 93.12-96.865l0.182-0.006h828.302v-29.582h34.133v-730.453h-903.396c-66.577 0.078-120.527 54.028-120.604 120.597v0.007zM955.733 606.436h-794.169c-35.171 0.271-67.563 11.952-93.712 31.517l0.414-0.297v-602.385c0.077-28.874 23.464-52.26 52.33-52.338h835.136z"/>
+                        </g>
+                      </svg>
+                    </div>
+                    <div class="text-sm">
+                      @if (asset.metal_item) {
+                        <span>{{ asset.metal_item.title }}</span>
+                      } @else {
+                        <span>موجودی نقدی</span>
+                      }
+                    </div>
+                  </div>
+                  <div>
+                    <div class="flex items-center gap-2"
+                         [class.text-teal-700]="asset.total_balance > 0"
+                         [class.text-rose-600]="asset.total_balance < 0">
+                      <span dir="ltr" class="text-xl">{{ asset.total_balance | number }}</span>
+                      @if (asset.metal_item && asset.metal_item?.unit == 'gram') {
+                        <span>گرم</span>
+                      } @else if (asset.metal_item && asset.metal_item?.unit == 'count') {
+                        <span>عدد</span>
+                      } @else {
+                        <span>تومان</span>
+                      }
+                    </div>
+                    @if (asset.metal_item && ! asset.metal_item.is_spot && asset.fiat_balance) {
+                      <div class="flex gap-1" [class]="asset.fiat_balance > 0 ? 'text-teal-700' : 'text-rose-600'">
+                        <div dir="ltr">{{ asset.fiat_balance | number }}</div>
+                        <div>تومان</div>
+                      </div>
+                    }
+                  </div>
+                </div>
+              }
+            </div>
+          </div>
+        }
+      } @else {
+        <div class="my-8">
+          <div class="flex justify-center mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="-32 -32 1088 1088" class="size-20 fill-gray-700"><g transform="translate(0, 960) scale(1, -1)"><path d="M423.040 760.748h23.27v-268.531h-23.27c-85.333 0-154.51-69.176-154.51-154.51s69.176-154.51 154.51-154.51c85.333 0 154.51 69.176 154.51 154.51v0 23.27h268.531v-23.27c0-233.639-189.402-423.040-423.040-423.040s-423.040 189.402-423.040 423.040c0 233.639 189.402 423.040 423.040 423.040v0zM399.771 537.36v176.151c-197.668-12.626-353.209-176.039-353.209-375.78 0-207.936 168.565-376.501 376.501-376.501 199.741 0 363.154 155.541 375.724 352.108l0.056 1.101h-176.104c-12.059-100.57-96.862-177.778-199.698-177.778-111.036 0-201.049 90.013-201.049 201.049 0 102.836 77.208 187.639 176.819 199.604l0.958 0.094zM1023.86 447.54h-313.208v23.27c-0.328 84.501-68.173 153.048-152.371 154.508l-0.137 0.002-22.944 0.279v312.929h23.27c257.19-1.583 465.105-210.299 465.391-467.644v-0.027zM755.842 494.079h220.782c-13.019 213.116-182.004 382.874-393.599 397.049l-1.286 0.069v-220.921c91.575-12.12 163.111-84.354 174.055-175.237l0.094-0.96zM689.058 38.74l-156.837 156.837 32.95 32.95 156.837-156.837z"/></g></svg>
+          </div>
+          <div>
+            <div class="text-center mb-2">شما هنوز کیف پول فعالی ندارید</div>
+            <div class="text-center text-sm text-gray-600">پس از انجام معاملات کیف پول شما فعال شده و در این بخش نمایش داده خواهد شد</div>
+          </div>
         </div>
-      </div>
+      }
     </div>
   } @else {
     <div>
