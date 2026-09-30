@@ -35,6 +35,7 @@ import {removeTrailingZeros} from '../../../../utils/remove-trailing-zeros.util'
 import {OrderStateService} from '../../../../services/order-state.service';
 import {Subscription} from 'rxjs';
 import {environment} from '../../../../../environments/environment';
+import {Holiday} from '../../../../interfaces/holiday';
 
 @Component({
   selector: 'app-exchange-modal',
@@ -61,6 +62,7 @@ export class ExchangeModalComponent implements OnInit, AfterViewInit, OnDestroy 
   baseOrderData = input<{ orderType: 'buy' | 'sell'; metal_item_id?: number } | undefined>(undefined);
   latestPrices = input<SelectedMetalPrice[]>([]);
   metalItems = input<any[]>([]);
+  holidays = input<Holiday[]>([]);
   marketStatus = input<'active' | 'inactive'>('inactive');
   user = input<User | undefined>(undefined);
   expirationTime = input<number>(0);
@@ -241,6 +243,94 @@ export class ExchangeModalComponent implements OnInit, AfterViewInit, OnDestroy 
 
     return items.find(i => i.id === data.metal_item_id);
   });
+
+  private holidayDatesSet = computed(() => {
+    return new Set(this.holidays().map(h => h.date));
+  });
+
+  settlementDate = computed<string | null>(() => {
+    const item = this.metalItem();
+    if (!item) return null;
+
+    const targetWorkingDays = item.settlement_working_days ?? 0;
+    const holidaysSet = this.holidayDatesSet();
+
+    // تاریخ مبنا (امروز بدون احتساب ساعت، دقیقه و ثانیه)
+    const current = new Date();
+    current.setHours(0, 0, 0, 0);
+
+    // تابع کمکی برای فرمت استاندارد YYYY-MM-DD بدون مشکلات Timezone
+    const formatDateKey = (d: Date): string => {
+      const year = d.getFullYear();
+      const month = String(d.getMonth() + 1).padStart(2, '0');
+      const day = String(d.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    };
+
+    // تابع بررسی تعطیل بودن (جمعه‌ها + لیست holidays)
+    // در جاوااسکریپت: یکشنبه=0، دوشنبه=1، ...، پنج‌شنبه=4، جمعه=5، شنبه=6
+    const isOffDay = (d: Date): boolean => {
+      const isFriday = d.getDay() === 5;
+      if (isFriday) return true;
+
+      const dateKey = formatDateKey(d);
+      return holidaysSet.has(dateKey);
+    };
+
+    // حالت خاص: اگر تسویه همان روز جاری (T+0 / نقدی امروز) باشد
+    if (targetWorkingDays === 0) {
+      // اگر خود امروز هم روز کاری بود همان تاریخ امروز، در غیر این صورت اولین روز کاری بعدی
+      while (isOffDay(current)) {
+        current.setDate(current.getDate() + 1);
+      }
+      return formatDateKey(current);
+    }
+
+    // پیمایش به ازای N روز کاری آینده (T+N)
+    let workingDaysCounted = 0;
+
+    while (workingDaysCounted < targetWorkingDays) {
+      // یک روز به جلو می‌رویم
+      current.setDate(current.getDate() + 1);
+
+      // اگر روز کاری بود (نه جمعه بود و نه در تعطیلات رسمی) شمارش می‌کنیم
+      if (!isOffDay(current)) {
+        workingDaysCounted++;
+      }
+    }
+
+    return formatDateKey(current);
+  });
+
+  settlementMessage = computed<string | null>(() => {
+    const dateStr = this.settlementDate();
+    if (!dateStr) return null;
+
+    // تاریخ امروز با فرمت YYYY-MM-DD
+    const now = new Date();
+    const yearNow = now.getFullYear();
+    const monthNow = String(now.getMonth() + 1).padStart(2, '0');
+    const dayNow = String(now.getDate()).padStart(2, '0');
+    const todayStr = `${yearNow}-${monthNow}-${dayNow}`;
+
+    // اگر تاریخ تسویه همان امروز باشد، هیچی نمایش نده
+    if (dateStr === todayStr) {
+      return null;
+    }
+
+    // فرمت‌دهی شمسی برای روزهای کاری آینده
+    const [year, month, day] = dateStr.split('-').map(Number);
+    const targetDate = new Date(year, month - 1, day);
+
+    const formatter = new Intl.DateTimeFormat('fa-IR-u-ca-persian', {
+      day: 'numeric',
+      month: 'long',
+      weekday: 'long',
+    });
+
+    return `تاریخ تسویه حساب ${formatter.format(targetDate)}`;
+  });
+
 
   config = computed(() => {
     return this.user()?.group.metal_item_configs.find((each: any) => each.metal_item_id === this.baseOrderData()?.metal_item_id);

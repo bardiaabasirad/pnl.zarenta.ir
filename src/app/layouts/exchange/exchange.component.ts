@@ -26,6 +26,7 @@ import { viewChild } from '@angular/core';
 import {DomSanitizer, SafeHtml, Title} from '@angular/platform-browser';
 import {RouterLinkHandlerDirective} from '../../directives/router-link-handler.directive';
 import {environment} from '../../../environments/environment';
+import {Holiday} from '../../interfaces/holiday';
 
 @Component({
   selector: 'app-exchange',
@@ -44,6 +45,7 @@ import {environment} from '../../../environments/environment';
 export class ExchangeComponent implements OnInit, OnDestroy {
   marketStatus = signal<'active' | 'inactive'>('inactive');
   metalItemGroups = signal<MetalItemGroup[]>([]);
+  holidays = signal<Holiday[]>([]);
   expirationTime = signal<number>(0);
   initialized = signal<boolean>(false);
   messages = signal<string>('');
@@ -425,6 +427,7 @@ export class ExchangeComponent implements OnInit, OnDestroy {
         const metal_item_groups = this.encryptionService.decrypt(response.metal_item_groups.data, response.metal_item_groups.iv);
         this.metalItemGroups.set(metal_item_groups);
         this.marketStatus.set(response.market_status);
+        this.holidays.set(response.holidays);
         this.expirationTime.set(response.expiration_time);
         this.messages.set(response.messages);
         this.initialized.set(true);

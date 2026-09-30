@@ -23,7 +23,9 @@
             </div>
           </div>
           <div>
-            <div class="flex items-center gap-2">
+            <div class="flex items-center gap-2"
+                 [class.text-teal-700]="asset.total_balance > 0"
+                 [class.text-rose-600]="asset.total_balance < 0">
               <span dir="ltr" class="text-xl">{{ asset.total_balance | number }}</span>
               @if (asset.metal_item && asset.metal_item?.unit == 'gram') {
                 <span>گرم</span>
@@ -33,6 +35,12 @@
                 <span>تومان</span>
               }
             </div>
+            @if (asset.fiat_balance) {
+              <div class="flex gap-1" [class]="asset.fiat_balance > 0 ? 'text-teal-700' : 'text-rose-600'">
+                <div dir="ltr">{{ asset.fiat_balance | number }}</div>
+                <div>تومان</div>
+              </div>
+            }
           </div>
         </div>
       }

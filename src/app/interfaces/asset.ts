@@ -7,6 +7,7 @@ export interface Asset {
   metal_item: MetalItem | null,
   available_balance: number,
   blocked_balance: number,
+  fiat_balance: number,
   total_balance: number,
   created_at: string,
   updated_at: string

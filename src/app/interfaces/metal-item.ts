@@ -9,6 +9,7 @@ export interface MetalItem {
   metal_item_group_id: boolean,
   price_change_threshold: number,
   buy_sell_spread: number,
+  settlement_working_days: number,
   group: MetalItemGroup,
   price_source_mapping: PriceSourceMapping,
   latest_price: SelectedMetalPrice,
