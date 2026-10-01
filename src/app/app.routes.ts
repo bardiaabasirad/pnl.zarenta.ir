@@ -23,6 +23,11 @@ export const routes: Routes = [
           import('./layouts/profile/profile.component').then(m => m.ProfileComponent),
       },
       {
+        path: 'contact-us',
+        loadComponent: () =>
+          import('./layouts/contact/contact.component').then(m => m.ContactComponent),
+      },
+      {
         path: 'inquiries',
         loadComponent: () =>
           import('./layouts/inquiries/inquiries/inquiries.component').then(m => m.InquiriesComponent),

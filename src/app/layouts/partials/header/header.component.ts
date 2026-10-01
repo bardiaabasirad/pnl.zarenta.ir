@@ -2,18 +2,15 @@ import {ChangeDetectionStrategy, Component, effect, output} from '@angular/core'
 import {toSignal} from '@angular/core/rxjs-interop';
 import {RouterLink} from '@angular/router';
 import {map, timer} from 'rxjs';
-
 import {Flowbite} from '../../../decorators/flowbite.decorator';
 import {JalaliPipe} from '../../../pipes/jalali.pipe';
-import {ContactComponent} from '../contact/contact.component';
 
 @Flowbite()
 @Component({
   selector: 'app-header',
   imports: [
     RouterLink,
-    JalaliPipe,
-    ContactComponent
+    JalaliPipe
   ],
   templateUrl: './header.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,

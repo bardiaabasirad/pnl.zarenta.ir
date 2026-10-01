@@ -6,7 +6,6 @@ import {from, Subscription} from 'rxjs';
 import {AuthService} from '../../../services/auth.service';
 import {EventService} from '../../../services/event.service';
 import {StorageKey, StorageService} from '../../../services/storage.service';
-import {ContactComponent} from '../contact/contact.component';
 import {filter} from 'rxjs/operators';
 import {OrderStateService} from '../../../services/order-state.service';
 
@@ -15,8 +14,7 @@ import {OrderStateService} from '../../../services/order-state.service';
   standalone: true,
   imports: [
     CommonModule,
-    RouterLink,
-    ContactComponent
+    RouterLink
   ],
   templateUrl: './sidebar.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
