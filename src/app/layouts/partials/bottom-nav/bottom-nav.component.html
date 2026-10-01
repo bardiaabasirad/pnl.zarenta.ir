@@ -48,6 +48,22 @@
         >معامله</span>
       </a>
 
+      <a routerLink="/transactions" class="cursor-pointer p-2.5 group flex flex-1 flex-col items-center justify-center active:text-gray-800">
+        <div class="mb-1.5 inline-flex flex-col items-center justify-center rounded-s-full px-2.5">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="-32 -32 1088 1088"
+               class="size-5 group-active:fill-amber-400"
+               [class]="activeIndex === 4 ? 'fill-amber-400' : 'fill-gray-400'"
+          >
+            <g transform="translate(0, 960) scale(1, -1)">
+              <path d="M979.596 126.962h-932.483v66.606h932.483zM245.598-85.289l-245.598 245.554 245.554 245.554 47.113-47.068-198.441-198.486 198.486-198.486zM935.192 659.81h-932.483v66.606h932.483zM736.706 447.559l-47.068 47.068 198.441 198.486-198.441 198.486 47.068 47.068 245.598-245.554z"></path>
+            </g>
+          </svg>
+        </div>
+        <span class="text-xs group-active:text-amber-400"
+              [class]="activeIndex === 4 ? 'text-amber-400' : 'text-gray-400'"
+        >تراکنش‌ها</span>
+      </a>
+
       <a routerLink="/orders" class="cursor-pointer p-2.5 group flex flex-1 flex-col items-center justify-center active:text-gray-800">
         <div class="mb-1.5 relative inline-flex flex-col items-center justify-center rounded-s-full px-2.5">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="-32 -32 1088 1088"

@@ -1,4 +1,4 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, inject, OnInit, signal} from '@angular/core';
 import {NavigationEnd, Router, RouterLink} from "@angular/router";
 import {SiteInfo} from '../../../interfaces/site-info';
 import {OrderStateService} from '../../../services/order-state.service';
@@ -15,7 +15,7 @@ import {from} from 'rxjs';
 export class BottomNavComponent implements OnInit {
   siteInfo: SiteInfo | undefined
   private router = inject(Router);
-  currentUrl = '';
+  currentUrl = signal<string>('');
 
   private orderState = inject(OrderStateService);
   readonly hasUnseenUpdate = this.orderState.hasUnseenUpdate;
@@ -25,12 +25,12 @@ export class BottomNavComponent implements OnInit {
   ngOnInit() {
     this.getSettings();
 
-    this.currentUrl = this.router.url;
+    this.currentUrl.set(this.router.url);
 
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe((event: NavigationEnd) => {
-      this.currentUrl = event.urlAfterRedirects;
+      this.currentUrl.set(event.urlAfterRedirects);
     });
   }
 
@@ -48,7 +48,7 @@ export class BottomNavComponent implements OnInit {
   }
 
   get activeIndex(): number {
-    switch (this.currentUrl) {
+    switch (this.currentUrl()) {
       case '/settings':
       case '/profile':
       case '/inquiries':
@@ -59,6 +59,8 @@ export class BottomNavComponent implements OnInit {
         return 2;
       case '/assets':
         return 3;
+      case '/transactions':
+        return 4;
       default:
         return -1; // هیچ آیتمی فعال نیست
     }

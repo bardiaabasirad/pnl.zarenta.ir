@@ -9,6 +9,7 @@ export interface MetalItem {
   is_spot: boolean,
   metal_item_group_id: boolean,
   price_change_threshold: number,
+  settlement_metal_item_id: number | null;
   buy_sell_spread: number,
   settlement_working_days: number,
   group: MetalItemGroup,
