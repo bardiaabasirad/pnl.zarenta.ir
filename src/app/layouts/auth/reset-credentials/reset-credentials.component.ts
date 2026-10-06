@@ -9,6 +9,7 @@ import {EncryptionService} from '../../../services/encryption.service';
 import {Router} from '@angular/router';
 import {ValidationService} from '../../../services/validation.service';
 import {AuthFlowService} from '../../../services/auth-flow.service';
+import {CerificateSectionComponent} from '../partials/cerificate-section/cerificate-section.component';
 
 @Component({
   selector: 'app-reset-credentials',
@@ -16,7 +17,8 @@ import {AuthFlowService} from '../../../services/auth-flow.service';
     ButtonWithLoaderComponent,
     ErrorDisplayComponent,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CerificateSectionComponent
   ],
   templateUrl: './reset-credentials.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,

@@ -8,6 +8,7 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {ValidationService} from '../../../services/validation.service';
 import {AuthFlowService} from '../../../services/auth-flow.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {CerificateSectionComponent} from '../partials/cerificate-section/cerificate-section.component';
 
 @Component({
   selector: 'app-password-step',
@@ -15,7 +16,8 @@ import {MatSnackBar} from '@angular/material/snack-bar';
     ButtonWithLoaderComponent,
     ErrorDisplayComponent,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CerificateSectionComponent
   ],
   templateUrl: './password-step.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,

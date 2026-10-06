@@ -9,6 +9,7 @@ import {convertToEnglishNumbersUtil} from '../../../utils/convert-to-english-num
 import {ButtonWithLoaderComponent} from '../../../components/button-with-loader/button-with-loader.component';
 import {ErrorDisplayComponent} from '../../../components/error-display/error-display.component';
 import {NgClass} from '@angular/common';
+import {CerificateSectionComponent} from '../partials/cerificate-section/cerificate-section.component';
 
 @Component({
   selector: 'app-complete-profile',
@@ -16,7 +17,8 @@ import {NgClass} from '@angular/common';
     ButtonWithLoaderComponent,
     ErrorDisplayComponent,
     ReactiveFormsModule,
-    NgClass
+    NgClass,
+    CerificateSectionComponent
   ],
   templateUrl: './complete-profile.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,

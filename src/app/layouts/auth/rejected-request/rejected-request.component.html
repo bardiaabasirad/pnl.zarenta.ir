@@ -1,40 +1,27 @@
-<div class="p-6 border-r border-l border-b border-gray-700 rounded-lg w-full max-w-96 relative pt-24">
-
-  <div class="absolute inset-0 bg-gray-900/70 rounded-lg -z-10"></div>
-  <div
-    class="absolute bottom-0 w-1/2 h-0.5 shadow rounded-t-lg bg-linear-to-r from-transparent via-yellow-200 to-transparent right-1/2 translate-x-1/2"></div>
-
-  <div class="absolute right-0 top-0 w-24 border-t rounded-r-lg h-full border-gray-700 -z-10"></div>
-  <div class="absolute left-0 top-0 w-30 border-t rounded-l-lg h-full border-gray-700 -z-10"></div>
-
-  <div class="space-y-8 text-center">
-    <div class="space-y-2.5">
-      <div class="flex items-center gap-2.5">
-        <div class="bg-red-500/70 flex justify-center items-center size-6 rounded">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-               class="size-5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"/>
-          </svg>
-        </div>
-        <div class="font-semibold">درخواست شما رد شده است</div>
+<div class="space-y-8 text-center">
+  <div class="space-y-2.5">
+    <div class="flex items-center gap-2.5">
+      <div class="bg-red-500/70 flex justify-center items-center size-6 rounded">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+             class="size-5 text-white">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"/>
+        </svg>
       </div>
-      <div class="text-gray-300">متأسفانه درخواست ثبت‌نام شما مورد پذیرش قرار نگرفته و دسترسی به پنل کاربری برای شما
-        مسدود است. چنانچه فکر می‌کنید این تصمیم نیاز به بررسی مجدد دارد، می‌توانید از طریق دکمه زیر درخواست بازبینی
-        ارسال کنید.
-      </div>
-      <div>
-        <app-button-with-loader type="submit" class="relative block"
-                                classes="bg-linear-to-r from-yellow-500 via-yellow-200 to-yellow-500 shadow rounded w-full py-2.5"
-                                loading_bg="bg-linear-to-r from-yellow-500 via-yellow-200 to-yellow-500 shadow"
-                                [loading]="isSubmitting"
-                                [disabled]="isSubmitting"
-                                (clicked)="onRequestReview()">
-          <div class="flex items-center justify-center gap-2.5">
-            <span class="text-base font-bold text-gray-700 ml-2.5">درخواست بررسی مجدد</span>
-          </div>
-        </app-button-with-loader>
-      </div>
+      <div class="font-semibold">درخواست شما رد شده است</div>
+    </div>
+    <div class="text-gray-600">متأسفانه درخواست ثبت‌نام شما مورد پذیرش قرار نگرفته و دسترسی به پنل کاربری برای شما
+      مسدود است. چنانچه فکر می‌کنید این تصمیم نیاز به بررسی مجدد دارد، می‌توانید از طریق دکمه زیر درخواست بازبینی
+      ارسال کنید.
+    </div>
+    <div>
+      <app-button-with-loader type="submit" class="relative block"
+                              classes="bg-linear-to-r from-rose-500 via-rose-600 to-rose-500 shadow rounded w-full py-2.5 border border-rose-500 focus:border-rose-700 focus:outline-none"
+                              loading_bg="bg-linear-to-r from-rose-400 via-rose-500 to-rose-400 shadow rounded w-full py-2.5 border border-rose-400 focus:border-rose-600 focus:outline-none"
+                              [loading]="isSubmitting"
+                              [disabled]="isSubmitting"
+                              (clicked)="onRequestReview()">
+        <span class="text-base font-bold text-white">درخواست بررسی مجدد</span>
+      </app-button-with-loader>
     </div>
   </div>
-
 </div>

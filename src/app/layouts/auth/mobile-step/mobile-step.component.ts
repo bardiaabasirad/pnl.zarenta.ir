@@ -10,6 +10,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 import {ValidationService} from '../../../services/validation.service';
 import {ErrorDisplayComponent} from '../../../components/error-display/error-display.component';
 import {maskCompleteValidator} from '../../../validators/mask-complete-validator';
+import {CerificateSectionComponent} from '../partials/cerificate-section/cerificate-section.component';
 
 @Component({
   selector: 'app-mobile-step',
@@ -17,7 +18,8 @@ import {maskCompleteValidator} from '../../../validators/mask-complete-validator
     ButtonWithLoaderComponent,
     NgxMaskDirective,
     ReactiveFormsModule,
-    ErrorDisplayComponent
+    ErrorDisplayComponent,
+    CerificateSectionComponent
   ],
   templateUrl: './mobile-step.component.html',
   styleUrl: './mobile-step.component.scss',

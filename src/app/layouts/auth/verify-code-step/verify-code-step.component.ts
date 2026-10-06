@@ -17,6 +17,7 @@ import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} fr
 import {convertToEnglishNumbersUtil} from '../../../utils/convert-to-english-numbers.util';
 import {AuthService} from '../../../services/auth.service';
 import {ErrorDisplayComponent} from '../../../components/error-display/error-display.component';
+import {CerificateSectionComponent} from '../partials/cerificate-section/cerificate-section.component';
 
 @Component({
   selector: 'app-verify-code-step',
@@ -24,7 +25,8 @@ import {ErrorDisplayComponent} from '../../../components/error-display/error-dis
     ButtonWithLoaderComponent,
     NgxMaskDirective,
     ReactiveFormsModule,
-    ErrorDisplayComponent
+    ErrorDisplayComponent,
+    CerificateSectionComponent
   ],
   templateUrl: './verify-code-step.component.html',
   styleUrl: './verify-code-step.component.scss',

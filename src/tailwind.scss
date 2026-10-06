@@ -26,6 +26,16 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+@layer base {
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0px 1000px theme('colors.white') inset !important;
+    -webkit-text-fill-color: theme('colors.gray.900') !important;
+    transition: background-color 5000s ease-in-out 0s;
+  }
+}
+
 @theme {
   /* رنگ‌ها — در v4 یک namespace واحد همه‌ی bg-/text-/border- را تولید می‌کند */
   --color-gold-500: #ECBD00;
