@@ -68,6 +68,8 @@
       </div>
       <input type="text"
              formControlName="verification_code"
+             inputmode="numeric"
+             autocomplete="one-time-code"
              mask="000000"
              [inputTransformFn]="p2e"
              name="verification_code"
