@@ -87,4 +87,55 @@
   --shadow-all-xl:  0 0 25px -5px rgba(0,0,0,.1), 0 0 10px -5px rgba(0,0,0,.04);
   --shadow-all-2xl: 0 0 50px -12px rgba(0,0,0,.25);
   --shadow-all-3xl: 0 0 60px -15px rgba(0,0,0,.3);
+
+  --color-primary: var(--color-yellow-400);
+  --color-primary-50: var(--color-yellow-50);
+  --color-primary-100: var(--color-yellow-100);
+  --color-primary-200: var(--color-yellow-200);
+  --color-primary-300: var(--color-yellow-300);
+  --color-primary-400: var(--color-yellow-400);
+  --color-primary-500: var(--color-yellow-500);
+  --color-primary-600: var(--color-yellow-600);
+  --color-primary-700: var(--color-yellow-700);
+  --color-primary-800: var(--color-yellow-800);
+  --color-primary-900: var(--color-yellow-900);
+  --color-primary-950: var(--color-yellow-950);
+
+  --color-accent: var(--color-teal-400);
+  --color-accent-50: var(--color-teal-50);
+  --color-accent-100: var(--color-teal-100);
+  --color-accent-200: var(--color-teal-200);
+  --color-accent-300: var(--color-teal-300);
+  --color-accent-400: var(--color-teal-400);
+  --color-accent-500: var(--color-teal-500);
+  --color-accent-600: var(--color-teal-600);
+  --color-accent-700: var(--color-teal-700);
+  --color-accent-800: var(--color-teal-800);
+  --color-accent-900: var(--color-teal-900);
+  --color-accent-950: var(--color-teal-950);
+
+  --color-danger: var(--color-rose-600);
+  --color-danger-50: var(--color-rose-50);
+  --color-danger-100: var(--color-rose-100);
+  --color-danger-200: var(--color-rose-200);
+  --color-danger-300: var(--color-rose-300);
+  --color-danger-400: var(--color-rose-400);
+  --color-danger-500: var(--color-rose-500);
+  --color-danger-600: var(--color-rose-600);
+  --color-danger-700: var(--color-rose-700);
+  --color-danger-800: var(--color-rose-800);
+  --color-danger-900: var(--color-rose-900);
+  --color-danger-950: var(--color-rose-950);
+
+  --animate-button-loader: button-loader 0.96s ease-in-out infinite both;
+
+  @keyframes button-loader {
+    0%,
+    100% {
+      transform: scale(0.6);
+    }
+    50% {
+      transform: scale(0.9);
+    }
+  }
 }

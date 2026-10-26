@@ -33,7 +33,7 @@
         </svg>
 
         @if (url === '/') {
-          <div class="w-1 rounded-l bg-rose-500 h-10 absolute right-0 top-0.5"></div>
+          <div class="w-1 rounded-l bg-primary h-10 absolute right-0 top-0.5"></div>
         }
       </a>
       <a routerLink="/assets"
@@ -48,7 +48,7 @@
         </svg>
 
         @if (url === '/assets') {
-          <div class="w-1 rounded-l bg-rose-500 h-10 absolute right-0 top-0.5"></div>
+          <div class="w-1 rounded-l bg-primary h-10 absolute right-0 top-0.5"></div>
         }
       </a>
       <a routerLink="/orders" class="relative flex items-center justify-between rounded pr-4 pl-6 py-2.5">
@@ -65,7 +65,7 @@
         </svg>
 
         @if (url === '/orders') {
-          <div class="w-1 rounded-l bg-rose-500 h-10 absolute right-0 top-0.5"></div>
+          <div class="w-1 rounded-l bg-primary h-10 absolute right-0 top-0.5"></div>
         }
       </a>
       <a routerLink="/transactions"
@@ -80,7 +80,7 @@
         </svg>
 
         @if (url === '/transactions') {
-          <div class="w-1 rounded-l bg-rose-500 h-10 absolute right-0 top-0.5"></div>
+          <div class="w-1 rounded-l bg-primary h-10 absolute right-0 top-0.5"></div>
         }
       </a>
       <a routerLink="/profile" class="relative flex items-center justify-between rounded pr-4 pl-6 py-2.5">
@@ -93,7 +93,7 @@
         </svg>
 
         @if (url === '/profile' || url === '/inquiries' || url === '/settings') {
-          <div class="w-1 rounded-l bg-rose-500 h-10 absolute right-0 top-0.5"></div>
+          <div class="w-1 rounded-l bg-primary h-10 absolute right-0 top-0.5"></div>
         }
       </a>
       <a routerLink="/contact-us" class="relative flex items-center justify-between rounded pr-4 pl-6 py-2.5">
@@ -106,13 +106,15 @@
         </svg>
 
         @if (url === 'contact-us') {
-          <div class="w-1 rounded-l bg-rose-500 h-10 absolute right-0 top-0.5"></div>
+          <div class="w-1 rounded-l bg-primary h-10 absolute right-0 top-0.5"></div>
         }
       </a>
 
       <div class="px-4 py-2.5">
         <button (click)="logout()" class="cursor-pointer flex items-center">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="-32 -32 1088 1088" class="size-5 fill-red-500"><g transform="translate(0, 960) scale(1, -1)"><path d="M544.681-85.333h-522.894v907.22l522.894 104.579zM108.936 1.816h348.596v818.329l-348.596-69.719zM457.532 829.731h261.447v-915.064h-261.447zM631.83 742.582h-87.149v-740.766h87.149zM880.509 234.634l-61.614 61.614 99.001 99.001-98.958 98.609 61.527 61.745 160.964-160.267zM980.426 350.412h-305.021v87.149h305.021z"/></g></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5 text-rose-500">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9" />
+          </svg>
           <span class="text-base font-medium text-rose-500 mr-2.5">خروج</span>
           @if (loggingOut) {
             <div role="status" class="mr-2">

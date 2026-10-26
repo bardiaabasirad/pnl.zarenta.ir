@@ -19,7 +19,7 @@
              id="full_name"
              placeholder="نام و نام خانوادگی خود را وارد کنید"
              (keydown.enter)="submit()"
-             class="text-right block w-full rounded border border-gray-200 bg-transparent text-sm text-gray-700 p-2.5 focus:border-gray-300"/>
+             class="text-right block w-full rounded-base border border-gray-200 bg-transparent text-sm text-gray-700 p-2.5 focus:border-gray-300"/>
     </div>
     <app-error-display [control]="form.get('full_name')" [style]="'text-xs font-medium text-red-500 text-justify'"></app-error-display>
   </div>
@@ -37,13 +37,13 @@
       <div class="space-y-4">
         @for (businessType of businessTypes; track businessType.value) {
           <div
-            class="flex gap-4 px-4 items-center p-0 border rounded text-center cursor-pointer"
+            class="flex gap-4 px-4 items-center p-0 border rounded-base text-center cursor-pointer"
             role="radio"
             tabindex="0"
             [attr.aria-checked]="form.get('business_type')?.value === businessType.value"
             [ngClass]="
                 form.get('business_type')?.value === businessType.value
-                  ? 'shadow-[0_0_6px_rgba(244,63,94,0.5)] border-rose-500'
+                  ? 'shadow-[0_0_6px_rgba(244,63,94,0.5)] border-primary'
                   : 'border-gray-400'
               "
             (click)="selectBusinessType(businessType.value)"
@@ -67,8 +67,8 @@
 
   <div class="mb-4">
     <app-button-with-loader type="submit" class="relative block"
-                            classes="bg-linear-to-r from-rose-500 via-rose-600 to-rose-500 shadow rounded w-full py-2.5 border border-rose-500 focus:border-rose-700 focus:outline-none"
-                            loading_bg="bg-linear-to-r from-rose-400 via-rose-500 to-rose-400 shadow rounded w-full py-2.5 border border-rose-400 focus:border-rose-600 focus:outline-none"
+                            classes="bg-primary rounded-base w-full py-2"
+                            loading_bg="bg-primary/70 rounded-base w-full py-2"
                             [loading]="submitting"
                             [disabled]="submitting"
                             (clicked)="submit()">
