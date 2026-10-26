@@ -1,45 +1,21 @@
 @let product_status = productStatus();
 @let market_status = marketStatus();
-@let price = calculatedPrice();
+@let price = finalDisplayPrice();
 @let order_type = orderType();
 @let metal_item_config = config();
 
-@if (market_status == 'active' && product_status && price && metal_item_config) {
+@if (market_status == 'active' && product_status && price !== undefined && metal_item_config) {
   <button (click)="openModal()"
        [class]="order_type == 'buy' ? 'bg-emerald-500 text-white' : 'bg-rose-500 text-white'"
        class="cursor-pointer w-full select-none rounded-full px-1 text-center text-sm font-medium py-2.5 lg:text-base">
-    @if (metal_item_config.display_mode == 'quotation') {
-      @if (order_type == 'buy') {
-        {{ price | ceil | number }}
-      } @else {
-        {{ price | floor | number }}
-      }
-    } @else {
-      @if (order_type == 'buy') {
-        {{ price / AppConstants.MARKET_SPECIFIC_CONVERSION_FACTOR | ceil | number }}
-      } @else {
-        {{ price / AppConstants.MARKET_SPECIFIC_CONVERSION_FACTOR | floor | number }}
-      }
-    }
+    {{ price | number }}
     <span class="text-[8px] lg:text-xs">تومان</span>
   </button>
-} @else if (market_status == 'inactive' && product_status && price) {
+} @else if (market_status == 'inactive' && product_status && price !== undefined) {
   <button
     [class]="order_type == 'buy' ? 'bg-emerald-200 text-white' : 'bg-rose-200 text-white'"
     class="cursor-pointer w-full select-none rounded-full px-1 text-center text-sm font-medium py-2.5 lg:text-base">
-    @if (metal_item_config.display_mode == 'quotation') {
-      @if (order_type == 'buy') {
-        {{ price | ceil | number }}
-      } @else {
-        {{ price | floor | number }}
-      }
-    } @else {
-      @if (order_type == 'buy') {
-        {{ price / AppConstants.MARKET_SPECIFIC_CONVERSION_FACTOR | ceil | number }}
-      } @else {
-        {{ price / AppConstants.MARKET_SPECIFIC_CONVERSION_FACTOR | floor | number }}
-      }
-    }
+    {{ price | number }}
     <span class="text-[8px] lg:text-xs">تومان</span>
   </button>
 } @else {

@@ -1,5 +1,16 @@
 export class AppConstants {
+  /** @deprecated از UNIT_MULTIPLIER_TO_GRAM استفاده کنید */
   static readonly MARKET_SPECIFIC_CONVERSION_FACTOR = 4.331802;
+
+  static readonly UNIT_MULTIPLIER_TO_GRAM: Record<string, number> = {
+    gram: 1,
+    mazane: 4.331802,
+    ounce: 31.103477,
+    kilogram: 1000,
+    ton: 1000000,
+    count: 0,
+  };
+
   static readonly DAY_AFTER_TOMORROW_ALIAS = 'نقد بعد تعطیلات';
   static readonly TOMORROW_SPOT_SETTLEMENT = 'tomorrow_spot_settlement';
   static readonly TODAY_SPOT_SETTLEMENT = 'today_spot_settlement';

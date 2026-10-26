@@ -106,19 +106,21 @@
                       <div class="w-20 lg:w-40 font-medium text-xs lg:text-base line-clamp-2">{{ metalItem.title }}</div>
                       <div class="flex-1 flex gap-1.5 lg:gap-4 items-center">
                         <app-exchange-btn class="w-full"
-                                          [rate]="metalItem.latest_price.sell"
+                                          [rate]="metalItem.latest_price?.sell"
                                           [marketStatus]="market_status"
                                           [config]="config"
                                           [productStatus]="metalItem.is_buy_active"
                                           [metalItem]="metalItem.id"
+                                          [pricingUnitId]="metalItem.pricing_unit_id || metalItem.pricing_unit_basis || 'mazane'"
                                           orderType="buy"
                                           (modalOpened)="onModalOpened($event)"></app-exchange-btn>
                         <app-exchange-btn class="w-full"
-                                          [rate]="metalItem.latest_price.buy"
+                                          [rate]="metalItem.latest_price?.buy"
                                           [marketStatus]="market_status"
                                           [config]="config"
                                           [productStatus]="metalItem.is_sell_active"
                                           [metalItem]="metalItem.id"
+                                          [pricingUnitId]="metalItem.pricing_unit_id || metalItem.pricing_unit_basis || 'mazane'"
                                           orderType="sell"
                                           (modalOpened)="onModalOpened($event)"></app-exchange-btn>
                       </div>

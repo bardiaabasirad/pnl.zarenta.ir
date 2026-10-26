@@ -10,6 +10,7 @@ export const environment = {
   encryptionKey: '3EafTBWHaB35CFec7vE5UeeD6suHOsZD',
   reverb: {
     wsHost: 'localhost',
+    key: '74b8c00e38c67ca39cdbcbe54ecc5c5c',
     wsPort: 8080,
     forceTLS: false,
   },

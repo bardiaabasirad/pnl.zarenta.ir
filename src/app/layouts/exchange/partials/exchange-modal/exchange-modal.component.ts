@@ -28,14 +28,19 @@ import {WebSocketConnectionStatus, WebSocketService} from '../../../../services/
 import {NotificationService} from '../../../../services/notification.service';
 import {SelectedMetalPrice} from '../../../../interfaces/selected-metal-price';
 import {ButtonWithLoaderComponent} from '../../../../components/button-with-loader/button-with-loader.component';
-import {CeilPipe} from '../../../../pipes/ceil.pipe';
-import {FloorPipe} from '../../../../pipes/floor.pipe';
-import {AppConstants} from '../../../../constants/app-constants';
 import {removeTrailingZeros} from '../../../../utils/remove-trailing-zeros.util';
 import {OrderStateService} from '../../../../services/order-state.service';
 import {Subscription} from 'rxjs';
 import {environment} from '../../../../../environments/environment';
 import {Holiday} from '../../../../interfaces/holiday';
+import {MetalItem} from '../../../../interfaces/metal-item';
+import {
+  convertMetalPrice,
+  isMazaneTarget,
+  resolvePricingUnitId,
+  resolveTargetUnitId,
+  unitLabel
+} from '../../../../utils/metal-price.util';
 
 @Component({
   selector: 'app-exchange-modal',
@@ -44,8 +49,6 @@ import {Holiday} from '../../../../interfaces/holiday';
     CommonModule,
     FormsModule,
     ButtonWithLoaderComponent,
-    CeilPipe,
-    FloorPipe,
     NgxMaskDirective,
     ProgressBarComponent
   ],
@@ -61,7 +64,7 @@ export class ExchangeModalComponent implements OnInit, AfterViewInit, OnDestroy 
   // inputs
   baseOrderData = input<{ orderType: 'buy' | 'sell'; metal_item_id?: number } | undefined>(undefined);
   latestPrices = input<SelectedMetalPrice[]>([]);
-  metalItems = input<any[]>([]);
+  metalItems = input<MetalItem[]>([]);
   holidays = input<Holiday[]>([]);
   marketStatus = input<'active' | 'inactive'>('inactive');
   user = input<User | undefined>(undefined);
@@ -107,7 +110,7 @@ export class ExchangeModalComponent implements OnInit, AfterViewInit, OnDestroy 
   constructor() {
     effect(() => {
       const market_status = this.marketStatus();
-      let product_status: number = 0;
+      let product_status: boolean = false;
       const metal_item = this.metalItem();
       const base_order_data = this.baseOrderData();
       const order = this.metalOrder();
@@ -340,6 +343,7 @@ export class ExchangeModalComponent implements OnInit, AfterViewInit, OnDestroy 
     return this.latestPrices().find(each => each.metal_item_id === this.baseOrderData()?.metal_item_id);
   })
 
+  /** نرخ خام + مارجین در واحد قیمت‌گذاری (pricing_unit_id) */
   calculatedPrice = computed(() => {
     const price = this.latestPrice();
     const config = this.config();
@@ -370,6 +374,40 @@ export class ExchangeModalComponent implements OnInit, AfterViewInit, OnDestroy 
 
     return calculatedPrice;
   });
+
+  /** نرخ نمایشی در واحد هدف گروه */
+  displayPrice = computed(() => {
+    const price = this.calculatedPrice();
+    if (price === undefined) return undefined;
+
+    const metalItem = this.metalItem();
+    const config = this.config();
+    const sourceUnit = resolvePricingUnitId(metalItem);
+    const targetUnit = resolveTargetUnitId(config);
+    const converted = convertMetalPrice(price, sourceUnit, targetUnit);
+    const isBuy = this.baseOrderData()?.orderType === 'buy';
+
+    if (targetUnit === 'gram' || metalItem?.unit === 'count') {
+      return isBuy
+        ? Math.ceil(converted / 1000) * 1000
+        : Math.floor(converted / 1000) * 1000;
+    }
+
+    return Math.round(converted);
+  });
+
+  private pricePerPhysicalUnit(rawPrice: number): number {
+    const metalItem = this.metalItem();
+    if (metalItem?.unit === 'count') {
+      return rawPrice;
+    }
+
+    return convertMetalPrice(rawPrice, resolvePricingUnitId(metalItem), 'gram');
+  }
+
+  protected readonly isMazaneTarget = isMazaneTarget;
+  protected readonly resolveTargetUnitId = resolveTargetUnitId;
+  protected readonly unitLabel = unitLabel;
 
   // Add polling fallback method
   private pollingInterval: any;
@@ -415,14 +453,15 @@ export class ExchangeModalComponent implements OnInit, AfterViewInit, OnDestroy 
 
         this.settingByMetal = true;
 
-        if (this.metalItem().unit == 'count') {
+        if (this.metalItem()?.unit == 'count') {
           price = this.baseOrderData()?.orderType == 'buy' ?
             Math.ceil(calculated_price! * Number(this.amountOfMetal) * 1000) / 1000 :
             Math.floor(calculated_price! * Number(this.amountOfMetal) * 1000) / 1000;
         } else {
+          const perUnit = this.pricePerPhysicalUnit(calculated_price!);
           price = this.baseOrderData()?.orderType == 'buy' ?
-            Number((Math.ceil(calculated_price! / AppConstants.MARKET_SPECIFIC_CONVERSION_FACTOR / 1000) * 1000 * Number(this.amountOfMetal)).toFixed(0)) :
-            Number((Math.floor(calculated_price! / AppConstants.MARKET_SPECIFIC_CONVERSION_FACTOR / 1000) * 1000 * Number(this.amountOfMetal)).toFixed(0));
+            Number((Math.ceil(perUnit / 1000) * 1000 * Number(this.amountOfMetal)).toFixed(0)) :
+            Number((Math.floor(perUnit / 1000) * 1000 * Number(this.amountOfMetal)).toFixed(0));
         }
 
         if (price) {
@@ -447,9 +486,10 @@ export class ExchangeModalComponent implements OnInit, AfterViewInit, OnDestroy 
         ** Therefore, any product with manually entered purchase or sale prices
         ** must use a non-count unit.
         */
+        const perUnit = this.pricePerPhysicalUnit(calculated_price!);
         const oneGram = this.baseOrderData()?.orderType == 'buy' ?
-          Math.ceil(calculated_price! / AppConstants.MARKET_SPECIFIC_CONVERSION_FACTOR * 1000) / 1000 :
-          Math.floor(calculated_price! / AppConstants.MARKET_SPECIFIC_CONVERSION_FACTOR * 1000) / 1000;
+          Math.ceil(perUnit * 1000) / 1000 :
+          Math.floor(perUnit * 1000) / 1000;
 
         let amount = this._amountOfCash! / oneGram;
 
@@ -544,34 +584,26 @@ export class ExchangeModalComponent implements OnInit, AfterViewInit, OnDestroy 
 
     this.frozenItem = 'metal';
 
-    if (this.metalItem().unit == 'gram') {
+    if (this.metalItem()?.unit == 'gram') {
+      const perUnit = this.pricePerPhysicalUnit(calculatedPrice!);
+      const targetUnit = resolveTargetUnitId(this.config());
+
       if (this.baseOrderData()?.orderType == 'buy') {
-
-        if (this.config().display_mode == 'quotation') {
-          this._amountOfCash = Number(
-            (calculatedPrice! / AppConstants.MARKET_SPECIFIC_CONVERSION_FACTOR * Number(_amountOfMetal))
-              .toFixed(0)
-          );
+        if (targetUnit === 'mazane') {
+          this._amountOfCash = Number((perUnit * Number(_amountOfMetal)).toFixed(0));
         } else {
-          console.log('gram', 'no quotation');
-
           this._amountOfCash = Number(
-            (Math.ceil(calculatedPrice! / AppConstants.MARKET_SPECIFIC_CONVERSION_FACTOR / 1000) * 1000 * Number(_amountOfMetal)).toFixed(0)
+            (Math.ceil(perUnit / 1000) * 1000 * Number(_amountOfMetal)).toFixed(0)
           );
         }
-
       } else {
-
-        if (this.config().display_mode == 'quotation') {
-          this._amountOfCash = Number(
-            (calculatedPrice! / AppConstants.MARKET_SPECIFIC_CONVERSION_FACTOR * Number(_amountOfMetal)).toFixed(0)
-          );
+        if (targetUnit === 'mazane') {
+          this._amountOfCash = Number((perUnit * Number(_amountOfMetal)).toFixed(0));
         } else {
           this._amountOfCash = Number(
-            (Math.floor(calculatedPrice! / AppConstants.MARKET_SPECIFIC_CONVERSION_FACTOR / 1000) * 1000 * Number(_amountOfMetal)).toFixed(0)
+            (Math.floor(perUnit / 1000) * 1000 * Number(_amountOfMetal)).toFixed(0)
           );
         }
-
       }
     } else {
       this._amountOfCash = Number(
@@ -603,17 +635,18 @@ export class ExchangeModalComponent implements OnInit, AfterViewInit, OnDestroy 
 
     let price: number;
 
-    if (this.config()?.display_mode == 'quotation' && this.metalItem().unit == 'count') {
+    if (this.metalItem()?.unit == 'count') {
       if (this.baseOrderData()?.orderType == 'buy') {
         price = Math.ceil(calculatedPrice! / 1000) * 1000;
       } else {
         price = Math.floor(calculatedPrice! / 1000) * 1000;
       }
     } else {
+      const perUnit = this.pricePerPhysicalUnit(calculatedPrice!);
       if (this.baseOrderData()?.orderType == 'buy') {
-        price = Math.ceil(calculatedPrice! / AppConstants.MARKET_SPECIFIC_CONVERSION_FACTOR);
+        price = Math.ceil(perUnit);
       } else {
-        price = Math.floor(calculatedPrice! / AppConstants.MARKET_SPECIFIC_CONVERSION_FACTOR);
+        price = Math.floor(perUnit);
       }
     }
 
@@ -628,7 +661,7 @@ export class ExchangeModalComponent implements OnInit, AfterViewInit, OnDestroy 
   }
 
   get mask(): string {
-    if (this.metalItem().unit == 'gram') {
+    if (this.metalItem()?.unit == 'gram') {
       return 'separator.3';
     } else {
       return 'separator.0';
@@ -645,7 +678,7 @@ export class ExchangeModalComponent implements OnInit, AfterViewInit, OnDestroy 
       const _amountOfMetal = this.normalizeNumericInput(this.amountOfMetal);
 
       const data = {
-        'metal_item_id': this.metalItem().id,
+        'metal_item_id': this.metalItem()?.id,
         'selected_metal_price_id': String(this.latestPrice()?.id),
         'quantity': String(_amountOfMetal),
         'amount': Math.floor(this.amountOfCash!).toString(),
@@ -767,6 +800,5 @@ export class ExchangeModalComponent implements OnInit, AfterViewInit, OnDestroy 
 
   public p2e = (value: unknown): string => convertToEnglishNumbersUtil(String(value));
   protected readonly Math = Math;
-  protected readonly AppConstants = AppConstants;
   protected readonly environment = environment;
 }

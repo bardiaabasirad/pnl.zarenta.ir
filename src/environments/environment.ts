@@ -10,6 +10,7 @@ export const environment = {
   encryptionKey: '4kaEV29FSsPKmQnLq1UHWiQGNlbnijDL',
   reverb: {
     wsHost: 'api.zarenta.ir',
+    key: '74b8c00e38c67ca39cdbcbe54ecc5c5c',
     wsPort: 443,
     forceTLS: true,
   },

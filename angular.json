@@ -93,10 +93,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "gold:build:production"
+              "buildTarget": "zarenta:build:production"
             },
             "development": {
-              "buildTarget": "gold:build:development"
+              "buildTarget": "zarenta:build:development"
             }
           },
           "defaultConfiguration": "development"

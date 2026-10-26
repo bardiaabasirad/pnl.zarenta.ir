@@ -34,15 +34,8 @@
                   <span class="font-medium inline">{{ order.product.amount | number }} تومان</span>
                 }
 
-                @if (order.product.display_mode == 'quotation') {
-                  با مظنه
-                  <span class="font-medium">{{ order.product.fee | number }}</span> تومان
-                } @else {
-                  با نرخ هر {{ order.product.unit }}
-                  <span class="font-medium">
-                    {{ order.product.fee / AppConstants.MARKET_SPECIFIC_CONVERSION_FACTOR | ceil | number }}
-                  </span> تومان
-                }
+                با نرخ هر {{ order.product.target_unit_name || (order.product.display_mode == 'per_gram' ? 'گرم' : order.product.display_mode == 'quotation' ? 'مظنه' : order.product.display_mode ? 'گرم' : 'مظنه') }}
+                <span class="font-medium">{{ (order.product.display_fee ?? (order.product.display_mode == 'per_gram' || (order.product.display_mode && order.product.display_mode !== 'quotation') ? (order.product.fee / AppConstants.MARKET_SPECIFIC_CONVERSION_FACTOR) : order.product.fee)) | number }}</span> تومان
 
                 @switch (order.status) {
                   @case ('pending') {
@@ -79,15 +72,8 @@
                   <span class="font-medium inline">{{ order.product.amount | number }} تومان</span>
                 }
 
-                @if (order.product.display_mode == 'quotation') {
-                  با مظنه
-                  <span class="font-medium">{{ order.product.fee | number }}</span> تومان
-                } @else {
-                  با نرخ هر {{ order.product.unit }}
-                  <span class="font-medium">
-                    {{ order.product.fee / AppConstants.MARKET_SPECIFIC_CONVERSION_FACTOR | floor | number }}
-                  </span> تومان
-                }
+                با نرخ هر {{ order.product.target_unit_name || (order.product.display_mode == 'per_gram' ? 'گرم' : order.product.display_mode == 'quotation' ? 'مظنه' : order.product.display_mode ? 'گرم' : 'مظنه') }}
+                <span class="font-medium">{{ (order.product.display_fee ?? (order.product.display_mode == 'per_gram' || (order.product.display_mode && order.product.display_mode !== 'quotation') ? (order.product.fee / AppConstants.MARKET_SPECIFIC_CONVERSION_FACTOR) : order.product.fee)) | number }}</span> تومان
 
                 @switch (order.status) {
                   @case ('pending') {

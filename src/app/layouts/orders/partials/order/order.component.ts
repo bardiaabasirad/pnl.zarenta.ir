@@ -5,8 +5,6 @@ import {WithoutTrailingZerosPipe} from '../../../../pipes/without-trailing-zeros
 import {JalaliPipe} from '../../../../pipes/jalali.pipe';
 import {ProgressBarComponent} from '../../../../components/progress-bar/progress-bar.component';
 import {AppConstants} from '../../../../constants/app-constants';
-import {CeilPipe} from '../../../../pipes/ceil.pipe';
-import {FloorPipe} from '../../../../pipes/floor.pipe';
 
 @Component({
   selector: 'app-order',
@@ -16,8 +14,6 @@ import {FloorPipe} from '../../../../pipes/floor.pipe';
     WithoutTrailingZerosPipe,
     JalaliPipe,
     ProgressBarComponent,
-    CeilPipe,
-    FloorPipe,
   ],
   templateUrl: './order.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,

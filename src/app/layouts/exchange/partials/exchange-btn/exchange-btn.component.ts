@@ -5,16 +5,16 @@ import {
   ChangeDetectionStrategy
 } from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {CeilPipe} from '../../../../pipes/ceil.pipe';
-import {FloorPipe} from '../../../../pipes/floor.pipe';
-import {AppConstants} from '../../../../constants/app-constants';
+import {roundToStep} from '../../../../utils/number-precision';
+import {
+  convertMetalPrice,
+  resolveTargetUnitId
+} from '../../../../utils/metal-price.util';
 
 @Component({
   selector: 'app-exchange-btn',
   imports: [
     CommonModule,
-    CeilPipe,
-    FloorPipe,
   ],
   templateUrl: './exchange-btn.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
@@ -27,29 +27,57 @@ export class ExchangeBtnComponent {
   productStatus = input<boolean>(false);
   orderType = input<'buy' | 'sell'>('buy');
   metalItem = input<number>();
+  pricingUnitId = input<string>('mazane');
   modalOpened = output<{
     orderType: 'buy' | 'sell';
     metal_item_id?: number;
   }>();
 
-  calculatedPrice = computed(() => {
-    const price = this.rate();
+  /**
+   * ۱. قیمت تعدیل‌شده (شامل کارمزد/تلرانس مارکت) در واحد قیمت‌گذاری خام
+   */
+  readonly adjustedPrice = computed<number | undefined>(() => {
+    const rawRate = this.rate();
     const config = this.config();
 
-    let tolerance = 0
-    if (config) {
-      tolerance = this.orderType() == 'buy' ? config.sell_fee_margin : config.buy_fee_margin;
-
-      if (price) {
-        if (this.config().tolerance_type == 'fixed_amount') {
-          return price + tolerance;
-        } else {
-          return price + (price * tolerance / 100);
-        }
-      }
+    if (rawRate === undefined || rawRate === null) {
+      return undefined;
     }
 
-    return price;
+    if (!config) {
+      return rawRate;
+    }
+
+    const tolerance =
+      this.orderType() === 'buy'
+        ? Number(config.sell_fee_margin ?? 0)
+        : Number(config.buy_fee_margin ?? 0);
+
+    if (config.tolerance_type === 'fixed_amount') {
+      return rawRate + tolerance;
+    } else {
+      return rawRate + (rawRate * tolerance) / 100;
+    }
+  });
+
+  /**
+   * ۲. قیمت نهایی نمایشی در واحد هدف گروه
+   * Display = Price × (targetMult / sourceMult); buy ceil thousand, sell floor thousand
+   */
+  readonly finalDisplayPrice = computed<number | undefined>(() => {
+    const price = this.adjustedPrice();
+    if (price === undefined || price === null) {
+      return undefined;
+    }
+
+    const config = this.config();
+    const isBuy = this.orderType() === 'buy';
+    const sourceUnit = this.pricingUnitId() || 'mazane';
+    const targetUnit = resolveTargetUnitId(config);
+
+    const basePrice = convertMetalPrice(price, sourceUnit, targetUnit);
+
+    return isBuy ? roundToStep(Math.ceil(basePrice), true) : roundToStep(Math.floor(basePrice), false);
   });
 
   openModal() {
@@ -58,6 +86,4 @@ export class ExchangeBtnComponent {
       metal_item_id: this.metalItem(),
     });
   }
-
-  protected readonly AppConstants = AppConstants;
 }

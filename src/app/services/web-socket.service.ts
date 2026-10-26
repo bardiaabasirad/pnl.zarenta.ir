@@ -235,7 +235,7 @@ export class WebSocketService implements OnDestroy {
 
     this.echo = new Echo({
       broadcaster: 'reverb',
-      key: '2qvxyvguiix6csb02cdy',
+      key: environment.reverb.key,
       wsHost: environment.reverb.wsHost,
       wsPort: environment.reverb.wsPort,
       forceTLS: environment.reverb.forceTLS,

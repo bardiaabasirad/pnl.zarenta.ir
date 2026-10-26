@@ -14,11 +14,14 @@ export interface MetalItem {
   settlement_working_days: number,
   group: MetalItemGroup,
   price_source_mapping: PriceSourceMapping,
-  latest_price: SelectedMetalPrice,
+  latest_price?: SelectedMetalPrice,
   pivot: any,
   purity: number,
   title: string,
   unit: string,
+  pricing_unit_id: string,
+  /** @deprecated استفاده از pricing_unit_id */
+  pricing_unit_basis?: string,
   created_at: string,
   updated_at: string
 }

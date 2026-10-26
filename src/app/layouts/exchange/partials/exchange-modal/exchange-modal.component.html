@@ -1,5 +1,6 @@
 @let action = baseOrderData()?.orderType;
 @let calculated_price = calculatedPrice();
+@let display_price = displayPrice();
 @let actionText = action == 'buy' ? 'خرید' : 'فروش';
 @let metal_item_config = config();
 @let metal_item = metalItem();
@@ -45,9 +46,9 @@
               <span
                 class="inline font-medium">{{ metal_order.product.quantity | number }} {{ metal_order.product.unit }} </span>
               {{ metal_order.product.name }}
-              @if (metal_order.product.display_mode == 'quotation') {
-                با مظنه
-                {{ metal_order.product.fee | number }}
+              @if (metal_order.product.target_unit_id || metal_order.product.display_mode) {
+                با نرخ هر {{ metal_order.product.target_unit_name || unitLabel(metal_order.product.target_unit_id || (metal_order.product.display_mode == 'per_gram' ? 'gram' : metal_order.product.display_mode == 'quotation' ? 'mazane' : 'gram')) }}
+                {{ (metal_order.product.display_fee ?? metal_order.product.fee) | number }}
                 تومان
               }
               معادل
@@ -109,15 +110,7 @@
                       <div class="text-sm">در حال حاضر نرخ {{ actionText }} <span
                         [ngClass]="metal_order.order_type == 'buy' ? 'text-emerald-700':'text-red-700'"
                         class="font-semibold">
-                        @if (metal_item_config?.display_mode == 'quotation') {
-                          {{ calculated_price! | number }}
-                        } @else {
-                          @if (action == 'buy') {
-                            {{ calculated_price! / AppConstants.MARKET_SPECIFIC_CONVERSION_FACTOR | ceil | number }}
-                          } @else {
-                            {{ calculated_price! / AppConstants.MARKET_SPECIFIC_CONVERSION_FACTOR | floor | number }}
-                          }
-                        }
+                        {{ display_price! | number }}
                         تومان</span> می‌باشد؛ آیا می‌خواهید
                         سفارش شما به میزان <span
                           [ngClass]="metal_order.order_type == 'buy' ? 'text-emerald-700':'text-red-700'"
@@ -125,15 +118,7 @@
                           {{ metal_item.unit == 'gram' ? 'گرم' : 'عدد' }}</span> را با نرخ جدید <span
                           [ngClass]="metal_order.order_type == 'buy' ? 'text-emerald-700':'text-red-700'"
                           class="font-semibold">
-                            @if (metal_item_config?.display_mode == 'quotation') {
-                              {{ calculated_price! | number }}
-                            } @else {
-                              @if (action == 'buy') {
-                                {{ calculated_price! / AppConstants.MARKET_SPECIFIC_CONVERSION_FACTOR | ceil | number }}
-                              } @else {
-                                {{ calculated_price! / AppConstants.MARKET_SPECIFIC_CONVERSION_FACTOR | floor | number }}
-                              }
-                            }
+                            {{ display_price! | number }}
                             تومان</span> ثبت نمایم؟
                       </div>
                     } @else if (metal_order.retry == 'active') {
@@ -142,15 +127,7 @@
                         class="font-semibold">{{ amountOfMetal | number }} {{ metal_item.unit == 'gram' ? 'گرم' : 'عدد' }}</span> را با نرخ <span
                         [ngClass]="metal_order.order_type == 'buy' ? 'text-emerald-700':'text-red-700'"
                         class="font-semibold">
-                          @if (metal_item_config?.display_mode == 'quotation') {
-                            {{ calculated_price! | number }}
-                          } @else {
-                            @if (action == 'buy') {
-                              {{ calculated_price! / AppConstants.MARKET_SPECIFIC_CONVERSION_FACTOR | ceil | number }}
-                            } @else {
-                              {{ calculated_price! / AppConstants.MARKET_SPECIFIC_CONVERSION_FACTOR | floor | number }}
-                            }
-                          }
+                          {{ display_price! | number }}
                           تومان</span> مجدد ثبت نمایم؟
                       </div>
                     }
@@ -222,20 +199,9 @@
             <div class="relative">
               <div [ngClass]="action == 'buy' ? 'text-emerald-700':'text-red-700'"
                    class="relative z-10 text-center text-lg font-medium">نرخ
-                @if (metal_item_config?.display_mode == 'quotation') {
-                  @if (action == 'buy') {
-                    {{ calculated_price! | ceil | number }}
-                  } @else {
-                    {{ calculated_price! | floor | number }}
-                  }
-                } @else {
-                  @if (action == 'buy') {
-                    {{ calculated_price! / AppConstants.MARKET_SPECIFIC_CONVERSION_FACTOR | ceil | number }}
-                  } @else {
-                    {{ calculated_price! / AppConstants.MARKET_SPECIFIC_CONVERSION_FACTOR | floor | number }}
-                  }
-                }
+                {{ display_price! | number }}
                 تومان
+                <span class="text-xs text-gray-500">({{ unitLabel(resolveTargetUnitId(metal_item_config)) }})</span>
               </div>
               @if (rateChanging) {
                 <div
