@@ -22,7 +22,6 @@ import {OrderService} from '../../../../services/order.service';
 import {Order} from '../../../../interfaces/order';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {User} from '../../../../interfaces/user';
-import {WithoutTrailingZerosPipe} from '../../../../pipes/without-trailing-zeros.pipe';
 import {ProgressBarComponent} from '../../../../components/progress-bar/progress-bar.component';
 import {WebSocketConnectionStatus, WebSocketService} from '../../../../services/web-socket.service';
 import {NotificationService} from '../../../../services/notification.service';
@@ -53,7 +52,6 @@ import {
     ProgressBarComponent
   ],
   providers: [
-    WithoutTrailingZerosPipe,
     provideNgxMask()
   ],
   templateUrl: './exchange-modal.component.html',

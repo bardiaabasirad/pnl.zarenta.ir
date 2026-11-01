@@ -1,0 +1,79 @@
+<div class="p-2.5 lg:p-4 space-y-4">
+  <div>
+    <h1 class="text-lg font-medium">حساب‌های بانکی</h1>
+    <p class="mt-1 text-sm text-gray-600">فقط شماره شبا را وارد کنید. هر حساب پس از تایید مدیر فعال می‌شود.</p>
+  </div>
+
+  @if (error()) {
+    <div class="rounded bg-rose-50 px-3 py-2 text-sm text-rose-700">{{ error() }}</div>
+  }
+  @if (success()) {
+    <div class="rounded bg-emerald-50 px-3 py-2 text-sm text-emerald-700">{{ success() }}</div>
+  }
+
+  <section class="rounded-lg border border-gray-200 p-3 lg:p-4 space-y-3">
+    <h2 class="text-sm font-medium">ثبت حساب بانکی جدید</h2>
+    <div class="grid gap-3 lg:grid-cols-[1fr_auto]">
+      <div>
+        <label for="sheba" class="sr-only">شماره شبا</label>
+        <input
+          id="sheba"
+          type="text"
+          [formControl]="sheba"
+          placeholder="IR00 ACCT-000003 0000 00"
+          class="w-full rounded-lg border border-gray-200 px-3 py-2.5 text-sm"
+          autocomplete="off"
+          dir="ltr"
+        >
+        @for (message of shebaErrors(); track message) {
+          <p class="mt-1.5 text-xs text-rose-600">{{ message }}</p>
+        }
+      </div>
+      <button
+        type="button"
+        class="rounded-lg bg-primary px-4 py-2.5 text-sm text-white disabled:opacity-50"
+        [disabled]="sheba.invalid || submitting()"
+        (click)="submit()"
+      >
+        @if (submitting()) { در حال ثبت... } @else { ثبت حساب بانکی }
+      </button>
+    </div>
+  </section>
+
+  <section class="space-y-2">
+    <h2 class="text-sm font-medium">حساب‌های من</h2>
+    @if (loading()) {
+      <p class="text-sm text-gray-500">در حال بارگذاری...</p>
+    } @else if (items().length === 0) {
+      <p class="text-sm text-gray-500">هنوز حساب بانکی ثبت نکرده‌اید.</p>
+    } @else {
+      <div class="space-y-2">
+        @for (row of items(); track row.id) {
+          <div class="rounded-lg border p-3 flex flex-wrap items-start justify-between gap-3"
+               [ngClass]="statusClass(row.status)">
+            <div class="text-sm space-y-1.5 min-w-0">
+              <div class="font-medium tracking-wide text-gray-900" dir="ltr">{{ formatSheba(row.sheba) }}</div>
+              <div class="inline-flex items-center rounded border px-2 py-0.5 text-xs"
+                   [ngClass]="statusClass(row.status)">
+                {{ statusLabel(row.status) }}
+              </div>
+              @if (row.status === 'rejected' && row.rejection_reason?.value) {
+                <div class="text-xs text-rose-700">
+                  علت رد: {{ row.rejection_reason.value }}
+                </div>
+              }
+            </div>
+            <button
+              type="button"
+              class="text-sm text-rose-700 disabled:opacity-50"
+              [disabled]="deletingId() === row.id"
+              (click)="remove(row)"
+            >
+              @if (deletingId() === row.id) { در حال حذف... } @else { حذف }
+            </button>
+          </div>
+        }
+      </div>
+    }
+  </section>
+</div>

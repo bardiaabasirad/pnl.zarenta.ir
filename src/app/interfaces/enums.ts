@@ -17,9 +17,9 @@ export enum UserGender {
   FEMALE = 'female',
 }
 export enum BankAccountStatus {
-  CHECKING = 'checking',
-  CONFIRMED = 'confirmed',
-  REJECTED = 'rejected'
+  PENDING = 'pending',
+  APPROVED = 'approved',
+  REJECTED = 'rejected',
 }
 export enum CheckoutType {
   BUY = 'buy',

@@ -51,6 +51,53 @@
           <div class="w-1 rounded-l bg-primary h-10 absolute right-0 top-0.5"></div>
         }
       </a>
+      <a routerLink="/physical-deliveries"
+         class="relative flex items-center justify-between rounded pr-4 pl-6 py-2.5"
+      >
+        <div class="flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="size-5 fill-gray-700"><path d="M19 7h-3V6a4 4 0 0 0-8 0v1H5a1 1 0 0 0-1 1v11a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V8a1 1 0 0 0-1-1zm-9-1a2 2 0 0 1 4 0v1h-4V6zm8 13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V9h2v1a1 1 0 0 0 2 0V9h4v1a1 1 0 0 0 2 0V9h2z"/></svg>
+          <span class="text-base font-medium mr-2.5">تحویل فیزیکی</span>
+        </div>
+        <svg class="size-4" viewBox="0 0 9 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M7.57422 1.40008L2.14091 6.83341C1.49924 7.47508 1.49924 8.52508 2.14091 9.16675L7.57422 14.6001" stroke="#414042" stroke-opacity="0.5" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+
+        @if (url === '/physical-deliveries') {
+          <div class="w-1 rounded-l bg-primary h-10 absolute right-0 top-0.5"></div>
+        }
+      </a>
+      <a routerLink="/bank-accounts"
+         class="relative flex items-center justify-between rounded pr-4 pl-6 py-2.5"
+      >
+        <div class="flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5 text-gray-700">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Z" />
+          </svg>
+          <span class="text-base font-medium mr-2.5">حساب‌های بانکی</span>
+        </div>
+        <svg class="size-4" viewBox="0 0 9 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M7.57422 1.40008L2.14091 6.83341C1.49924 7.47508 1.49924 8.52508 2.14091 9.16675L7.57422 14.6001" stroke="#414042" stroke-opacity="0.5" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+
+        @if (url === '/bank-accounts') {
+          <div class="w-1 rounded-l bg-primary h-10 absolute right-0 top-0.5"></div>
+        }
+      </a>
+      <a routerLink="/withdrawals"
+         class="relative flex items-center justify-between rounded pr-4 pl-6 py-2.5"
+      >
+        <div class="flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="size-5 fill-gray-700"><path d="M12 2a1 1 0 0 1 1 1v11.59l3.3-3.3a1 1 0 1 1 1.4 1.42l-5 5a1 1 0 0 1-1.4 0l-5-5a1 1 0 1 1 1.4-1.42L11 14.59V3a1 1 0 0 1 1-1zm-7 18a1 1 0 1 0 0 2h14a1 1 0 1 0 0-2H5z"/></svg>
+          <span class="text-base font-medium mr-2.5">برداشت تومان</span>
+        </div>
+        <svg class="size-4" viewBox="0 0 9 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M7.57422 1.40008L2.14091 6.83341C1.49924 7.47508 1.49924 8.52508 2.14091 9.16675L7.57422 14.6001" stroke="#414042" stroke-opacity="0.5" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+
+        @if (url === '/withdrawals') {
+          <div class="w-1 rounded-l bg-primary h-10 absolute right-0 top-0.5"></div>
+        }
+      </a>
       <a routerLink="/orders" class="relative flex items-center justify-between rounded pr-4 pl-6 py-2.5">
         <div class="flex items-center relative">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="-32 -32 1088 1088" class="size-5 fill-gray-700"><g transform="translate(0, 960) scale(1, -1)"><path d="M745.249-0.475h-466.499c-0.15 0-0.327-0.001-0.504-0.001-85.075 0-155.701 61.867-169.34 143.066l-0.14 1.007-75.821 456.971h958.108l-75.687-456.971c-13.779-82.206-84.405-144.074-169.48-144.074-0.224 0-0.448 0-0.672 0.001h0.035zM279.018 88.569h466.232c0.070 0 0.153 0 0.236 0 41.117 0 75.25 29.902 81.839 69.146l0.068 0.487 58.591 353.325h-747.965l58.635-353.325c6.657-39.731 40.79-69.632 81.907-69.632 0.067 0 0.135 0 0.202 0h-0.011zM1024 511.525h-1024v89.043h1024zM343.263 470.565h-89.043v94.386l131.384 306.933 81.875-35.083-124.216-289.881zM769.781 470.565h-89.043v76.355l-124.216 289.881 81.831 35.039 131.428-306.888zM556.522 171.825h-89.043v213.259h89.043zM386.003 171.825h-89.043v213.259h89.043zM727.040 171.825h-89.043v213.259h89.043z"/></g></svg>

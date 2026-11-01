@@ -12,7 +12,54 @@
         <div class="text-[8px] lg:text-xs text-primary">اعتبار هر معامله</div>
       </div>
     </a>
-    <div class="flex gap-2">
+    <div class="flex items-center gap-3">
+
+      <div class="relative">
+        <button type="button"
+                data-dropdown-toggle="trader-notification-dropdown"
+                class="relative p-1.5 text-gray-500 rounded-full bg-white border border-gray-200">
+          <span class="sr-only">مشاهده اطلاعیه‌ها</span>
+          <svg class="size-5 text-gray-700" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+            <path fill-rule="evenodd"
+                  d="M5.25 9a6.75 6.75 0 0 1 13.5 0v.75c0 2.123.8 4.057 2.118 5.52a.75.75 0 0 1-.297 1.206c-1.544.57-3.16.99-4.831 1.243a3.75 3.75 0 1 1-7.48 0 24.585 24.585 0 0 1-4.831-1.244.75.75 0 0 1-.298-1.205A8.217 8.217 0 0 0 5.25 9.75V9Zm4.502 8.9a2.25 2.25 0 1 0 4.496 0 25.057 25.057 0 0 1-4.496 0Z"
+                  clip-rule="evenodd"/>
+          </svg>
+          @if (hasNotifications()) {
+            <span
+              class="w-4 h-4 text-[10px] flex justify-center items-center bg-red-500 text-white absolute -top-0.5 -right-0.5 rounded-full">
+              {{ notifications().length | number }}
+            </span>
+          }
+        </button>
+
+        <div id="trader-notification-dropdown"
+             class="z-50 hidden min-w-72 max-w-sm my-4 text-sm bg-white divide-y divide-gray-100 rounded shadow-lg border border-gray-100">
+          <div class="px-4 py-2 font-medium text-gray-700">اطلاعیه‌ها</div>
+          <div class="max-h-80 overflow-y-auto">
+            @if (!hasNotifications()) {
+              <div class="px-4 py-6 text-center text-gray-500">اطلاعیه خوانده‌نشده‌ای نیست</div>
+            } @else {
+              @for (notification of notifications(); track notification.id) {
+                <button type="button"
+                        class="w-full text-right px-4 py-3 hover:bg-gray-50 disabled:opacity-60"
+                        [disabled]="isLoading(notification.id)"
+                        (click)="openNotification(notification)">
+                  <div class="font-medium text-gray-800">{{ notification.title }}</div>
+                  <div class="mt-1 text-xs text-gray-600 leading-5">{{ notification.content }}</div>
+                </button>
+              }
+            }
+          </div>
+          @if (hasNotifications()) {
+            <button type="button"
+                    class="w-full px-4 py-2 text-xs text-gray-600 hover:bg-gray-50 disabled:opacity-50"
+                    [disabled]="markingAll()"
+                    (click)="markAllAsRead()">
+              @if (markingAll()) { در حال علامت‌گذاری... } @else { خواندن همه }
+            </button>
+          }
+        </div>
+      </div>
 
       <div class="flex items-center lg:justify-center">
         <svg class="h-4 lg:h-5" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">

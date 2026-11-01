@@ -19,7 +19,7 @@
                 @if (order.frozen == 'cash') {
                   <span class="font-medium inline">{{ order.product.amount | number }} تومان</span>
                 } @else if (order.frozen == 'metal') {
-                  <span class="font-medium">{{ order.product.quantity | withoutTrailingZeros }}</span>
+                  <span class="font-medium">{{ order.product.quantity | number:'1.0-6' }}</span>
                   {{ order.product.unit }}
                 }
 
@@ -27,7 +27,7 @@
 
                 @if (order.frozen == 'cash') {
                   معادل
-                  <span class="font-medium">{{ order.product.quantity | withoutTrailingZeros }}</span>
+                  <span class="font-medium">{{ order.product.quantity | number:'1.0-6' }}</span>
                   {{ order.product.unit }}
                 } @else if (order.frozen == 'metal') {
                   معادل
@@ -57,7 +57,7 @@
                 @if (order.frozen == 'cash') {
                   <span class="font-medium inline">{{ order.product.amount | number }} تومان</span>
                 } @else if (order.frozen == 'metal') {
-                  <span class="font-medium">{{ order.product.quantity | withoutTrailingZeros }}</span>
+                  <span class="font-medium">{{ order.product.quantity | number:'1.0-6' }}</span>
                   {{ order.product.unit }}
                 }
 
@@ -65,7 +65,7 @@
 
                 @if (order.frozen == 'cash') {
                   معادل
-                  <span class="font-medium">{{ order.product.quantity | withoutTrailingZeros }}</span>
+                  <span class="font-medium">{{ order.product.quantity | number:'1.0-6' }}</span>
                   {{ order.product.unit }}
                 } @else if (order.frozen == 'metal') {
                   معادل

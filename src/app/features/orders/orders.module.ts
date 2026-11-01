@@ -10,7 +10,6 @@ import {OrdersRoutingModule} from './orders-routing.module';
 import {PaginationComponent} from "../../components/pagination/pagination.component";
 import {FormsModule} from '@angular/forms';
 import {DateRangePickerComponent} from '../../components/date-range-picker/date-range-picker.component';
-import {WithoutTrailingZerosPipe} from '../../pipes/without-trailing-zeros.pipe';
 import {NgxMaskDirective, provideNgxMask} from 'ngx-mask';
 import {JalaliPipe} from "../../pipes/jalali.pipe";
 import {OrderComponent} from '../../layouts/orders/partials/order/order.component';
@@ -30,7 +29,6 @@ import {OrderComponent} from '../../layouts/orders/partials/order/order.componen
     PaginationComponent,
     FormsModule,
     DateRangePickerComponent,
-    WithoutTrailingZerosPipe,
     PaginationComponent,
     NgxMaskDirective,
     JalaliPipe,

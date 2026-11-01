@@ -1,0 +1,38 @@
+server {
+  listen 80;
+  server_name pnl.zarenta.ir;
+  root /var/www/pnl.zarenta.ir/browser;
+  index index.html;
+
+  # App shell / SW metadata: always revalidate
+  location = /index.html {
+    add_header Cache-Control "no-cache";
+    try_files $uri =404;
+  }
+
+  location = /ngsw.json {
+    add_header Cache-Control "no-cache";
+    try_files $uri =404;
+  }
+
+  location = /ngsw-worker.js {
+    add_header Cache-Control "no-cache";
+    try_files $uri =404;
+  }
+
+  location = /manifest.webmanifest {
+    add_header Cache-Control "no-cache";
+    try_files $uri =404;
+  }
+
+  # Hashed JS/CSS: long-lived immutable cache
+  location ~* \.(?:js|css)$ {
+    add_header Cache-Control "max-age=31536000, immutable";
+    try_files $uri =404;
+  }
+
+  # SPA fallback
+  location / {
+    try_files $uri $uri/ /index.html;
+  }
+}

@@ -48,6 +48,21 @@ export const routes: Routes = [
         path: 'assets',
         loadComponent: () => import('./layouts/assets/assets.component').then(c => c.AssetsComponent),
       },
+      {
+        path: 'physical-deliveries',
+        loadComponent: () =>
+          import('./layouts/physical-deliveries/physical-deliveries.component').then(c => c.PhysicalDeliveriesComponent),
+      },
+      {
+        path: 'bank-accounts',
+        loadComponent: () =>
+          import('./layouts/bank-accounts/bank-accounts.component').then(c => c.BankAccountsComponent),
+      },
+      {
+        path: 'withdrawals',
+        loadComponent: () =>
+          import('./layouts/withdrawals/withdrawals.component').then(c => c.WithdrawalsComponent),
+      },
     ]
   },
   {

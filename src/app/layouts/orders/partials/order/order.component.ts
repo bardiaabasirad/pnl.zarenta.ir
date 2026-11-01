@@ -1,7 +1,6 @@
 import {ChangeDetectorRef, Component, inject, Input, OnInit, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {Order} from '../../../../interfaces/order';
-import {WithoutTrailingZerosPipe} from '../../../../pipes/without-trailing-zeros.pipe';
 import {JalaliPipe} from '../../../../pipes/jalali.pipe';
 import {ProgressBarComponent} from '../../../../components/progress-bar/progress-bar.component';
 import {AppConstants} from '../../../../constants/app-constants';
@@ -11,7 +10,6 @@ import {AppConstants} from '../../../../constants/app-constants';
   standalone: true,
   imports: [
     CommonModule,
-    WithoutTrailingZerosPipe,
     JalaliPipe,
     ProgressBarComponent,
   ],

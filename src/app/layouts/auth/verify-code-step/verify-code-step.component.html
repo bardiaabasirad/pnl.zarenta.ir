@@ -16,7 +16,7 @@
   <div class="mb-4">
     <div class="mb-2">
       <div class="flex justify-between mb-1.5">
-        @if (remainingSeconds) {
+        @if (remainingSeconds()) {
           <div class="flex text-amber-400 text-md">
               <span class="aspect-square h-5 w-5 rounded-full bg-amber-400/25">
                 <svg class="progress-ring" width="20" height="20">
@@ -29,7 +29,7 @@
                   />
                   </svg>
                 </span>
-            <span class="inline-flex w-6 justify-end mr-0.5">{{ remainingSeconds }}</span>
+            <span class="inline-flex w-6 justify-end mr-0.5">{{ remainingSeconds() }}</span>
             <span class="mr-1.5">ثانیه</span>
           </div>
         } @else {

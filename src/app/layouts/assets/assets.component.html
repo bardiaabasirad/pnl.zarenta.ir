@@ -60,6 +60,20 @@
                         <span>تومان</span>
                       }
                     </div>
+                    @if (asset.metal_item && asset.blocked_balance && asset.blocked_balance != 0) {
+                      <div class="mt-1.5 flex flex-wrap gap-x-3 gap-y-1 text-xs text-gray-600">
+                        <div>
+                          آزاد:
+                          <span dir="ltr" class="font-medium text-gray-800">{{ asset.available_balance | number }}</span>
+                          {{ asset.metal_item.unit == 'count' ? 'عدد' : 'گرم' }}
+                        </div>
+                        <div>
+                          درخواست تحویل:
+                          <span dir="ltr" class="font-medium text-amber-700">{{ asset.blocked_balance | number }}</span>
+                          {{ asset.metal_item.unit == 'count' ? 'عدد' : 'گرم' }}
+                        </div>
+                      </div>
+                    }
                     @if (asset.metal_item && ! asset.metal_item.is_spot && asset.fiat_balance) {
                       <div class="flex gap-1" [class]="asset.fiat_balance > 0 ? 'text-teal-700' : 'text-rose-600'">
                         <div dir="ltr">{{ asset.fiat_balance | number }}</div>
@@ -129,6 +143,20 @@
                         <span>تومان</span>
                       }
                     </div>
+                    @if (asset.metal_item && asset.blocked_balance && asset.blocked_balance != 0) {
+                      <div class="mt-1.5 flex flex-wrap gap-x-3 gap-y-1 text-xs text-gray-600">
+                        <div>
+                          آزاد:
+                          <span dir="ltr" class="font-medium text-gray-800">{{ asset.available_balance | number }}</span>
+                          {{ asset.metal_item.unit == 'count' ? 'عدد' : 'گرم' }}
+                        </div>
+                        <div>
+                          درخواست تحویل:
+                          <span dir="ltr" class="font-medium text-amber-700">{{ asset.blocked_balance | number }}</span>
+                          {{ asset.metal_item.unit == 'count' ? 'عدد' : 'گرم' }}
+                        </div>
+                      </div>
+                    }
                     @if (asset.metal_item && ! asset.metal_item.is_spot && asset.fiat_balance) {
                       <div class="flex gap-1" [class]="asset.fiat_balance > 0 ? 'text-teal-700' : 'text-rose-600'">
                         <div dir="ltr">{{ asset.fiat_balance | number }}</div>

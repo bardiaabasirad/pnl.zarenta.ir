@@ -41,7 +41,7 @@ export class VerifyCodeStepComponent implements OnInit, OnDestroy {
 
   verifyForm!: FormGroup;
 
-  remainingSeconds = 0;
+  remainingSeconds = signal(0);
   submitting = signal<boolean>(false);
   isResending = signal<boolean>(false);
   statusError = '';
@@ -201,7 +201,7 @@ export class VerifyCodeStepComponent implements OnInit, OnDestroy {
 
   // ─── دریافت مجدد کد ────────────────────────────────────────────────
   async getNewCode(): Promise<void> {
-    if (this.isResending() || this.remainingSeconds > 0) return;
+    if (this.isResending() || this.remainingSeconds() > 0) return;
 
     this.isResending.set(true);
     this.statusError = '';
@@ -243,25 +243,23 @@ export class VerifyCodeStepComponent implements OnInit, OnDestroy {
   // ─── شمارش معکوس ───────────────────────────────────────────────────
   private startCountdown(timeRemaining: number, sentAt: number): void {
     clearInterval(this.countdownInterval);
-    this._sentAt = sentAt;           // ← اضافه شد
-    this._timeRemaining = timeRemaining; // ← اضافه شد
+    this._sentAt = sentAt;
+    this._timeRemaining = timeRemaining;
 
     const elapsed = Math.floor((Date.now() - sentAt) / 1000);
 
-    this.remainingSeconds = Math.max(0, timeRemaining - elapsed);
+    this.remainingSeconds.set(Math.max(0, timeRemaining - elapsed));
 
-    if (this.remainingSeconds <= 0) return;
+    if (this.remainingSeconds() <= 0) return;
 
     this.countdownInterval = setInterval(() => {
-      if (this.remainingSeconds > 0) {
-        this.remainingSeconds--;
-        const percentElapsed = ((this.totalTime - this.remainingSeconds) / this.totalTime) * 100;
+      const next = this.remainingSeconds() - 1;
+      if (next >= 0) {
+        this.remainingSeconds.set(next);
+        const percentElapsed = ((this.totalTime - next) / this.totalTime) * 100;
         this.setProgress(percentElapsed);
-
-        if (this.remainingSeconds <= 0) {
-          clearInterval(this.countdownInterval);
-        }
-      } else {
+      }
+      if (next <= 0) {
         clearInterval(this.countdownInterval);
       }
     }, 1000);

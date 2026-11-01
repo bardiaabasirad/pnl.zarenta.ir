@@ -1,0 +1,53 @@
+<div class="relative">
+  <div
+    class="flex w-full items-center border border-gray-200 leading-5 rounded-base text-sm focus-within:outline-none {{ triggerClass() }}"
+  >
+    <button
+      #trigger
+      [id]="buttonId"
+      type="button"
+      [disabled]="disabled()"
+      [attr.aria-expanded]="false"
+      [attr.aria-controls]="menuId"
+      class="min-w-0 flex-1 flex items-center justify-between text-gray-700 bg-transparent border-0 px-4 py-2.5 focus:outline-none disabled:cursor-not-allowed disabled:opacity-60"
+    >
+      @if (selectedLabel(); as label) {
+        <span class="truncate">{{ label }}</span>
+      } @else {
+        <span class="truncate text-gray-400">{{ placeholder() }}</span>
+      }
+
+      <div class="flex items-center">
+        <div class="flex shrink-0 items-center empty:hidden" (click)="$event.stopPropagation()">
+          <ng-content select="[actions]" />
+        </div>
+
+        <svg class="w-4 h-4 -me-0.5 shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 9-7 7-7-7"/>
+        </svg>
+      </div>
+    </button>
+  </div>
+
+  <div
+    #menu
+    [id]="menuId"
+    class="z-[70] hidden bg-neutral-primary-medium border border-default-medium rounded-base shadow-lg"
+    [attr.aria-labelledby]="buttonId"
+  >
+    <ul class="p-2 text-sm text-body font-medium">
+      @for (option of options(); track optionValue(option)) {
+        <li>
+          <button
+            type="button"
+            (click)="select(option)"
+            [class.bg-gray-100]="isSelected(option)"
+            class="inline-flex items-center w-full p-2 hover:bg-gray-50 hover:text-heading rounded-base"
+          >
+            {{ optionLabel(option) }}
+          </button>
+        </li>
+      }
+    </ul>
+  </div>
+</div>

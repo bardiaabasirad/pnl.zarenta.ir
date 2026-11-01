@@ -55,6 +55,9 @@ export class ValidationService {
       minlength: `حداقل ${error.requiredLength} کاراکتر باشد`,
       maxlength: `حداکثر ${error.requiredLength} کاراکتر باشد`,
       pattern: 'فرمت اشتباه است',
+      sheba_invalid: typeof error === 'string' ? error : 'شماره شبا معتبر نیست',
+      sheba_format: typeof error === 'string' ? error : 'فرمت شماره شبا صحیح نیست',
+      sheba_checksum: typeof error === 'string' ? error : 'شماره شبا از نظر الگوریتم کنترلی معتبر نیست',
       serverError: error // Server errors are already in message format
     };
 
