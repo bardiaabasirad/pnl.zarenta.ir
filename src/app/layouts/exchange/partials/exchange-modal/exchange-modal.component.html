@@ -24,7 +24,7 @@
           <div
             [ngClass]="
             action == 'buy' ?
-              'text-emerald-700':
+              'text-teal-700':
               'text-red-700'
           "
             class="mt-8 text-center text-base font-medium dark:text-white lg:text-xl">
@@ -92,7 +92,7 @@
                   }
                   @case ('succeed') {
                     <span
-                      class="whitespace-nowrap rounded-full bg-emerald-100 px-2 text-sm text-emerald-900 py-0.5">تایید شد</span>
+                      class="whitespace-nowrap rounded-full bg-teal-100 px-2 text-sm text-teal-900 py-0.5">تایید شد</span>
                   }
                   @case ('rejected') {
                     @if (metal_order.message) {
@@ -108,24 +108,24 @@
 
                     @if (metal_order.retry == 'active' && metal_order.product.fee != calculated_price!) {
                       <div class="text-sm">در حال حاضر نرخ {{ actionText }} <span
-                        [ngClass]="metal_order.order_type == 'buy' ? 'text-emerald-700':'text-red-700'"
+                        [ngClass]="metal_order.order_type == 'buy' ? 'text-teal-700':'text-red-700'"
                         class="font-semibold">
                         {{ display_price! | number }}
                         تومان</span> می‌باشد؛ آیا می‌خواهید
                         سفارش شما به میزان <span
-                          [ngClass]="metal_order.order_type == 'buy' ? 'text-emerald-700':'text-red-700'"
+                          [ngClass]="metal_order.order_type == 'buy' ? 'text-teal-700':'text-red-700'"
                           class="font-semibold">{{ amountOfMetal | number }}
                           {{ metal_item.unit == 'gram' ? 'گرم' : 'عدد' }}</span> را با نرخ جدید <span
-                          [ngClass]="metal_order.order_type == 'buy' ? 'text-emerald-700':'text-red-700'"
+                          [ngClass]="metal_order.order_type == 'buy' ? 'text-teal-700':'text-red-700'"
                           class="font-semibold">
                             {{ display_price! | number }}
                             تومان</span> ثبت نمایم؟
                       </div>
                     } @else if (metal_order.retry == 'active') {
                       <div class="text-sm">آیا می‌خواهید سفارش شما به میزان <span
-                        [ngClass]="metal_order.order_type == 'buy' ? 'text-emerald-700':'text-red-700'"
+                        [ngClass]="metal_order.order_type == 'buy' ? 'text-teal-700':'text-red-700'"
                         class="font-semibold">{{ amountOfMetal | number }} {{ metal_item.unit == 'gram' ? 'گرم' : 'عدد' }}</span> را با نرخ <span
-                        [ngClass]="metal_order.order_type == 'buy' ? 'text-emerald-700':'text-red-700'"
+                        [ngClass]="metal_order.order_type == 'buy' ? 'text-teal-700':'text-red-700'"
                         class="font-semibold">
                           {{ display_price! | number }}
                           تومان</span> مجدد ثبت نمایم؟
@@ -141,7 +141,7 @@
                     [createdTime]="metal_order.created_at"
                     [now]="now"
                     (progressUpdate)="onProgressUpdate($event)"
-                    [progressColor]="metal_order.order_type == 'buy'? 'bg-emerald-500':'bg-red-500'"
+                    [progressColor]="metal_order.order_type == 'buy'? 'bg-teal-500':'bg-red-500'"
                     #progressBar
                   ></app-progress-bar>
                 </div>
@@ -155,7 +155,7 @@
               <div class="flex-1">
                 <app-button-with-loader type="submit"
                                         class="relative"
-                                        [classes]="metal_order.order_type == 'buy' ? 'flex justify-center w-full bg-emerald-500 text-white px-4 rounded-base w-full py-2.5':'flex justify-center w-full bg-red-500 text-white px-4 rounded-base w-full py-2.5'"
+                                        [classes]="metal_order.order_type == 'buy' ? 'flex justify-center w-full bg-teal-500 text-white px-4 rounded-base w-full py-2.5':'flex justify-center w-full bg-red-500 text-white px-4 rounded-base w-full py-2.5'"
                                         [loading]="submitting"
                                         [disabled]="submitting || ! formIsValid"
                                         (clicked)="exchange()">
@@ -197,7 +197,7 @@
           <!-- Modal body -->
           <div class="space-y-4">
             <div class="relative">
-              <div [ngClass]="action == 'buy' ? 'text-emerald-700':'text-red-700'"
+              <div [ngClass]="action == 'buy' ? 'text-teal-700':'text-red-700'"
                    class="relative z-10 text-center text-lg font-medium">نرخ
                 {{ display_price! | number }}
                 تومان
@@ -351,7 +351,7 @@
               <app-button-with-loader type="submit" class="relative"
                                       [classes]="
                                       action == 'buy' ?
-                                        'cursor-pointer flex bg-emerald-500 justify-center w-full text-white px-4 rounded-base w-full py-2.5':
+                                        'cursor-pointer flex bg-teal-500 justify-center w-full text-white px-4 rounded-base w-full py-2.5':
                                         'cursor-pointer flex bg-red-500 justify-center w-full text-white px-4 rounded-base w-full py-2.5'
                                       "
                                       [loading]="submitting"
