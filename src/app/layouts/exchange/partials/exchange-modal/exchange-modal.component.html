@@ -14,7 +14,7 @@
   @if (metal_item && metal_item_config) {
     <div class="relative max-h-full w-full max-w-lg">
       <!-- Modal content -->
-      <div class="relative mt-12 rounded-lg bg-white p-6 shadow-sm space-y-4 dark:bg-gray-700">
+      <div class="relative mt-12 rounded-base bg-white p-6 shadow-sm space-y-4 dark:bg-gray-700">
         <!-- Modal header -->
         <div class="relative">
           <div
@@ -96,12 +96,12 @@
                   }
                   @case ('rejected') {
                     @if (metal_order.message) {
-                      <div class="mb-4 rounded-lg bg-red-50 p-4 text-sm text-red-800 dark:bg-gray-800 dark:text-red-300"
+                      <div class="mb-4 rounded-base bg-red-50 p-4 text-sm text-red-800 dark:bg-gray-800 dark:text-red-300"
                            role="alert">سفارش شما به علت {{ metal_order.message }} رد شد
                       </div>
                     } @else {
                       <div
-                        class="mb-4 rounded-lg bg-red-50 p-4 text-sm text-red-800 dark:bg-gray-800 dark:text-red-300"
+                        class="mb-4 rounded-base bg-red-50 p-4 text-sm text-red-800 dark:bg-gray-800 dark:text-red-300"
                         role="alert">سفارش شما رد شد
                       </div>
                     }
@@ -155,7 +155,7 @@
               <div class="flex-1">
                 <app-button-with-loader type="submit"
                                         class="relative"
-                                        [classes]="metal_order.order_type == 'buy' ? 'flex justify-center w-full bg-emerald-500 text-white px-4 rounded-lg w-full py-2.5':'flex justify-center w-full bg-red-500 text-white px-4 rounded-lg w-full py-2.5'"
+                                        [classes]="metal_order.order_type == 'buy' ? 'flex justify-center w-full bg-emerald-500 text-white px-4 rounded-base w-full py-2.5':'flex justify-center w-full bg-red-500 text-white px-4 rounded-base w-full py-2.5'"
                                         [loading]="submitting"
                                         [disabled]="submitting || ! formIsValid"
                                         (clicked)="exchange()">
@@ -172,7 +172,7 @@
                 <button
                   (click)="closeModal()"
                   type="button"
-                  class="cursor-pointer flex w-full items-center justify-center gap-1 rounded-lg border border-gray-200 bg-white px-4 text-sm font-medium text-gray-500 py-2.5 hover:bg-gray-100 hover:text-gray-900 focus:z-10 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:border-gray-500 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
+                  class="cursor-pointer flex w-full items-center justify-center gap-1 rounded-base border border-gray-200 bg-white px-4 text-sm font-medium text-gray-500 py-2.5 hover:bg-gray-100 hover:text-gray-900 focus:z-10 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:border-gray-500 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                        stroke="currentColor" class="size-6">
@@ -187,7 +187,7 @@
               <button
                 (click)="closeModal()"
                 type="button"
-                class="cursor-pointer rounded-lg border border-gray-300 bg-white px-5 text-sm font-medium text-gray-500 py-2.5 hover:bg-gray-100 hover:text-gray-900 focus:z-10 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
+                class="cursor-pointer rounded-base border border-gray-300 bg-white px-5 text-sm font-medium text-gray-500 py-2.5 hover:bg-gray-100 hover:text-gray-900 focus:z-10 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
               >
                 باشه
               </button>
@@ -250,7 +250,7 @@
             </div>
             <div
               [ngClass]="errors['amountOfMetal'] || errors['quantity'] ? 'border-red-300 dark:border-red-600':'border-gray-300 dark:border-gray-600'"
-              class="flex items-center gap-2 rounded-lg px-2.5 border">
+              class="flex items-center gap-2 rounded-base px-2.5 border">
               <div>
                 <svg class="text-gray-500 size-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
                   <path class="fill-gray-500"
@@ -279,7 +279,7 @@
             <label for="price" class="mb-2 block text-xs font-medium text-gray-900 dark:text-white lg:text-sm">قیمت
               معادل</label>
             @if (metal_item.unit == 'gram') {
-              <div class="flex items-center gap-2 rounded-lg border border-gray-300 dark:border-gray-600 px-2.5">
+              <div class="flex items-center gap-2 rounded-base border border-gray-300 dark:border-gray-600 px-2.5">
                 <div>
                   <svg class="h-5 w-5 text-gray-500" id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg"
                        viewBox="0 0 24 24" stroke-width="1.5">
@@ -315,7 +315,7 @@
               </div>
             } @else {
               <div
-                class="flex items-center gap-2 rounded-lg border border-gray-300 dark:border-gray-600 px-2.5 min-h-11">
+                class="flex items-center gap-2 rounded-base border border-gray-300 dark:border-gray-600 px-2.5 min-h-11">
                 <div>
                   <svg class="h-5 w-5 text-gray-500" id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg"
                        viewBox="0 0 24 24" stroke-width="1.5">
@@ -351,8 +351,8 @@
               <app-button-with-loader type="submit" class="relative"
                                       [classes]="
                                       action == 'buy' ?
-                                        'cursor-pointer flex bg-emerald-500 justify-center w-full text-white px-4 rounded-lg w-full py-2.5':
-                                        'cursor-pointer flex bg-red-500 justify-center w-full text-white px-4 rounded-lg w-full py-2.5'
+                                        'cursor-pointer flex bg-emerald-500 justify-center w-full text-white px-4 rounded-base w-full py-2.5':
+                                        'cursor-pointer flex bg-red-500 justify-center w-full text-white px-4 rounded-base w-full py-2.5'
                                       "
                                       [loading]="submitting"
                                       [disabled]="submitting || ! formIsValid"
@@ -370,7 +370,7 @@
               <button
                 (click)="closeModal()"
                 type="button"
-                class="cursor-pointer flex w-full items-center justify-center gap-1 rounded-lg border border-gray-200 bg-white px-4 text-sm font-medium text-gray-500 py-2.5 hover:bg-gray-100 hover:text-gray-900 focus:z-10 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:border-gray-500 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
+                class="cursor-pointer flex w-full items-center justify-center gap-1 rounded-base border border-gray-200 bg-white px-4 text-sm font-medium text-gray-500 py-2.5 hover:bg-gray-100 hover:text-gray-900 focus:z-10 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:border-gray-500 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                      stroke="currentColor" class="size-6">
