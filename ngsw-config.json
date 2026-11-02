@@ -21,9 +21,12 @@
       "updateMode": "prefetch",
       "resources": {
         "files": [
-          "/assets/**",
+          "/fonts/**",
+          "/images/**",
+          "/svg/**",
+          "/audio/**",
           "/icons/**",
-          "/*.(svg|png|jpg|jpeg|gif|webp|ico|woff|woff2)"
+          "/*.(svg|png|jpg|jpeg|gif|webp|ico|woff|woff2|mp3|wav)"
         ]
       }
     }

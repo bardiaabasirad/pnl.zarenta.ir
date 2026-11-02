@@ -19,7 +19,7 @@ type ImageSrc = string | null | undefined;
 export class DefaultImgDirective implements OnChanges {
   @Input({ required: true }) src: ImageSrc = null;
 
-  private defaultLocalImage = '/assets/images/theme/gallery-icon-picture-landscape-vector-sign-symbol_660702-313.jpg';
+  private defaultLocalImage = '/images/gallery-icon-picture-landscape-vector-sign-symbol_660702-313.jpg';
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
