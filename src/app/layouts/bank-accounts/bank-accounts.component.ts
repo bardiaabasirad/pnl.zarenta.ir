@@ -14,7 +14,7 @@ import {HttpErrorResponse} from '@angular/common/http';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './bank-accounts.component.html',
-  styleUrl: './bank-accounts.component.scss',
+  styleUrl: './bank-accounts.component.css',
 })
 export class BankAccountsComponent implements OnInit {
   private bankAccountService = inject(BankAccountService);

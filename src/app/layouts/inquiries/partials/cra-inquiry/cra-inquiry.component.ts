@@ -15,7 +15,7 @@ import {convertToEnglishNumbersUtil} from '../../../../utils/convert-to-english-
   imports: [CommonModule, ButtonWithLoaderComponent, NgxMaskDirective, ReactiveFormsModule],
   templateUrl: './cra-inquiry.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./cra-inquiry.component.scss']
+  styleUrls: ['./cra-inquiry.component.css']
 })
 export class CraInquiryComponent {
   @Input() fee: number = 0;

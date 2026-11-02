@@ -14,7 +14,7 @@ import {BottomNavComponent} from '../partials/bottom-nav/bottom-nav.component';
   imports: [RouterOutlet, FooterComponent, HeaderComponent, SidebarComponent, BottomNavComponent],
   templateUrl: './main-layout.html',
   changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrl: './main-layout.scss',
+  styleUrl: './main-layout.css',
 })
 export class MainLayout implements OnInit {
   private authService = inject(AuthService);

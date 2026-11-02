@@ -26,7 +26,7 @@ import {MaterialPersianDateAdapter, PERSIAN_DATE_FORMATS} from "../../adapters/m
   ],
   templateUrl: './date-picker.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./date-picker.component.scss']
+  styleUrls: ['./date-picker.component.css']
 })
 export class DatePickerComponent implements OnInit {
   @Input() style: string = 'w-full border border-gray-200 rounded bg-gray-50 dark:border-gray-700 flex items-center';

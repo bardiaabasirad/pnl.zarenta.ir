@@ -7,7 +7,7 @@ import {RouterOutlet} from "@angular/router";
   imports: [RouterOutlet],
   templateUrl: './auth-entry-layout.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrl: './auth-entry-layout.component.scss',
+  styleUrl: './auth-entry-layout.component.css',
 })
 export class AuthEntryLayoutComponent {
 

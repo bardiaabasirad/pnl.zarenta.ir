@@ -21,7 +21,7 @@ import {CerificateSectionComponent} from '../partials/cerificate-section/cerific
   ],
   templateUrl: './password-step.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrl: './password-step.component.scss'
+  styleUrl: './password-step.component.css'
 })
 export class PasswordStepComponent {
   // ─── Services ────────────────────────────────────────────────────────────────

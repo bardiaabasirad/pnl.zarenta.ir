@@ -11,7 +11,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
     ButtonWithLoaderComponent
   ],
   templateUrl: './rejected-request.component.html',
-  styleUrl: './rejected-request.component.scss',
+  styleUrl: './rejected-request.component.css',
 })
 export class RejectedRequestComponent {
   private authService = inject(AuthService);

@@ -18,7 +18,7 @@ import {OrderStateService} from '../../../services/order-state.service';
   ],
   templateUrl: './sidebar.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrl: './sidebar.component.scss'
+  styleUrl: './sidebar.component.css'
 })
 export class SidebarComponent implements OnInit, OnDestroy {
   readonly user = signal<User | null | undefined>(undefined);

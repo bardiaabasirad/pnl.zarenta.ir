@@ -27,7 +27,7 @@ import {AppConstants} from '../../constants/app-constants';
   standalone: false,
   templateUrl: './transactions.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrl: './transactions.component.scss'
+  styleUrl: './transactions.component.css'
 })
 export class TransactionsComponent implements OnInit, OnDestroy {
   user: User | null | undefined;

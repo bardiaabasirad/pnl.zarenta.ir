@@ -7,7 +7,7 @@ import {environment} from '../../../environments/environment';
   imports: [],
   templateUrl: './blocked.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrl: './blocked.component.scss',
+  styleUrl: './blocked.component.css',
 })
 export class BlockedComponent {
   constructor(private router: Router) {}

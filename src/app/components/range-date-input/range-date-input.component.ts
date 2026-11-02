@@ -24,7 +24,7 @@ import {convertToEnglishNumbersUtil} from '../../utils/convert-to-english-number
   ],
   providers: [provideNgxMask()],
   changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./range-date-input.component.scss']
+  styleUrls: ['./range-date-input.component.css']
 })
 export class RangeDateInputComponent implements AfterViewInit, OnChanges {
   @Input() startDate!: string;

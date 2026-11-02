@@ -18,7 +18,7 @@ import {convertToEnglishNumbersUtil} from '../../../../utils/convert-to-english-
   imports: [CommonModule, FormsModule, ReactiveFormsModule, ButtonWithLoaderComponent, DatePickerComponent, NgxMaskDirective],
   templateUrl: './bank-inquiry.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./bank-inquiry.component.scss']
+  styleUrls: ['./bank-inquiry.component.css']
 })
 export class BankInquiryComponent implements OnInit, OnDestroy {
   @Input() fee: number = 0;

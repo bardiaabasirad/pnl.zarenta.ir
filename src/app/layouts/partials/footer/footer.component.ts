@@ -13,7 +13,7 @@ import {environment} from '../../../../environments/environment';
   imports: [],
   templateUrl: './footer.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrl: './footer.component.scss'
+  styleUrl: './footer.component.css'
 })
 export class FooterComponent {
   siteInfo: SiteInfo | undefined

@@ -40,7 +40,7 @@ import {Holiday} from '../../interfaces/holiday';
   ],
   templateUrl: './exchange.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrl: './exchange.component.scss'
+  styleUrl: './exchange.component.css'
 })
 export class ExchangeComponent implements OnInit, OnDestroy {
   marketStatus = signal<'active' | 'inactive'>('inactive');

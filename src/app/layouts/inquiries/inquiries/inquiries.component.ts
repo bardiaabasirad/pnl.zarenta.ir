@@ -34,7 +34,7 @@ import {environment} from '../../../../environments/environment';
   ],
   templateUrl: './inquiries.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./inquiries.component.scss']
+  styleUrls: ['./inquiries.component.css']
 })
 
 export class InquiriesComponent implements OnInit {

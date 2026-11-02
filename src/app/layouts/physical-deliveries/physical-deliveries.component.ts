@@ -12,7 +12,7 @@ import {DropdownSelect} from '../../components/dropdown-select/dropdown-select';
   standalone: true,
   imports: [CommonModule, FormsModule, DropdownSelect],
   templateUrl: './physical-deliveries.component.html',
-  styleUrl: './physical-deliveries.component.scss',
+  styleUrl: './physical-deliveries.component.css',
   providers: [DecimalPipe],
 })
 export class PhysicalDeliveriesComponent implements OnInit {

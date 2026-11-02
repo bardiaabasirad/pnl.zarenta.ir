@@ -18,7 +18,7 @@ import {
   ],
   templateUrl: './exchange-btn.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrl: './exchange-btn.component.scss',
+  styleUrl: './exchange-btn.component.css',
 })
 export class ExchangeBtnComponent {
   rate = input<number | undefined>(undefined);

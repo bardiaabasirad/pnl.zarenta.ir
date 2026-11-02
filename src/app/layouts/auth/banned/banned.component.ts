@@ -7,7 +7,7 @@ import {environment} from '../../../../environments/environment';
   imports: [],
   templateUrl: './banned.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrl: './banned.component.scss'
+  styleUrl: './banned.component.css'
 })
 export class BannedComponent {
   protected readonly environment = environment;

@@ -7,7 +7,7 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule],
   templateUrl: './not-found.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./not-found.component.scss']
+  styleUrls: ['./not-found.component.css']
 })
 export class NotFoundComponent {
 

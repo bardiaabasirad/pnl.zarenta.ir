@@ -22,7 +22,7 @@ import {CerificateSectionComponent} from '../partials/cerificate-section/cerific
   ],
   templateUrl: './reset-credentials.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrl: './reset-credentials.component.scss',
+  styleUrl: './reset-credentials.component.css',
 })
 export class ResetCredentialsComponent {
   private formBuilder = inject(FormBuilder);

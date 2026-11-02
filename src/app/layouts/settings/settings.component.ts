@@ -22,7 +22,7 @@ import {environment} from '../../../environments/environment';
   ],
   templateUrl: './settings.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrl: './settings.component.scss'
+  styleUrl: './settings.component.css'
 })
 export class SettingsComponent implements OnInit {
   // Services

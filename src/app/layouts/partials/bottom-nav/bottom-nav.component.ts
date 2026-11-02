@@ -10,7 +10,7 @@ import {from} from 'rxjs';
   selector: 'app-bottom-nav',
   imports: [RouterLink],
   templateUrl: './bottom-nav.component.html',
-  styleUrl: './bottom-nav.component.scss',
+  styleUrl: './bottom-nav.component.css',
 })
 export class BottomNavComponent implements OnInit {
   siteInfo: SiteInfo | undefined

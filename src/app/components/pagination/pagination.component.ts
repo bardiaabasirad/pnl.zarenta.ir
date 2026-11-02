@@ -9,7 +9,7 @@ import {CommonModule} from "@angular/common";
   ],
   templateUrl: './pagination.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./pagination.component.scss'],
+  styleUrls: ['./pagination.component.css'],
 })
 
 export class PaginationComponent implements OnChanges {

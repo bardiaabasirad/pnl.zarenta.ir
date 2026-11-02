@@ -22,7 +22,7 @@ import {MaterialPersianDateAdapter, PERSIAN_DATE_FORMATS} from "../../adapters/m
   ],
   templateUrl: './date-range-picker.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./date-range-picker.component.scss'],
+  styleUrls: ['./date-range-picker.component.css'],
 })
 export class DateRangePickerComponent implements OnChanges {
   @Input() startDate: Date | null = null;

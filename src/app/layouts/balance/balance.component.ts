@@ -23,7 +23,7 @@ import {toSignal} from '@angular/core/rxjs-interop';
   ],
   templateUrl: './balance.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrl: './balance.component.scss'
+  styleUrl: './balance.component.css'
 })
 export class BalanceComponent implements OnInit, OnDestroy {
   // Services

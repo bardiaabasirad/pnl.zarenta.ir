@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
   selector: 'app-cerificate-section',
   imports: [],
   templateUrl: './cerificate-section.component.html',
-  styleUrl: './cerificate-section.component.scss',
+  styleUrl: './cerificate-section.component.css',
 })
 export class CerificateSectionComponent {
 

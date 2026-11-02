@@ -17,7 +17,7 @@ import {convertToEnglishNumbersUtil} from '../../../../utils/convert-to-english-
   imports: [CommonModule, ButtonWithLoaderComponent, DatePickerComponent, NgxMaskDirective, ReactiveFormsModule],
   templateUrl: './ncr-inquiry.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./ncr-inquiry.component.scss']
+  styleUrls: ['./ncr-inquiry.component.css']
 })
 export class NcrInquiryComponent {
   @Input() fee: number = 0;

@@ -6,7 +6,7 @@ import {environment} from '../../../../environments/environment';
   imports: [],
   templateUrl: './pending-approval.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrl: './pending-approval.component.scss',
+  styleUrl: './pending-approval.component.css',
 })
 export class PendingApprovalComponent {
   stepTitle: string = 'درخواست شما با موفقیت ثبت شد';

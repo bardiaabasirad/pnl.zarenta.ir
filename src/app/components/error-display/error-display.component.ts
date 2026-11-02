@@ -8,7 +8,7 @@ import { ValidationService } from '../../services/validation.service';
   standalone: true,
   templateUrl: './error-display.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrl: './error-display.component.scss',
+  styleUrl: './error-display.component.css',
 })
 export class ErrorDisplayComponent {
   private validationService = inject(ValidationService);

@@ -20,7 +20,7 @@ import {convertToEnglishNumbersUtil} from '../../../../utils/convert-to-english-
   ],
   templateUrl: './iban-from-card-inquiry.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrl: './iban-from-card-inquiry.component.scss'
+  styleUrl: './iban-from-card-inquiry.component.css'
 })
 export class IbanFromCardInquiryComponent {
   @Input() balance: number = 0;

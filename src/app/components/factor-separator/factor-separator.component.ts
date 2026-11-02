@@ -9,7 +9,7 @@ import { NgClass } from '@angular/common';
     NgClass
 ],
   changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrl: './factor-separator.component.scss'
+  styleUrl: './factor-separator.component.css'
 })
 export class FactorSeparatorComponent {
   @Input() text: string = '';

@@ -14,7 +14,7 @@ import {environment} from '../../../environments/environment';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, RouterLink, DropdownSelect, DecimalPipe],
   templateUrl: './withdrawals.component.html',
-  styleUrl: './withdrawals.component.scss',
+  styleUrl: './withdrawals.component.css',
 })
 export class WithdrawalsComponent implements OnInit {
   private withdrawalService = inject(FiatWithdrawalService);

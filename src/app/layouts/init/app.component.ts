@@ -15,7 +15,7 @@ import {Title} from '@angular/platform-browser';
     RouterOutlet
   ],
   changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrl: './app.component.scss'
+  styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit, OnDestroy {
   readonly navigationLoader = inject(NavigationLoaderService);

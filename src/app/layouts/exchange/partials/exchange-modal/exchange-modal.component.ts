@@ -56,7 +56,7 @@ import {
   ],
   templateUrl: './exchange-modal.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrl: './exchange-modal.component.scss'
+  styleUrl: './exchange-modal.component.css'
 })
 export class ExchangeModalComponent implements OnInit, AfterViewInit, OnDestroy {
   // inputs

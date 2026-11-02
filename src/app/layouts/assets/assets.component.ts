@@ -9,7 +9,7 @@ import {AppConstants} from '../../constants/app-constants';
   selector: 'app-assets',
   imports: [DecimalPipe],
   templateUrl: './assets.component.html',
-  styleUrl: './assets.component.scss',
+  styleUrl: './assets.component.css',
 })
 export class AssetsComponent implements OnInit {
   initialized = signal<boolean>(false);

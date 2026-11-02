@@ -15,7 +15,7 @@ import {AppConstants} from '../../../../constants/app-constants';
   ],
   templateUrl: './order.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrl: './order.component.scss'
+  styleUrl: './order.component.css'
 })
 export class OrderComponent implements OnInit{
   @Input() order: Order | undefined;

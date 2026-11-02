@@ -13,7 +13,7 @@ import {environment} from '../../../environments/environment';
   standalone: false,
   templateUrl: './orders.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrl: './orders.component.scss'
+  styleUrl: './orders.component.css'
 })
 export class OrdersComponent implements OnInit {
   expirationTime: number = 0;

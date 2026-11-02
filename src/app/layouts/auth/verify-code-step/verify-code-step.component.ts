@@ -29,7 +29,7 @@ import {CerificateSectionComponent} from '../partials/cerificate-section/cerific
     CerificateSectionComponent
   ],
   templateUrl: './verify-code-step.component.html',
-  styleUrl: './verify-code-step.component.scss',
+  styleUrl: './verify-code-step.component.css',
   changeDetection: ChangeDetectionStrategy.Eager,
   providers: [provideNgxMask()]
 })

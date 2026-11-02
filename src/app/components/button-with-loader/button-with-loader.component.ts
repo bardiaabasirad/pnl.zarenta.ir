@@ -9,7 +9,7 @@ import {CommonModule} from '@angular/common';
   ],
   templateUrl: './button-with-loader.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./button-with-loader.component.scss']
+  styleUrls: ['./button-with-loader.component.css']
 })
 export class ButtonWithLoaderComponent {
   @Input() type: string = 'submit';

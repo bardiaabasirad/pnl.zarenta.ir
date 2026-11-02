@@ -27,7 +27,7 @@ import {ButtonWithLoaderComponent} from '../../components/button-with-loader/but
   ],
   templateUrl: './profile.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrl: './profile.component.scss'
+  styleUrl: './profile.component.css'
 })
 export class ProfileComponent implements OnInit, OnDestroy {
   readonly user = signal<User | null | undefined>(undefined);

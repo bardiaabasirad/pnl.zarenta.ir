@@ -9,7 +9,7 @@ import {FormsModule} from '@angular/forms';
   ],
   templateUrl: './jalali-datetime.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrl: './jalali-datetime.component.scss'
+  styleUrl: './jalali-datetime.component.css'
 })
 export class JalaliDatetimeComponent implements OnInit, OnDestroy {
   @Input() initialDateTime: string = '';

@@ -22,7 +22,7 @@ import {CerificateSectionComponent} from '../partials/cerificate-section/cerific
   ],
   templateUrl: './complete-profile.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrl: './complete-profile.component.scss',
+  styleUrl: './complete-profile.component.css',
 })
 export class CompleteProfileComponent {
   private authService = inject(AuthService);
@@ -44,19 +44,19 @@ export class CompleteProfileComponent {
       value: 'gold_dealer',
       label: 'طلافروش',
       description: 'همکاران ما در صنف طلافروشی',
-      img_src: '/assets/images/37fab7cb2adaee0e5febef01d7085287de17b101.png',
+      img_src: '/images/37fab7cb2adaee0e5febef01d7085287de17b101.png',
     },
     {
       value: 'trader',
       label: 'معامله‌گر',
       description: 'خرید و فروش طلا و مدیریت معاملات',
-      img_src: '/assets/images/9cc4f9ed02c220ea49166ced033bf7802fcf3ba9.png',
+      img_src: '/images/9cc4f9ed02c220ea49166ced033bf7802fcf3ba9.png',
     },
     {
       value: 'other',
       label: 'سایر',
       description: 'سرمایه‌گذاری و حفظ ارزش دارایی',
-      img_src: '/assets/images/81d836dbc6fa451aa5b40a711854f13b36257d3e.png',
+      img_src: '/images/81d836dbc6fa451aa5b40a711854f13b36257d3e.png',
     },
   ];
 

@@ -22,7 +22,7 @@ import {CerificateSectionComponent} from '../partials/cerificate-section/cerific
     CerificateSectionComponent
   ],
   templateUrl: './mobile-step.component.html',
-  styleUrl: './mobile-step.component.scss',
+  styleUrl: './mobile-step.component.css',
   changeDetection: ChangeDetectionStrategy.Eager,
   providers: [
     provideNgxMask()

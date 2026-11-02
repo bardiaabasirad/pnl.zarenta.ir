@@ -38,7 +38,7 @@ interface TraderNotification {
   ],
   templateUrl: './header.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  styleUrl: './header.component.scss'
+  styleUrl: './header.component.css'
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   readonly timeChanged = output<Date>();
