@@ -14,6 +14,7 @@ import {TransactionRoutingModule} from './transaction-routing.module';
 import {ExchangeModalComponent} from '../../layouts/exchange/partials/exchange-modal/exchange-modal.component';
 import {TransactionDescriptionPipe} from '../../pipes/transaction-description.pipe';
 import {RangeDateInputComponent} from "../../components/range-date-input/range-date-input.component";
+import {DropdownSelect} from '../../components/dropdown-select/dropdown-select';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import {RangeDateInputComponent} from "../../components/range-date-input/range-d
     ExchangeModalComponent,
     TransactionDescriptionPipe,
     RangeDateInputComponent,
+    DropdownSelect,
   ],
   providers: [DatePipe, provideNgxMask()],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

@@ -25,19 +25,15 @@
           </div>
 
           <div class="max-w-44 w-full">
-            <select
+            <app-dropdown-select
               [(ngModel)]="rangeType"
               (ngModelChange)="onRangeTypeChange($event)"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded
-                         focus:ring-blue-500 focus:border-blue-500 block w-full p-2
-                         dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
-                         dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-              <option value="">دستی</option>
-              <option value="today">فقط امروز</option>
-              <option value="yesterday">از دیروز</option>
-              <option value="month">از ابتدای برج</option>
-              <option value="year">از ابتدای سال</option>
-            </select>
+              [options]="rangeTypeOptions"
+              bindValue="value"
+              bindLabel="label"
+              placeholder="بازه زمانی"
+              triggerClass="w-full rounded border border-gray-300 bg-gray-50 text-sm dark:border-gray-600 dark:bg-gray-700"
+            />
           </div>
 
           <button (click)="getTransactions()" [disabled]="loading()" class="cursor-pointer bg-gray-100 rounded border border-gray-300 dark:border-gray-600 p-2">
@@ -82,77 +78,61 @@
         </div>
       </div>
 
-      <div [ngClass]="isExpanded ? '' : 'overflow-auto max-h-[calc(100vh-360px)] lg:max-h-[calc(100vh-200px)]'">
-        <table #transactionsTable id="transactions-table" dir="rtl" class="w-full min-w-full border border-gray-300 dark:border-gray-600 border-separate border-spacing-0 text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-          <thead class="sticky top-0 text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 z-10">
+      <div [ngClass]="isExpanded ? '' : 'overflow-auto max-h-[calc(100vh-360px)] lg:max-h-[calc(100vh-313px)]'"
+           class="rounded-xl border border-gray-200 dark:border-gray-700"
+      >
+        <table #transactionsTable id="transactions-table" dir="rtl" class="w-full min-w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+          <thead class="sticky top-0 z-10 bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
           <tr>
-            <th scope="col" class="px-2 py-2 whitespace-nowrap border border-gray-300 dark:border-gray-600">
-              ردیف
-            </th>
-            <th scope="col" class="px-2 py-2 whitespace-nowrap border border-gray-300 dark:border-gray-600">
-              تاریخ
-            </th>
-            <th scope="col" class="px-2 py-2 whitespace-nowrap border border-gray-300 dark:border-gray-600">
-              شرح
-            </th>
-            <th scope="col" class="px-2 py-2 whitespace-nowrap border border-gray-300 dark:border-gray-600">
-              مقدار
-            </th>
-            <th scope="col" class="px-2 py-2 whitespace-nowrap border border-gray-300 dark:border-gray-600 text-center">
-              موجودی قبل
-            </th>
-            <th scope="col" class="px-2 py-2 whitespace-nowrap border border-gray-300 dark:border-gray-600 text-center">
-              موجودی بعد
-            </th>
-            <th scope="col" class="px-2 py-2 whitespace-nowrap border border-gray-300 dark:border-gray-600">
-              ارز
-            </th>
+            <th scope="col" class="whitespace-nowrap border-b border-gray-200 px-2 py-2 rtl:border-l ltr:border-r dark:border-gray-700">ردیف</th>
+            <th scope="col" class="whitespace-nowrap border-b border-gray-200 px-2 py-2 rtl:border-l ltr:border-r dark:border-gray-700">تاریخ</th>
+            <th scope="col" class="whitespace-nowrap border-b border-gray-200 px-2 py-2 rtl:border-l ltr:border-r dark:border-gray-700">شرح</th>
+            <th scope="col" class="whitespace-nowrap border-b border-gray-200 px-2 py-2 rtl:border-l ltr:border-r dark:border-gray-700">مقدار</th>
+            <th scope="col" class="whitespace-nowrap border-b border-gray-200 px-2 py-2 text-center rtl:border-l ltr:border-r dark:border-gray-700">موجودی قبل</th>
+            <th scope="col" class="whitespace-nowrap border-b border-gray-200 px-2 py-2 text-center rtl:border-l ltr:border-r dark:border-gray-700">موجودی بعد</th>
+            <th scope="col" class="whitespace-nowrap border-b border-gray-200 px-2 py-2 dark:border-gray-700">ارز</th>
           </tr>
           </thead>
-          <tbody>
-            @if (transactions) {
-              @for (item of transactions; track i; let i = $index) {
-                <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 bg-white border-b dark:bg-gray-800 dark:border-gray-600 border-gray-200">
-                  <th class="px-2 py-2 whitespace-nowrap border border-gray-300 dark:border-gray-600">{{i + 1}}</th>
-                  <td class="px-2 py-2 whitespace-nowrap border border-gray-300 dark:border-gray-600" dir="ltr">{{item.created_at | jalali: 'YYYY/MM/DD HH:mm'}}</td>
-                  <td class="px-2 py-2 text-start border border-gray-300 dark:border-gray-600 min-w-20">{{ item.description }}</td>
-                  <td class="px-2 py-2 border border-gray-300 dark:border-gray-600">
-                    <span dir="ltr">{{ item.amount | number }}</span>
-                    @if (item.type == 'metal_commitment_in' || item.type == 'metal_commitment_out' || item.type == 'settlement_metal_out' || item.type == 'settlement_metal_in') {
-                      @if (item.metal_item_unit == 'gram') {
-                        گرم
-                      } @else if (item.metal_item_unit == 'count') {
-                        عدد
-                      }
-                    } @else if (item.type == 'fiat_debt_in' || item.type == 'fiat_credit_in' || item.type == 'settlement_fiat_transfer') {
-                      تومان
-                    }
+
+          <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+            @if (transactions.length) {
+              @for (item of transactions; track item.id ?? i; let i = $index) {
+                <tr class="bg-white dark:bg-gray-800">
+                  <!-- ردیف -->
+                  <td class="whitespace-nowrap border-gray-200 px-2 py-2 rtl:border-l ltr:border-r dark:border-gray-700 font-medium text-gray-900 dark:text-white">
+                    {{ rowNumber(i) }}
                   </td>
-                  <td class="px-2 py-2 whitespace-nowrap border border-gray-300 dark:border-gray-600">
+
+                  <!-- تاریخ -->
+                  <td class="whitespace-nowrap border-gray-200 px-2 py-2 rtl:border-l ltr:border-r dark:border-gray-700" dir="ltr">
+                    {{ item.created_at | jalali: 'YYYY/MM/DD HH:mm' }}
+                  </td>
+
+                  <!-- شرح -->
+                  <td class="min-w-20 border-gray-200 px-2 py-2 text-start rtl:border-l ltr:border-r dark:border-gray-700">
+                    {{ item.description }}
+                  </td>
+
+                  <!-- مقدار -->
+                  <td class="whitespace-nowrap border-gray-200 px-2 py-2 rtl:border-l ltr:border-r dark:border-gray-700">
+                    <span dir="ltr" class="font-medium text-gray-900 dark:text-white">{{ item.amount | number }}</span>
+                    {{ unitLabel(item) }}
+                  </td>
+
+                  <!-- موجودی قبل -->
+                  <td class="whitespace-nowrap border-gray-200 px-2 py-2 text-center rtl:border-l ltr:border-r dark:border-gray-700">
                     <span dir="ltr">{{ item.balance_before | number }}</span>
-                    @if (item.type == 'metal_commitment_in' || item.type == 'metal_commitment_out' || item.type == 'settlement_metal_out' || item.type == 'settlement_metal_in') {
-                      @if (item.metal_item_unit == 'gram') {
-                        گرم
-                      } @else if (item.metal_item_unit == 'count') {
-                        عدد
-                      }
-                    } @else if (item.type == 'fiat_debt_in' || item.type == 'fiat_credit_in' || item.type == 'settlement_fiat_transfer') {
-                      تومان
-                    }
+                    {{ unitLabel(item) }}
                   </td>
-                  <td class="px-2 py-2 whitespace-nowrap border border-gray-300 dark:border-gray-600">
+
+                  <!-- موجودی بعد -->
+                  <td class="whitespace-nowrap border-gray-200 px-2 py-2 text-center rtl:border-l ltr:border-r dark:border-gray-700">
                     <span dir="ltr">{{ item.balance_after | number }}</span>
-                    @if (item.type == 'metal_commitment_in' || item.type == 'metal_commitment_out' || item.type == 'settlement_metal_out' || item.type == 'settlement_metal_in') {
-                      @if (item.metal_item_unit == 'gram') {
-                        گرم
-                      } @else if (item.metal_item_unit == 'count') {
-                        عدد
-                      }
-                    } @else if (item.type == 'fiat_debt_in' || item.type == 'fiat_credit_in' || item.type == 'settlement_fiat_transfer') {
-                      تومان
-                    }
+                    {{ unitLabel(item) }}
                   </td>
-                  <td class="px-2 py-2 whitespace-nowrap border border-gray-300 dark:border-gray-600">
+
+                  <!-- ارز -->
+                  <td class="whitespace-nowrap border-gray-200 px-2 py-2 dark:border-gray-700">
                     @if (item.metal_item_title) {
                       {{ item.metal_item_title }}
                     } @else {
@@ -161,10 +141,26 @@
                   </td>
                 </tr>
               }
+            } @else if (!loading()) {
+              <tr class="bg-white dark:bg-gray-800">
+                <td colspan="7" class="px-4 py-8 text-center text-sm text-gray-500">تراکنشی یافت نشد.</td>
+              </tr>
             }
           </tbody>
         </table>
       </div>
+
+      @if (pageEvent.length > pageEvent.pageSize) {
+        <div [ngClass]="isExpanded ? 'p-4' : ''">
+          <app-pagination
+            [totalRecords]="pageEvent.length"
+            [recordsPerPage]="pageEvent.pageSize"
+            [activePage]="pageEvent.pageIndex + 1"
+            [loading]="loading()"
+            (onPageChange)="getTransactions($event)">
+          </app-pagination>
+        </div>
+      }
     } @else {
       <div class="relative space-y-4">
         <div class="flex items-center justify-between mb-8">

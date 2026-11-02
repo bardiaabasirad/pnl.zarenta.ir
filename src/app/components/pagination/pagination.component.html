@@ -1,35 +1,69 @@
-<div class="select-none">
-  @if (this.totalPages > 1) {
-    <ul class="flex items-center justify-center {{ class }}">
-      <li (click)="onPageClick(activePage - 1)">
-        <a class="px-2.5 bg-yellow-200 dark:bg-yellow-800 h-7 flex items-center rounded ml-2.5 {{ activePage === 1? 'disabled':'cursor-pointer' }}">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
-            <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
-          </svg>
+<div class="relative">
+  @if (totalPages > 1) {
+    <ul
+      class="flex items-center justify-center transition-opacity duration-200 {{ class }}"
+      [class.opacity-40]="loading"
+      [class.pointer-events-none]="loading"
+      [attr.aria-busy]="loading"
+    >
+      <!-- Previous Button -->
+      @let isPrevDisabled = activePage === 1;
+      <li (click)="!isPrevDisabled && onPageClick(activePage - 1)">
+        <a [ngClass]="{
+             'dark:border-gray-800 bg-gray-50 dark:bg-gray-800/40 hover:bg-gray-200 dark:hover:bg-gray-700': isPrevDisabled,
+             'cursor-pointer dark:border-gray-700 hover:border-primary hover:bg-primary group': !isPrevDisabled
+           }"
+           class="border px-3 h-7 flex transition-colors items-center rounded ml-1.5 border-gray-200">
+          <app-svg-icon name="chevron-right-mini"
+                        [ngClass]="isPrevDisabled ? 'fill-gray-300 dark:fill-gray-600' : 'fill-gray-600 dark:fill-gray-300 group-hover:fill-white'"
+                        class="size-5 transition-colors"
+          />
         </a>
       </li>
-      @if (! pages.includes(1)) {
-        <li (click)="onPageClick(1)"><a class="px-2.5 cursor-pointer dark:text-white">{{1}}</a></li>
+
+      <!-- First Page -->
+      @if (!pages.includes(1)) {
+        <li (click)="onPageClick(1)"><a class="cursor-pointer px-2.5 dark:text-white">1</a></li>
       }
-      @if (! pages.includes(1) && pages[1] - numbersToShow !== 1) {
+
+      @if (!pages.includes(1) && pages[1] - numbersToShow !== 1) {
         <li class="dots dark:text-white">...</li>
       }
+
+      <!-- Page Numbers -->
       @for (item of pages; track item) {
         <li>
-          <a (click)="onPageClick(item)" [ngClass]="{'bg-yellow-200 dark:bg-yellow-800 rounded text-gray-700': activePage === item, 'cursor-pointer': activePage !== item}" class="h-7 flex items-center px-2.5 transition-all dark:text-white">{{item}}</a>
+          <a (click)="onPageClick(item)"
+             [ngClass]="{
+               'bg-primary dark:bg-primary-800 text-white border-primary': activePage === item,
+               'cursor-pointer border-gray-200 hover:bg-primary hover:border-primary hover:text-white transition-colors': activePage !== item
+             }"
+             class="flex ml-1.5 h-7 border rounded items-center transition-all px-2.5 dark:text-white"
+          >{{ item }}</a>
         </li>
       }
-      @if (! pages.includes(totalPages) && pages[numbersToShowEdge] + numbersToShow - 1 !== totalPages) {
+
+      @if (!pages.includes(totalPages) && pages[numbersToShowEdge] + numbersToShow - 1 !== totalPages) {
         <li class="dots dark:text-white">...</li>
       }
-      @if (! pages.includes(totalPages)) {
-        <li (click)="onPageClick(totalPages)"><a class="px-2.5 cursor-pointer dark:text-white">{{totalPages}}</a></li>
+
+      <!-- Last Page -->
+      @if (!pages.includes(totalPages)) {
+        <li (click)="onPageClick(totalPages)"><a class="cursor-pointer px-2.5 dark:text-white">{{ totalPages }}</a></li>
       }
-      <li (click)="onPageClick(activePage + 1)">
-        <a class="px-2.5 bg-yellow-200 dark:bg-yellow-800 h-7 flex items-center rounded mr-2.5 {{ activePage + 1 > this.totalPages? 'disabled':'cursor-pointer' }}">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
-          </svg>
+
+      <!-- Next Button -->
+      @let isNextDisabled = activePage >= totalPages;
+      <li (click)="!isNextDisabled && onPageClick(activePage + 1)">
+        <a [ngClass]="{
+             'dark:border-gray-800 bg-gray-50 dark:bg-gray-800/40 hover:bg-gray-200 dark:hover:bg-gray-700': isNextDisabled,
+             'cursor-pointer dark:border-gray-700 hover:border-primary hover:bg-primary group': !isNextDisabled
+           }"
+           class="border px-3 h-7 flex transition-colors items-center rounded border-gray-200">
+          <app-svg-icon name="chevron-left-mini"
+                        [ngClass]="isNextDisabled ? 'fill-gray-300 dark:fill-gray-600' : 'fill-gray-600 dark:fill-gray-300 group-hover:fill-white'"
+                        class="size-5 transition-colors"
+          />
         </a>
       </li>
     </ul>

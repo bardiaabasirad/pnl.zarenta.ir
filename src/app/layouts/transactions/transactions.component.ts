@@ -21,6 +21,7 @@ import {AuthService} from '../../services/auth.service';
 import {Router} from '@angular/router';
 import {BalanceStateService} from '../../services/balance-state.service';
 import {AppConstants} from '../../constants/app-constants';
+import {PageEvent} from '@angular/material/paginator';
 
 @Component({
   selector: 'app-transactions',
@@ -31,7 +32,7 @@ import {AppConstants} from '../../constants/app-constants';
 })
 export class TransactionsComponent implements OnInit, OnDestroy {
   user: User | null | undefined;
-  transactions: any;
+  transactions: any[] = [];
   private kimiaService = inject(KimiaService);
   private datePipe = inject(DatePipe);
   private router = inject(Router);
@@ -42,10 +43,19 @@ export class TransactionsComponent implements OnInit, OnDestroy {
   start_date: Date | null = null;
   end_date: Date | null = null;
   rangeType: string = 'month';
+  readonly rangeTypeOptions = [
+    {value: '', label: 'دستی'},
+    {value: 'today', label: 'فقط امروز'},
+    {value: 'yesterday', label: 'از دیروز'},
+    {value: 'month', label: 'از ابتدای برج'},
+    {value: 'year', label: 'از ابتدای سال'},
+  ];
   generatingPDF = signal<boolean>(false);
   initialized = signal<boolean>(false);
   loadError: boolean = false;
   loading = signal<boolean>(false);
+  pageEvent: PageEvent = {length: 0, pageSize: 50, pageIndex: 0, previousPageIndex: 0};
+  private readonly pageSize = 50;
   balances: any[] = [];
   @ViewChild('expandableContainer') expandableContainer!: ElementRef;
   isExpanded: boolean = false;
@@ -229,19 +239,27 @@ export class TransactionsComponent implements OnInit, OnDestroy {
     this.end_date = event.endDate;
   }
 
-  getTransactions() {
-
-    const params: any = {};
+  getTransactions(page: number = 1) {
+    const params: any = {
+      page,
+      count: this.pageSize,
+    };
 
     if (this.start_date) params['start'] = this.datePipe.transform(this.start_date, 'yyyy-MM-dd');
     if (this.end_date) params['end'] = this.datePipe.transform(this.end_date, 'yyyy-MM-dd');
-    params['pageSize'] = 10000000;
 
     this.loading.set(true);
 
     this.kimiaService.getVoucherTransactions(params).subscribe({
       next: result => {
-        this.transactions = result
+        const pageData = result?.data;
+        this.transactions = pageData?.data ?? [];
+        this.pageEvent = {
+          length: pageData?.total ?? 0,
+          pageSize: pageData?.per_page ?? this.pageSize,
+          pageIndex: (pageData?.current_page ?? 1) - 1,
+          previousPageIndex: Math.max((pageData?.current_page ?? 1) - 2, 0),
+        };
         this.loading.set(false);
         this.initialized.set(true);
         this.loadError = false;
@@ -251,8 +269,17 @@ export class TransactionsComponent implements OnInit, OnDestroy {
         this.loading.set(false);
         this.loadError = true;
       }
-    })
+    });
+  }
 
+  rowNumber(index: number): number {
+    return this.pageEvent.pageIndex * this.pageEvent.pageSize + index + 1;
+  }
+
+  unitLabel(item: any): string {
+    if (item?.metal_item_unit === 'gram') return 'گرم';
+    if (item?.metal_item_unit === 'count') return 'عدد';
+    return 'تومان';
   }
 
   private convertToPersianNumbers(value: string): string {

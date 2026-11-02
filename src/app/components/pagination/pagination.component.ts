@@ -1,14 +1,15 @@
-import {Component, Input, OnChanges, Output, EventEmitter, AfterViewInit, ChangeDetectionStrategy} from '@angular/core';
+import {Component, Input, OnChanges, Output, EventEmitter} from '@angular/core';
 import {CommonModule} from "@angular/common";
+import {SvgIcon} from '../svg-icon/svg-icon';
 
 @Component({
   selector: 'app-pagination',
   standalone: true,
   imports: [
     CommonModule,
+    SvgIcon,
   ],
   templateUrl: './pagination.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./pagination.component.css'],
 })
 
@@ -20,6 +21,7 @@ export class PaginationComponent implements OnChanges {
   @Input() numbersToShowEdge = 4;
   @Input() activePage = 1;
   @Input() class = '';
+  @Input() loading = false;
 
   @Output() onPageChange: EventEmitter<number> = new EventEmitter();
 
@@ -91,6 +93,10 @@ export class PaginationComponent implements OnChanges {
   }
 
   onPageClick(pageNumber: number) {
+    if (this.loading) {
+      return;
+    }
+
     if (pageNumber !== this.activePage && pageNumber >= 1 && pageNumber <= this.totalPages) {
       this.activePage = pageNumber;
       this.onPageChange.emit(this.activePage);
