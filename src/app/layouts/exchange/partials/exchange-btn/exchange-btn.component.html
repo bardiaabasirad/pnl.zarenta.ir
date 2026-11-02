@@ -13,14 +13,14 @@
   </button>
 } @else if (market_status == 'inactive' && product_status && price !== undefined) {
   <button
-    [class]="order_type == 'buy' ? 'bg-teal-500/500' : 'bg-rose-400/20'"
+    [class]="order_type == 'buy' ? 'bg-teal-500/50' : 'bg-rose-400/20'"
     class="cursor-pointer w-full select-none rounded-base px-1 text-center text-sm font-medium py-2.5 lg:text-base text-white">
     {{ price | number }}
     <span class="text-[8px] lg:text-xs">تومان</span>
   </button>
 } @else {
   <div
-    [class]="order_type == 'buy' ? 'bg-teal-500/500' : 'bg-rose-400/20'"
+    [class]="order_type == 'buy' ? 'bg-teal-500/50' : 'bg-rose-400/20'"
     class="cursor-pointer select-none rounded-base px-1 text-center text-sm font-medium py-2.5 lg:text-base text-white">
     -
   </div>

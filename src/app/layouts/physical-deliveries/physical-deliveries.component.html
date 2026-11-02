@@ -8,7 +8,7 @@
     <div class="rounded bg-rose-50 px-3 py-2 text-sm text-rose-700">{{ error() }}</div>
   }
 
-  <section class="rounded-lg border border-gray-200 p-3 lg:p-4 space-y-3">
+  <section class="rounded-base border border-gray-200 p-3 lg:p-4 space-y-3">
     <h2 class="text-sm font-medium">ثبت درخواست جدید</h2>
     <div class="grid gap-3 lg:grid-cols-3">
       <app-dropdown-select
@@ -18,14 +18,14 @@
         bindValue="metal_item_id"
         bindLabel="label"
         placeholder="انتخاب فلز حاضر"
-        triggerClass="w-full rounded-lg border border-gray-200 bg-white text-sm"
+        triggerClass="w-full rounded-base border border-gray-200 bg-white text-sm"
       />
-      <input class="rounded-lg border border-gray-200 px-3 py-2.5 text-sm" type="text"
+      <input class="rounded-base border border-gray-200 px-3 py-2.5 text-sm" type="text"
              placeholder="وزن (گرم)"
              [ngModel]="qty()"
              (ngModelChange)="onQtyChange($event)">
       <button type="button"
-              class="rounded-lg bg-primary px-4 py-2.5 text-sm text-white disabled:opacity-50"
+              class="rounded-base bg-primary px-4 py-2.5 text-sm text-white disabled:opacity-50"
               [disabled]="!canSubmit()"
               (click)="submit()">
         @if (submitting()) { در حال ثبت... } @else { ثبت درخواست }
@@ -51,7 +51,7 @@
     } @else {
       <div class="space-y-2">
         @for (row of items(); track row.id) {
-          <div class="rounded-lg border border-gray-200 p-3 flex flex-wrap items-center justify-between gap-3">
+          <div class="rounded-base border border-gray-200 p-3 flex flex-wrap items-center justify-between gap-3">
             <div class="text-sm space-y-1">
               <div class="font-medium">#{{ row.tracking_code }} — {{ row.metal_item?.title }}</div>
               <div>وزن رزرو: {{ row.qty | number }} | کارمزد: {{ row.fee_amount | number }} تومان</div>

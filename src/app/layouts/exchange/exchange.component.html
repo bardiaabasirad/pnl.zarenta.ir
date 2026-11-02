@@ -1,5 +1,5 @@
 @if (messages()) {
-  <div class="relative border border-amber-500/30 rounded-lg p-4 text-sm bg-amber-50 mb-4">
+  <div class="relative border border-amber-500/30 rounded-base p-4 text-sm bg-amber-50 mb-4">
     <div #contentBox
          class="overflow-hidden transition-[max-height] duration-300"
          [style.max-height.px]="(effectiveShowToggle() && !expanded())
@@ -54,7 +54,7 @@
   @if (filteredGroups().length) {
     <div class="space-y-4">
       @for (group of filteredGroups(); track group.id) {
-        <div class="border border-gray-200 bg-white p-4 rounded-lg space-y-10">
+        <div class="border border-gray-200 bg-white p-4 rounded-base space-y-10">
           <div class="space-y-6">
             <div class="flex gap-1.5 pb-4 lg:gap-4 border-b border-gray-200 items-center justify-between">
               <div class="flex items-center gap-2 font-medium text-sm text-gray-700 lg:text-base">
@@ -158,7 +158,7 @@
   ></app-exchange-modal>
 
 } @else {
-  <div class="border border-gray-200 bg-white p-4 rounded-lg space-y-10">
+  <div class="border border-gray-200 bg-white p-4 rounded-base space-y-10">
     <div class="mx-auto w-full max-w-44 rounded h-6 bg-gray-200 animate-pulse mb-8"></div>
     <div class="space-y-4">
       <div class="flex gap-1.5 lg:gap-4 items-center">

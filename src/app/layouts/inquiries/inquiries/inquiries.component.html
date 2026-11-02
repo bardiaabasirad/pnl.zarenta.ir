@@ -1,7 +1,7 @@
 @let metal_trader = user();
 
 <div class="space-y-4">
-  <div class="bg-white border border-gray-200 rounded-lg flex items-center justify-between px-4 py-2.5">
+  <div class="bg-white border border-gray-200 rounded-base flex items-center justify-between px-4 py-2.5">
     @if (metal_trader && metal_trader.inquiry_access) {
       <div class="flex items-center text-xs font-medium text-gray-700">
         <div class="w-6">
@@ -17,7 +17,7 @@
     }
   </div>
 
-  <div class="rounded-lg border border-gray-200">
+  <div class="rounded-base border border-gray-200">
     <div
       class="flex items-center rounded-t-lg border-b border-gray-200 bg-white pl-2 dark:border-gray-700 dark:bg-gray-800 lg:px-4">
       <ul

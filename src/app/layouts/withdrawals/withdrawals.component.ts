@@ -8,13 +8,18 @@ import {FiatWithdrawalService} from '../../services/fiat-withdrawal.service';
 import {ValidationService} from '../../services/validation.service';
 import {DropdownSelect} from '../../components/dropdown-select/dropdown-select';
 import {environment} from '../../../environments/environment';
+import {NgxMaskDirective, provideNgxMask} from 'ngx-mask';
+import {convertToEnglishNumbersUtil} from '../../utils/convert-to-english-numbers.util';
 
 @Component({
   selector: 'app-withdrawals',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink, DropdownSelect, DecimalPipe],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink, DropdownSelect, DecimalPipe, NgxMaskDirective],
   templateUrl: './withdrawals.component.html',
   styleUrl: './withdrawals.component.css',
+  providers: [
+    provideNgxMask()
+  ]
 })
 export class WithdrawalsComponent implements OnInit {
   private withdrawalService = inject(FiatWithdrawalService);
@@ -200,4 +205,6 @@ export class WithdrawalsComponent implements OnInit {
     }
     return sheba.replace(/(.{4})/g, '$1 ').trim();
   }
+
+  public p2e = (value: unknown): string => convertToEnglishNumbersUtil(String(value));
 }

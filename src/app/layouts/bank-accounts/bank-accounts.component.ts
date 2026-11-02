@@ -8,13 +8,17 @@ import {iranianShebaValidator, normalizeSheba} from '../../validators/iranian-sh
 import {BankAccountStatus} from '../../interfaces/enums';
 import {environment} from '../../../environments/environment';
 import {HttpErrorResponse} from '@angular/common/http';
+import {NgxMaskDirective, provideNgxMask} from 'ngx-mask';
 
 @Component({
   selector: 'app-bank-accounts',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, NgxMaskDirective],
   templateUrl: './bank-accounts.component.html',
   styleUrl: './bank-accounts.component.css',
+  providers: [
+    provideNgxMask()
+  ]
 })
 export class BankAccountsComponent implements OnInit {
   private bankAccountService = inject(BankAccountService);
@@ -138,4 +142,21 @@ export class BankAccountsComponent implements OnInit {
     }
     return sheba.replace(/(.{4})/g, '$1 ').trim();
   }
+
+  /**
+   * ارقام فارسی/عربی → لاتین؛ پیشوند IR در paste حذف می‌شود.
+   * فاصله‌های mask حفظ می‌شوند تا مکان‌نما نپرد.
+   */
+  public toEnglishDigits = (value: unknown): string => {
+    const map: Record<string, string> = {
+      '۰': '0', '۱': '1', '۲': '2', '۳': '3', '۴': '4',
+      '۵': '5', '۶': '6', '۷': '7', '۸': '8', '۹': '9',
+      '٠': '0', '١': '1', '٢': '2', '٣': '3', '٤': '4',
+      '٥': '5', '٦': '6', '٧': '7', '٨': '8', '٩': '9',
+    };
+    return String(value ?? '')
+      .replace(/[۰-۹٠-٩]/g, (digit) => map[digit] ?? digit)
+      .replace(/^IR/i, '')
+      .replace(/[^\d\s]/g, '');
+  };
 }

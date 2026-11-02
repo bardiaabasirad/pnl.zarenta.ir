@@ -1,4 +1,4 @@
-<div class="space-y-4 rounded-lg bg-white p-4 border border-gray-200 overflow-hidden">
+<div class="space-y-4 rounded-base bg-white p-4 border border-gray-200 overflow-hidden">
 
   <div #expandableContainer
        (keyup.escape)="toggleExpand()"
@@ -115,7 +115,11 @@
 
                   <!-- مقدار -->
                   <td class="whitespace-nowrap border-gray-200 px-2 py-2 rtl:border-l ltr:border-r dark:border-gray-700">
-                    <span dir="ltr" class="font-medium text-gray-900 dark:text-white">{{ item.amount | number }}</span>
+                    <span dir="ltr" class="font-medium"
+                          [class.text-rose-600]="signedAmount(item) < 0"
+                          [class.text-teal-700]="signedAmount(item) > 0"
+                          [class.text-gray-900]="signedAmount(item) === 0"
+                          [class.dark:text-white]="signedAmount(item) === 0">{{ signedAmount(item) | number }}</span>
                     {{ unitLabel(item) }}
                   </td>
 

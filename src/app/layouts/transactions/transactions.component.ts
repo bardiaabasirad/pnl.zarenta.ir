@@ -276,10 +276,40 @@ export class TransactionsComponent implements OnInit, OnDestroy {
     return this.pageEvent.pageIndex * this.pageEvent.pageSize + index + 1;
   }
 
+  private readonly fiatTypes = new Set([
+    'deposit',
+    'withdraw',
+    'fiat_debt_in',
+    'fiat_credit_in',
+    'settlement_fiat_transfer',
+    'penalty_loss',
+  ]);
+
   unitLabel(item: any): string {
-    if (item?.metal_item_unit === 'gram') return 'گرم';
-    if (item?.metal_item_unit === 'count') return 'عدد';
+    if (item?.amount_unit === 'toman' || this.fiatTypes.has(item?.type)) {
+      return 'تومان';
+    }
+    if (item?.amount_unit === 'count' || item?.metal_item_unit === 'count') {
+      return 'عدد';
+    }
+    if (item?.amount_unit === 'gram' || item?.metal_item_unit === 'gram') {
+      return 'گرم';
+    }
     return 'تومان';
+  }
+
+  signedAmount(item: any): number {
+    if (item?.signed_amount !== undefined && item?.signed_amount !== null && item?.signed_amount !== '') {
+      return Number(item.signed_amount);
+    }
+
+    const before = Number(item?.balance_before ?? 0);
+    const after = Number(item?.balance_after ?? 0);
+    if (Number.isFinite(before) && Number.isFinite(after)) {
+      return after - before;
+    }
+
+    return Number(item?.amount ?? 0);
   }
 
   private convertToPersianNumbers(value: string): string {
