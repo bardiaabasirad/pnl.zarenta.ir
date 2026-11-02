@@ -6,12 +6,38 @@
 
     <div class="flex items-center justify-between pr-4 pl-6 py-4">
       <div class="flex items-center gap-3.5">
-        <div class="w-16 h-16 flex items-center justify-center aspect-square rounded-full border border-gray-300 dark:border-gray-600">
-          <svg width="20" height="23" viewBox="0 0 20 23" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M9.02418 10.3413C11.6037 10.3413 13.6948 8.2502 13.6948 5.67067C13.6948 3.09113 11.6037 1 9.02418 1C6.44465 1 4.35352 3.09113 4.35352 5.67067C4.35352 8.2502 6.44465 10.3413 9.02418 10.3413Z" stroke="#A7A9AC" stroke-width="1.74199" stroke-linecap="round" stroke-linejoin="round"></path>
-            <path d="M1 19.6827C1 16.0676 4.59641 13.1438 9.0242 13.1438C9.88794 13.1438 10.7201 13.255 11.5 13.461C11.6153 13.4914 11.7294 13.5239 11.8423 13.5585" stroke="#A7A9AC" stroke-width="1.74199" stroke-linecap="round" stroke-linejoin="round"></path>
-            <path d="M15.25 21.5V15M15.25 15L18.5 18.25M15.25 15L12 18.25" stroke="#A7A9AC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-          </svg>
+        <input #avatarFileInput
+               type="file"
+               accept="image/jpeg,image/png,image/jpg"
+               class="hidden"
+               (change)="onAvatarFileSelected($event)">
+        <div class="relative shrink-0">
+          <button id="avatar"
+                  type="button"
+                  (click)="openAvatarPicker()"
+                  class="cursor-pointer w-16 h-16 flex items-center justify-center aspect-square rounded-full border border-gray-300 dark:border-gray-600 overflow-hidden bg-gray-50">
+            @if (user_data?.avatar; as avatar) {
+              <img [src]="avatar | sanitizeImageURL:'100':'100'"
+                   alt="آواتار"
+                   class="w-full h-full object-cover">
+            } @else {
+              <svg width="20" height="23" viewBox="0 0 20 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9.02418 10.3413C11.6037 10.3413 13.6948 8.2502 13.6948 5.67067C13.6948 3.09113 11.6037 1 9.02418 1C6.44465 1 4.35352 3.09113 4.35352 5.67067C4.35352 8.2502 6.44465 10.3413 9.02418 10.3413Z" stroke="#A7A9AC" stroke-width="1.74199" stroke-linecap="round" stroke-linejoin="round"></path>
+                <path d="M1 19.6827C1 16.0676 4.59641 13.1438 9.0242 13.1438C9.88794 13.1438 10.7201 13.255 11.5 13.461C11.6153 13.4914 11.7294 13.5239 11.8423 13.5585" stroke="#A7A9AC" stroke-width="1.74199" stroke-linecap="round" stroke-linejoin="round"></path>
+                <path d="M15.25 21.5V15M15.25 15L18.5 18.25M15.25 15L12 18.25" stroke="#A7A9AC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            }
+          </button>
+
+          @if (user_data?.avatar) {
+            <button type="button"
+                    (click)="deleteAvatar($event)"
+                    [disabled]="deletingAvatar"
+                    title="حذف تصویر"
+                    class="absolute -bottom-1 -left-1 cursor-pointer flex items-center justify-center size-6 rounded-full bg-white border border-gray-200 shadow-sm disabled:opacity-50">
+              <app-svg-icon name="delete" class="size-3.5 fill-rose-300 hover:fill-rose-500 transition-colors" />
+            </button>
+          }
         </div>
         <div>
           <div class="text-base font-medium mb-1.5">{{ user_data?.name }}</div>
@@ -176,5 +202,61 @@
       </div>
     </div>
 
+  </div>
+</div>
+
+<div id="avatar-crop-modal"
+     tabindex="-1"
+     aria-hidden="true"
+     class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+  <div class="relative max-h-full w-full max-w-md p-4">
+    <div class="relative rounded-lg bg-white shadow dark:bg-gray-800">
+      <div class="px-4 py-3 bg-teal-50 flex gap-2.5 rounded-t-lg">
+        <div class="flex items-center justify-center p-1.5 bg-teal-200/50 rounded-full">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+               class="size-5 text-teal-800">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.055-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0Z" />
+          </svg>
+        </div>
+        <div class="font-semibold text-gray-700 pt-1">برش تصویر پروفایل</div>
+      </div>
+
+      <div class="p-4">
+        @if (imageChangedEvent) {
+          <image-cropper
+            [imageChangedEvent]="imageChangedEvent"
+            [maintainAspectRatio]="true"
+            [aspectRatio]="1"
+            [resizeToWidth]="100"
+            [resizeToHeight]="100"
+            [imageQuality]="80"
+            format="jpeg"
+            output="blob"
+            (imageCropped)="imageCropped($event)"
+            class="max-h-80">
+          </image-cropper>
+        }
+        <p class="mt-3 text-xs text-gray-500">تصویر مربعی با اندازه ۱۰۰×۱۰۰ پیکسل ذخیره می‌شود.</p>
+      </div>
+
+      <div class="flex gap-4 rounded-b p-4 dark:border-gray-600">
+        <button type="button"
+                (click)="closeAvatarCropModal()"
+                class="cursor-pointer flex-1 flex items-center justify-center rounded gap-2 border border-gray-200 text-gray-600 hover:text-gray-700 py-2">
+          بی‌خیال
+        </button>
+        <div class="flex-1">
+          <app-button-with-loader (clicked)="confirmAvatarUpload()"
+                                  [loading]="uploadingAvatar"
+                                  [disabled]="uploadingAvatar || !croppedBlob"
+                                  type="button"
+                                  class="relative block"
+                                  classes="bg-teal-700 text-white py-2 rounded w-full">
+            <span>ذخیره تصویر</span>
+          </app-button-with-loader>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

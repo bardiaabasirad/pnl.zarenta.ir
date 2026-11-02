@@ -1,5 +1,15 @@
-import {Component, inject, OnDestroy, OnInit, ChangeDetectionStrategy, signal} from '@angular/core';
-import {NavigationEnd, Router, RouterLink} from "@angular/router";
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  inject,
+  OnDestroy,
+  OnInit,
+  ChangeDetectionStrategy,
+  signal,
+  ViewChild
+} from '@angular/core';
+import {NavigationEnd, Router, RouterLink} from '@angular/router';
 import {CommonModule} from '@angular/common';
 import {User} from '../../../interfaces/user';
 import {from, Subscription} from 'rxjs';
@@ -8,29 +18,47 @@ import {EventService} from '../../../services/event.service';
 import {StorageKey, StorageService} from '../../../services/storage.service';
 import {filter} from 'rxjs/operators';
 import {OrderStateService} from '../../../services/order-state.service';
+import {Modal, ModalInterface, ModalOptions} from 'flowbite';
+import {ImageCropperComponent, ImageCroppedEvent} from 'ngx-image-cropper';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {SanitizeImageURLPipe} from '../../../pipes/sanitize-image-url.pipe';
+import {ButtonWithLoaderComponent} from '../../../components/button-with-loader/button-with-loader.component';
+import {SvgIcon} from '../../../components/svg-icon/svg-icon';
 
 @Component({
   selector: 'app-sidebar',
   standalone: true,
   imports: [
     CommonModule,
-    RouterLink
+    RouterLink,
+    ImageCropperComponent,
+    SanitizeImageURLPipe,
+    ButtonWithLoaderComponent,
+    SvgIcon
   ],
   templateUrl: './sidebar.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './sidebar.component.css'
 })
-export class SidebarComponent implements OnInit, OnDestroy {
+export class SidebarComponent implements OnInit, AfterViewInit, OnDestroy {
   readonly user = signal<User | null | undefined>(undefined);
   private subscriptions: Subscription[] = [];
   url: string = '';
   loggingOut: boolean = false;
   loading: boolean = false;
-  // services
-  private router =  inject(Router);
-  private authService =  inject(AuthService);
-  private eventService =  inject(EventService);
 
+  imageChangedEvent: Event | null = null;
+  croppedBlob: Blob | null = null;
+  uploadingAvatar = false;
+  deletingAvatar = false;
+  avatarCropModal: ModalInterface | undefined;
+
+  @ViewChild('avatarFileInput') avatarFileInput!: ElementRef<HTMLInputElement>;
+
+  private router = inject(Router);
+  private authService = inject(AuthService);
+  private eventService = inject(EventService);
+  private matSnackBar = inject(MatSnackBar);
   private orderState = inject(OrderStateService);
   readonly hasUnseenUpdate = this.orderState.hasUnseenUpdate;
 
@@ -54,6 +82,20 @@ export class SidebarComponent implements OnInit, OnDestroy {
     this.getUserInfo();
   }
 
+  ngAfterViewInit(): void {
+    const modalOptions: ModalOptions = {
+      placement: 'center',
+      backdrop: 'dynamic',
+      backdropClasses: 'bg-gray-900/50 dark:bg-gray-900/80 fixed inset-0 z-40',
+      closable: true,
+    };
+
+    const modalElement = document.querySelector('#avatar-crop-modal');
+    if (modalElement) {
+      this.avatarCropModal = new Modal(modalElement as HTMLElement, modalOptions);
+    }
+  }
+
   ngOnDestroy(): void {
     this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
@@ -73,21 +115,103 @@ export class SidebarComponent implements OnInit, OnDestroy {
           }
         })
       );
-    }
-    else{
+    } else {
       this.user.set(null);
     }
   }
 
-  logout(){
+  openAvatarPicker(): void {
+    this.avatarFileInput?.nativeElement.click();
+  }
+
+  onAvatarFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (!input.files?.length) {
+      return;
+    }
+
+    this.imageChangedEvent = event;
+    this.croppedBlob = null;
+    this.avatarCropModal?.show();
+  }
+
+  imageCropped(event: ImageCroppedEvent): void {
+    this.croppedBlob = event.blob ?? null;
+  }
+
+  closeAvatarCropModal(): void {
+    this.avatarCropModal?.hide();
+    this.resetCropState();
+  }
+
+  confirmAvatarUpload(): void {
+    if (!this.croppedBlob || this.uploadingAvatar) {
+      return;
+    }
+
+    this.uploadingAvatar = true;
+
+    this.subscriptions.push(
+      this.authService.uploadAvatar(this.croppedBlob).subscribe({
+        next: (response) => {
+          this.authService.updateUserField('avatar', response.avatar);
+          this.user.set(this.authService.getUser());
+          this.uploadingAvatar = false;
+          this.closeAvatarCropModal();
+          this.matSnackBar.open(response.message, 'باشه', {duration: 5000});
+        },
+        error: (error) => {
+          this.uploadingAvatar = false;
+          const message = error?.error?.message || 'خطا در آپلود تصویر پروفایل';
+          this.matSnackBar.open(message, 'باشه', {duration: 5000});
+        }
+      })
+    );
+  }
+
+  deleteAvatar(event: Event): void {
+    event.stopPropagation();
+
+    if (this.deletingAvatar || !this.user()?.avatar) {
+      return;
+    }
+
+    this.deletingAvatar = true;
+
+    this.subscriptions.push(
+      this.authService.deleteAvatar().subscribe({
+        next: (response) => {
+          this.authService.updateUserField('avatar', null);
+          this.user.set(this.authService.getUser());
+          this.deletingAvatar = false;
+          this.matSnackBar.open(response.message, 'باشه', {duration: 5000});
+        },
+        error: (error) => {
+          this.deletingAvatar = false;
+          const message = error?.error?.message || 'خطا در حذف تصویر پروفایل';
+          this.matSnackBar.open(message, 'باشه', {duration: 5000});
+        }
+      })
+    );
+  }
+
+  private resetCropState(): void {
+    this.imageChangedEvent = null;
+    this.croppedBlob = null;
+    if (this.avatarFileInput?.nativeElement) {
+      this.avatarFileInput.nativeElement.value = '';
+    }
+  }
+
+  logout() {
     this.loggingOut = true;
 
     this.authService.logout().subscribe({
-      next: (response) => {
+      next: () => {
         this.authService.unsetUser();
         this.loggingOut = false;
       },
-      error: (error) => {
+      error: () => {
         this.loggingOut = false;
       }
     });
@@ -102,13 +226,8 @@ declare global {
   }
 }
 
-String.prototype.isMatching = function(pattern: string): boolean {
-  // Escape special characters in the pattern
+String.prototype.isMatching = function (pattern: string): boolean {
   const escapedPattern = pattern.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-
-  // Create a regular expression from the pattern
   const regex = new RegExp(escapedPattern);
-
-  // Check if the string matches the pattern
   return regex.test(this.toString());
 };

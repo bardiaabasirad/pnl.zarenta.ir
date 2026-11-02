@@ -3,6 +3,7 @@ export interface User {
   name: string,
   api_key: string,
   phone: string,
+  avatar: string | null,
   balance: number,
   request_made: number,
   buy_fee_margin: number,

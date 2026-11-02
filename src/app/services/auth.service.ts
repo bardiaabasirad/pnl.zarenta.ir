@@ -160,6 +160,21 @@ export class AuthService {
     return this.http.post(`${environment.apiUrl}/v1/traders/change-password`, payload);
   }
 
+  uploadAvatar(image: Blob): Observable<{ avatar: string; message: string }> {
+    const formData = new FormData();
+    formData.append('image', image, 'avatar.jpg');
+    return this.http.post<{ avatar: string; message: string }>(
+      `${environment.apiUrl}/v1/traders/profile/avatar`,
+      formData
+    );
+  }
+
+  deleteAvatar(): Observable<{ avatar: null; message: string }> {
+    return this.http.delete<{ avatar: null; message: string }>(
+      `${environment.apiUrl}/v1/traders/profile/avatar`
+    );
+  }
+
   logout(): Observable<any> {
     return this.http.post(`${environment.apiUrl}/v1/traders/auth/logout`, {});
   }
