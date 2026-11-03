@@ -1,20 +1,22 @@
-import {Component, computed, inject, OnInit, signal} from '@angular/core';
+import {Component, computed, inject, OnInit, signal, viewChild} from '@angular/core';
 import {CommonModule, DecimalPipe} from '@angular/common';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {RouterLink} from '@angular/router';
 import {Title} from '@angular/platform-browser';
 import {HttpErrorResponse} from '@angular/common/http';
+import {firstValueFrom} from 'rxjs';
 import {FiatWithdrawalService} from '../../services/fiat-withdrawal.service';
 import {ValidationService} from '../../services/validation.service';
 import {DropdownSelect} from '../../components/dropdown-select/dropdown-select';
 import {environment} from '../../../environments/environment';
 import {NgxMaskDirective, provideNgxMask} from 'ngx-mask';
 import {convertToEnglishNumbersUtil} from '../../utils/convert-to-english-numbers.util';
+import {ConfirmModalComponent} from '../../components/confirm-modal/confirm-modal.component';
 
 @Component({
   selector: 'app-withdrawals',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink, DropdownSelect, DecimalPipe, NgxMaskDirective],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink, DropdownSelect, DecimalPipe, NgxMaskDirective, ConfirmModalComponent],
   templateUrl: './withdrawals.component.html',
   styleUrl: './withdrawals.component.css',
   providers: [
@@ -22,6 +24,7 @@ import {convertToEnglishNumbersUtil} from '../../utils/convert-to-english-number
   ]
 })
 export class WithdrawalsComponent implements OnInit {
+  private readonly confirmModal = viewChild.required(ConfirmModalComponent);
   private withdrawalService = inject(FiatWithdrawalService);
   private validationService = inject(ValidationService);
   private titleService = inject(Title);
@@ -151,21 +154,23 @@ export class WithdrawalsComponent implements OnInit {
     });
   }
 
-  cancel(row: any): void {
-    if (!confirm('لغو درخواست و بازگشت مبلغ به کیف تومان؟')) {
-      return;
-    }
-
-    this.cancellingId.set(row.id);
-    this.error.set(null);
-    this.withdrawalService.cancel(row.id).subscribe({
-      next: (res) => {
-        this.success.set(res?.message || 'درخواست لغو شد.');
-        this.loadMeta();
-        this.loadList();
+  async cancel(row: any): Promise<void> {
+    await this.confirmModal().ask({
+      title: 'لغو درخواست برداشت',
+      message: 'لغو درخواست و بازگشت مبلغ به کیف تومان؟',
+      confirmLabel: 'بله، لغو کن!',
+      onConfirm: async () => {
+        this.error.set(null);
+        try {
+          const res = await firstValueFrom(this.withdrawalService.cancel(row.id));
+          this.success.set(res?.message || 'درخواست لغو شد.');
+          this.loadMeta();
+          this.loadList();
+        } catch (err: any) {
+          this.error.set(err?.error?.message || 'لغو ناموفق بود');
+          throw err;
+        }
       },
-      error: (err) => this.error.set(err?.error?.message || 'لغو ناموفق بود'),
-      complete: () => this.cancellingId.set(null),
     });
   }
 

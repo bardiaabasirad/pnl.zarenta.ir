@@ -1,7 +1,8 @@
-import {Component, inject, OnInit, signal} from '@angular/core';
+import {Component, inject, OnInit, signal, viewChild} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormControl, ReactiveFormsModule, Validators} from '@angular/forms';
 import {Title} from '@angular/platform-browser';
+import {firstValueFrom} from 'rxjs';
 import {BankAccountService} from '../../services/bank-account.service';
 import {ValidationService} from '../../services/validation.service';
 import {iranianShebaValidator, normalizeSheba} from '../../validators/iranian-sheba-validator';
@@ -9,11 +10,12 @@ import {BankAccountStatus} from '../../interfaces/enums';
 import {environment} from '../../../environments/environment';
 import {HttpErrorResponse} from '@angular/common/http';
 import {NgxMaskDirective, provideNgxMask} from 'ngx-mask';
+import {ConfirmModalComponent} from '../../components/confirm-modal/confirm-modal.component';
 
 @Component({
   selector: 'app-bank-accounts',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, NgxMaskDirective],
+  imports: [CommonModule, ReactiveFormsModule, NgxMaskDirective, ConfirmModalComponent],
   templateUrl: './bank-accounts.component.html',
   styleUrl: './bank-accounts.component.css',
   providers: [
@@ -21,6 +23,7 @@ import {NgxMaskDirective, provideNgxMask} from 'ngx-mask';
   ]
 })
 export class BankAccountsComponent implements OnInit {
+  private readonly confirmModal = viewChild.required(ConfirmModalComponent);
   private bankAccountService = inject(BankAccountService);
   private validationService = inject(ValidationService);
   private titleService = inject(Title);
@@ -93,20 +96,22 @@ export class BankAccountsComponent implements OnInit {
     });
   }
 
-  remove(row: any): void {
-    if (!confirm('حساب بانکی حذف شود؟')) {
-      return;
-    }
-
-    this.deletingId.set(row.id);
-    this.error.set(null);
-    this.bankAccountService.destroy(row.id).subscribe({
-      next: (res) => {
-        this.success.set(res?.message || 'حساب بانکی حذف شد.');
-        this.loadList();
+  async remove(row: any): Promise<void> {
+    await this.confirmModal().ask({
+      title: 'حذف حساب بانکی',
+      message: 'حساب بانکی حذف شود؟',
+      confirmLabel: 'بله، حذفش کن!',
+      onConfirm: async () => {
+        this.error.set(null);
+        try {
+          const res = await firstValueFrom(this.bankAccountService.destroy(row.id));
+          this.success.set(res?.message || 'حساب بانکی حذف شد.');
+          this.loadList();
+        } catch (err: any) {
+          this.error.set(err?.error?.message || 'حذف ناموفق بود');
+          throw err;
+        }
       },
-      error: (err) => this.error.set(err?.error?.message || 'حذف ناموفق بود'),
-      complete: () => this.deletingId.set(null),
     });
   }
 

@@ -1,21 +1,24 @@
-import {Component, computed, inject, OnInit, signal} from '@angular/core';
+import {Component, computed, inject, OnInit, signal, viewChild} from '@angular/core';
 import {CommonModule, DecimalPipe} from '@angular/common';
 import {FormsModule} from '@angular/forms';
+import {firstValueFrom} from 'rxjs';
 import {PhysicalDeliveryService} from '../../services/physical-delivery.service';
 import {AssetService} from '../../services/asset.service';
 import {Title} from '@angular/platform-browser';
 import {environment} from '../../../environments/environment';
 import {DropdownSelect} from '../../components/dropdown-select/dropdown-select';
+import {ConfirmModalComponent} from '../../components/confirm-modal/confirm-modal.component';
 
 @Component({
   selector: 'app-physical-deliveries',
   standalone: true,
-  imports: [CommonModule, FormsModule, DropdownSelect],
+  imports: [CommonModule, FormsModule, DropdownSelect, ConfirmModalComponent],
   templateUrl: './physical-deliveries.component.html',
   styleUrl: './physical-deliveries.component.css',
   providers: [DecimalPipe],
 })
 export class PhysicalDeliveriesComponent implements OnInit {
+  private readonly confirmModal = viewChild.required(ConfirmModalComponent);
   private deliveryService = inject(PhysicalDeliveryService);
   private assetService = inject(AssetService);
   private titleService = inject(Title);
@@ -119,7 +122,7 @@ export class PhysicalDeliveriesComponent implements OnInit {
     });
   }
 
-  submit(): void {
+  async submit(): Promise<void> {
     if (!this.canSubmit()) {
       return;
     }
@@ -130,42 +133,46 @@ export class PhysicalDeliveriesComponent implements OnInit {
       this.error.set('مقدار از موجودی آزاد بیشتر است.');
       return;
     }
-    if (!confirm('ثبت درخواست تحویل؟ وزن رزرو و کارمزد از کیف‌پول کسر می‌شود.')) {
-      return;
-    }
-    this.submitting.set(true);
-    this.error.set(null);
-    this.deliveryService.create({
-      metal_item_id: Number(metalId),
-      qty,
-      idempotency_key: `ui-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`,
-    }).subscribe({
-      next: (res) => {
-        this.qty.set('');
-        this.quote.set(null);
-        this.loadAssets();
-        this.loadList();
-        alert(res.message || 'ثبت شد');
+    await this.confirmModal().ask({
+      title: 'ثبت درخواست تحویل',
+      message: 'ثبت درخواست تحویل؟ وزن رزرو و کارمزد از کیف‌پول کسر می‌شود.',
+      confirmLabel: 'بله، ثبت کن!',
+      onConfirm: async () => {
+        this.error.set(null);
+        try {
+          const res = await firstValueFrom(this.deliveryService.create({
+            metal_item_id: Number(metalId),
+            qty,
+            idempotency_key: `ui-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`,
+          }));
+          this.qty.set('');
+          this.quote.set(null);
+          this.loadAssets();
+          this.loadList();
+          alert(res.message || 'ثبت شد');
+        } catch (err: any) {
+          this.error.set(err?.error?.message || 'ثبت ناموفق بود');
+          throw err;
+        }
       },
-      error: (err) => {
-        this.error.set(err?.error?.message || 'ثبت ناموفق بود');
-      },
-      complete: () => this.submitting.set(false),
     });
   }
 
-  cancel(row: any): void {
-    if (!confirm('لغو درخواست و استرداد کارمزد؟')) {
-      return;
-    }
-    this.submitting.set(true);
-    this.deliveryService.cancel(row.id).subscribe({
-      next: () => {
-        this.loadAssets();
-        this.loadList();
+  async cancel(row: any): Promise<void> {
+    await this.confirmModal().ask({
+      title: 'لغو درخواست',
+      message: 'لغو درخواست و استرداد کارمزد؟',
+      confirmLabel: 'بله، لغو کن!',
+      onConfirm: async () => {
+        try {
+          await firstValueFrom(this.deliveryService.cancel(row.id));
+          this.loadAssets();
+          this.loadList();
+        } catch (err: any) {
+          this.error.set(err?.error?.message || 'لغو ناموفق');
+          throw err;
+        }
       },
-      error: (err) => this.error.set(err?.error?.message || 'لغو ناموفق'),
-      complete: () => this.submitting.set(false),
     });
   }
 

@@ -1,0 +1,57 @@
+<app-modal #confirmModal panelClass="max-w-md" (closed)="onClosed()">
+  <div class="relative rounded-base bg-white shadow dark:bg-gray-700">
+    <div class="relative rounded-base bg-white shadow dark:bg-gray-700">
+      <div class="p-6 space-y-6">
+        <div>
+          <div class="flex justify-center mb-2">
+            <app-svg-icon name="exclamation-triangle" class="size-10 text-danger-500"/>
+          </div>
+          <div class="font-medium text-base text-center mb-4">{{ title() }}</div>
+          <div class="text-sm text-gray-600 text-center whitespace-pre-line dark:text-gray-300">{{ message() }}</div>
+        </div>
+
+        @if (reasonLabel()) {
+          <div>
+            <label class="mb-1.5 block text-sm text-gray-700 dark:text-gray-200">{{ reasonLabel() }}</label>
+            <textarea
+              [ngModel]="reason()"
+              (ngModelChange)="reason.set($event); reasonError.set(false)"
+              rows="3"
+              [placeholder]="reasonPlaceholder()"
+              [disabled]="loading()"
+              class="w-full rounded-base border border-gray-200 bg-gray-50 p-2.5 text-sm dark:border-gray-600 dark:bg-gray-800 dark:text-white disabled:opacity-60"
+            ></textarea>
+            @if (reasonError()) {
+              <p class="mt-1 text-xs text-danger-500">وارد کردن دلیل الزامی است.</p>
+            }
+          </div>
+        }
+
+        <div class="flex gap-4">
+          <div class="flex-1">
+            <button
+              (click)="onCancel()"
+              type="button"
+              [disabled]="loading()"
+              class="w-full border border-gray-200 dark:border-gray-900 rounded-base flex justify-center cursor-pointer items-center gap-1.5 p-2 disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              <span class="text-sm">{{ cancelLabel() }}</span>
+            </button>
+          </div>
+          <div class="flex-1">
+            <app-button-with-loader
+              type="button"
+              class="relative w-full"
+              classes="w-full bg-danger-500 text-white px-6 rounded w-full py-2"
+              [loading]="loading()"
+              [disabled]="loading()"
+              (clicked)="onConfirm()"
+            >
+              <span class="text-sm">{{ confirmLabel() }}</span>
+            </app-button-with-loader>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</app-modal>
