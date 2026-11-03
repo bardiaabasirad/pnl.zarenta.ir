@@ -14,6 +14,7 @@ import {CommonModule} from '@angular/common';
 import {User} from '../../../interfaces/user';
 import {from, Subscription} from 'rxjs';
 import {AuthService} from '../../../services/auth.service';
+import {OnlinePresenceService} from '../../../services/online-presence.service';
 import {EventService} from '../../../services/event.service';
 import {StorageKey, StorageService} from '../../../services/storage.service';
 import {filter} from 'rxjs/operators';
@@ -57,6 +58,7 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private router = inject(Router);
   private authService = inject(AuthService);
+  private presenceService = inject(OnlinePresenceService);
   private eventService = inject(EventService);
   private matSnackBar = inject(MatSnackBar);
   private orderState = inject(OrderStateService);
@@ -205,6 +207,7 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnDestroy {
 
   logout() {
     this.loggingOut = true;
+    this.presenceService.stopPresence();
 
     this.authService.logout().subscribe({
       next: () => {
