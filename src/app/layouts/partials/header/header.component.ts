@@ -17,6 +17,7 @@ import {JalaliPipe} from '../../../pipes/jalali.pipe';
 import {AuthService} from '../../../services/auth.service';
 import {TraderNotificationApiService} from '../../../services/trader-notification.service';
 import {WebSocketService} from '../../../services/web-socket.service';
+import {PwaInstallService} from '../../../services/pwa-install.service';
 import {CommonModule} from '@angular/common';
 
 interface TraderNotification {
@@ -58,7 +59,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   private notificationApi = inject(TraderNotificationApiService);
   private webSocketService = inject(WebSocketService);
   private router = inject(Router);
+  readonly pwaInstall = inject(PwaInstallService);
   private readonly channelUnsubscribers: (() => void)[] = [];
+  installingPwa = false;
 
   constructor() {
     effect(() => this.timeChanged.emit(this.rxTime()));
@@ -149,5 +152,18 @@ export class HeaderComponent implements OnInit, OnDestroy {
       next: () => this.notifications.set([]),
       complete: () => this.markingAll.set(false),
     });
+  }
+
+  async installPwa(): Promise<void> {
+    if (this.installingPwa || !this.pwaInstall.canInstall()) {
+      return;
+    }
+
+    this.installingPwa = true;
+    try {
+      await this.pwaInstall.showInstallPrompt();
+    } finally {
+      this.installingPwa = false;
+    }
   }
 }

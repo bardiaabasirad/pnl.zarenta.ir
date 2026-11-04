@@ -2,6 +2,8 @@
   <router-outlet></router-outlet>
 </div>
 
+<app-pwa-install-banner />
+
 @if (navigationLoader.loading()) {
   <div
     class="fixed inset-0 z-[9999] flex items-center justify-center backdrop-blur-sm"

@@ -1,0 +1,40 @@
+@if (pwaInstall.showBanner()) {
+  <div
+    class="pwa-install-banner"
+    role="dialog"
+    aria-labelledby="pwa-install-title"
+    aria-describedby="pwa-install-desc"
+  >
+    <div class="pwa-install-banner__inner">
+      <img
+        class="pwa-install-banner__icon"
+        src="icons/icon-192x192.png"
+        width="40"
+        height="40"
+        alt=""
+      >
+      <div class="pwa-install-banner__copy">
+        <p id="pwa-install-title" class="pwa-install-banner__title">نصب اپلیکیشن زرنتا</p>
+        <p id="pwa-install-desc" class="pwa-install-banner__desc">برای دسترسی سریع‌تر، برنامه را روی دستگاه خود نصب کنید.</p>
+      </div>
+      <div class="pwa-install-banner__actions">
+        <button
+          type="button"
+          class="pwa-install-banner__install"
+          [disabled]="installing"
+          (click)="install()"
+        >
+          {{ installing ? 'در حال نصب...' : 'نصب' }}
+        </button>
+        <button
+          type="button"
+          class="pwa-install-banner__dismiss"
+          aria-label="بستن"
+          (click)="dismiss()"
+        >
+          بعداً
+        </button>
+      </div>
+    </div>
+  </div>
+}

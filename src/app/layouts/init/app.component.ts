@@ -6,13 +6,15 @@ import { NavigationLoaderService } from '../../services/navigation-loader.servic
 import {RouterOutlet} from '@angular/router';
 import {environment} from '../../../environments/environment';
 import {Title} from '@angular/platform-browser';
+import {PwaInstallBannerComponent} from '../../components/pwa-install-banner/pwa-install-banner.component';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   standalone: true,
   imports: [
-    RouterOutlet
+    RouterOutlet,
+    PwaInstallBannerComponent,
   ],
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './app.component.css'
