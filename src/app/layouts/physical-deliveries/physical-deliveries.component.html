@@ -54,7 +54,16 @@
           <div class="rounded-base border border-gray-200 p-3 flex flex-wrap items-center justify-between gap-3">
             <div class="text-sm space-y-1">
               <div class="font-medium">#{{ row.tracking_code }} — {{ row.metal_item?.title }}</div>
-              <div>وزن رزرو: {{ row.qty | number }} | کارمزد: {{ row.fee_amount | number }} تومان</div>
+              <div>
+                وزن درخواست: {{ row.qty | number }}
+                @if (row.delivered_qty != null) {
+                  | تحویل‌شده: {{ row.delivered_qty | number }}
+                }
+                | کارمزد: {{ row.fee_amount | number }} تومان
+                @if (row.fee_adjustment_amount != null && +row.fee_adjustment_amount !== 0) {
+                  (تعدیل: {{ row.fee_adjustment_amount | number }})
+                }
+              </div>
               <div class="text-xs text-gray-500">{{ statusLabel(row.status) }}</div>
             </div>
             @if (canCancel(row.status)) {
