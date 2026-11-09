@@ -28,6 +28,16 @@ export const routes: Routes = [
           import('./layouts/contact/contact.component').then(m => m.ContactComponent),
       },
       {
+        path: 'support',
+        loadComponent: () =>
+          import('./layouts/support/support-tickets.component').then(m => m.SupportTicketsComponent),
+      },
+      {
+        path: 'support/:id',
+        loadComponent: () =>
+          import('./layouts/support/support-ticket-detail.component').then(m => m.SupportTicketDetailComponent),
+      },
+      {
         path: 'inquiries',
         loadComponent: () =>
           import('./layouts/inquiries/inquiries/inquiries.component').then(m => m.InquiriesComponent),
