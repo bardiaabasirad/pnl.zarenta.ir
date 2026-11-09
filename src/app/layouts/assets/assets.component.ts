@@ -19,6 +19,19 @@ export class AssetsComponent implements OnInit {
 
   readonly assetService = inject(AssetService);
 
+  /** کیف‌پول تومانی حاضر: metal_item_id خالی است */
+  readonly cashWallet = computed(() =>
+    this.spotAndCash().find((asset) => this.isCashWallet(asset)) ?? null
+  );
+
+  readonly spotMetals = computed(() =>
+    this.spotAndCash().filter((asset) => !this.isCashWallet(asset))
+  );
+
+  readonly hasAssets = computed(() =>
+    this.spotAndCash().length > 0 || this.others().length > 0
+  );
+
   // ایجاد یک دیکشنری برای جستجوی O(1) و سریع‌ترین نرخ‌ها
   pricesMap = computed(() => {
     const map = new Map<number, SelectedMetalPrice>();
@@ -38,15 +51,37 @@ export class AssetsComponent implements OnInit {
   ngOnInit() {
     this.assetService.assets().subscribe({
       next: (response) => {
-        this.spotAndCash.set(response.assets.spot_and_cash);
-        this.others.set(response.assets.forward_items);
-        this.latestPrices.set(response.latest_prices);
+        const spotAndCash = this.toAssetArray(response?.assets?.spot_and_cash);
+        const forwardItems = this.toAssetArray(response?.assets?.forward_items);
+
+        // کیف تومانی را همیشه اول لیست موجودی حاضر نگه می‌داریم
+        this.spotAndCash.set(this.withCashFirst(spotAndCash));
+        this.others.set(forwardItems);
+        this.latestPrices.set(response?.latest_prices ?? []);
         this.initialized.set(true);
       },
       error: () => {
         this.initialized.set(true);
       },
     });
+  }
+
+  isCashWallet(asset: Asset | null | undefined): boolean {
+    if (!asset) {
+      return false;
+    }
+    return asset.metal_item_id == null || asset.metal_item == null;
+  }
+
+  /** موجودی قابل‌نمایش کیف تومانی (available + blocked) */
+  cashBalance(asset: Asset): number {
+    const available = Number(asset.available_balance ?? 0);
+    const blocked = Number(asset.blocked_balance ?? 0);
+    const total = Number(asset.total_balance);
+    if (Number.isFinite(total)) {
+      return total;
+    }
+    return (Number.isFinite(available) ? available : 0) + (Number.isFinite(blocked) ? blocked : 0);
   }
 
   getEffectiveBuyPrice(priceObj: SelectedMetalPrice, asset: Asset): number | null {
@@ -68,25 +103,27 @@ export class AssetsComponent implements OnInit {
     return rawBuy;
   }
 
-// محاسبه نهایی PnL
-  calculateProfitLossPercentage(asset: Asset): number | null {
-    const avgBuyPrice = Number(asset.avg_buy_price);
-    if (!asset.metal_item_id || !Number.isFinite(avgBuyPrice) || avgBuyPrice <= 0) {
-      return null;
+  private toAssetArray(value: unknown): Asset[] {
+    if (Array.isArray(value)) {
+      return value as Asset[];
     }
-
-    const priceObj = this.pricesMap().get(Number(asset.metal_item_id));
-    if (!priceObj) {
-      return null;
+    if (value && typeof value === 'object') {
+      return Object.values(value) as Asset[];
     }
+    return [];
+  }
 
-    const effectiveBuyPrice = this.getEffectiveBuyPrice(priceObj, asset);
-    if (effectiveBuyPrice === null) {
-      return null;
+  private withCashFirst(assets: Asset[]): Asset[] {
+    const cash: Asset[] = [];
+    const rest: Asset[] = [];
+    for (const asset of assets) {
+      if (this.isCashWallet(asset)) {
+        cash.push(asset);
+      } else {
+        rest.push(asset);
+      }
     }
-
-    const pnl = ((effectiveBuyPrice - avgBuyPrice) / avgBuyPrice) * 100;
-    return Math.round(pnl * 100) / 100;
+    return [...cash, ...rest];
   }
 
 }
