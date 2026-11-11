@@ -283,6 +283,9 @@ export class TransactionsComponent implements OnInit, OnDestroy {
     'fiat_credit_in',
     'settlement_fiat_transfer',
     'penalty_loss',
+    'settlement_correction_fiat',
+    'settlement_correction_metal',
+    'settlement_delivery_in',
   ]);
 
   unitLabel(item: any): string {
