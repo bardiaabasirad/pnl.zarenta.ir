@@ -4,13 +4,15 @@ import {Router, RouterLink} from '@angular/router';
 import {AuthFlowService} from '../../../services/auth-flow.service';
 import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {ButtonWithLoaderComponent} from '../../../components/button-with-loader/button-with-loader.component';
-import {NgxMaskDirective, provideNgxMask} from 'ngx-mask';
-import {convertToEnglishNumbersUtil} from '../../../utils/convert-to-english-numbers.util';
-import {normalizeIranianMobileInput} from '../../../utils/normalize-iranian-mobile.util';
+import {
+  iranianMobileValidator,
+  sanitizeMobileTyping,
+  toIranianMobileDisplay,
+  toIranianMobileNational,
+} from '../../../utils/normalize-iranian-mobile.util';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {ValidationService} from '../../../services/validation.service';
 import {ErrorDisplayComponent} from '../../../components/error-display/error-display.component';
-import {maskCompleteValidator} from '../../../validators/mask-complete-validator';
 import {environment} from '../../../../environments/environment';
 import {AppModal} from '../../../components/modal/modal.component';
 import {PageService} from '../../../services/page.service';
@@ -21,7 +23,6 @@ import {Page} from '../../../interfaces/page';
   selector: 'app-mobile-step',
   imports: [
     ButtonWithLoaderComponent,
-    NgxMaskDirective,
     ReactiveFormsModule,
     ErrorDisplayComponent,
     RouterLink,
@@ -30,9 +31,6 @@ import {Page} from '../../../interfaces/page';
   templateUrl: './mobile-step.component.html',
   styleUrl: './mobile-step.component.css',
   changeDetection: ChangeDetectionStrategy.Eager,
-  providers: [
-    provideNgxMask()
-  ]
 })
 export class MobileStepComponent implements OnInit {
   private authService = inject(AuthService);
@@ -47,12 +45,6 @@ export class MobileStepComponent implements OnInit {
   private readonly termsModal = viewChild.required<AppModal>('termsModal');
 
   readonly environment = environment;
-
-  /** Convert Persian/Arabic numerals to English */
-  public p2e = (value: unknown): string => convertToEnglishNumbersUtil(String(value));
-
-  /** Normalize autofill/paste (+98...) for mask prefix 0 + 10 digits */
-  public normalizeMobile = (value: unknown): string => normalizeIranianMobileInput(value);
 
   submitting = false;
   submittingLeadForm = false;
@@ -71,7 +63,7 @@ export class MobileStepComponent implements OnInit {
       phone: new FormControl('', {
         validators: [
           Validators.required,
-          maskCompleteValidator(11)
+          iranianMobileValidator(),
         ]
       }),
       agreement: new FormControl(false, {
@@ -83,7 +75,7 @@ export class MobileStepComponent implements OnInit {
       lead_phone: new FormControl('', {
         validators: [
           Validators.required,
-          maskCompleteValidator(11)
+          iranianMobileValidator(),
         ]
       }),
     });
@@ -109,6 +101,49 @@ export class MobileStepComponent implements OnInit {
     this.syncAgreementRequirement();
   }
 
+  onPhoneInput(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    let nextValue = sanitizeMobileTyping(input.value);
+
+    // Autofill / international full number → normalize immediately
+    const display = toIranianMobileDisplay(nextValue);
+    if (display && (nextValue.startsWith('98') || nextValue.length > 11)) {
+      nextValue = display;
+    }
+
+    if (input.value === nextValue) {
+      return;
+    }
+
+    const selectionStart = input.selectionStart ?? nextValue.length;
+    const diff = input.value.length - nextValue.length;
+    this.loginByOtpForm.get('phone')?.setValue(nextValue, {emitEvent: false});
+    input.value = nextValue;
+    const nextPos = Math.max(0, selectionStart - Math.max(0, diff));
+    queueMicrotask(() => input.setSelectionRange(nextPos, nextPos));
+  }
+
+  onPhoneBlur(): void {
+    const control = this.loginByOtpForm.get('phone');
+    if (!control) {
+      return;
+    }
+
+    const display = toIranianMobileDisplay(control.value);
+    if (display) {
+      control.setValue(display);
+    }
+  }
+
+  onPhonePaste(event: ClipboardEvent): void {
+    event.preventDefault();
+    const pasted = event.clipboardData?.getData('text') ?? '';
+    const display = toIranianMobileDisplay(pasted) ?? sanitizeMobileTyping(pasted);
+    this.loginByOtpForm.get('phone')?.setValue(display);
+    this.loginByOtpForm.get('phone')?.markAsDirty();
+    this.loginByOtpForm.get('phone')?.markAsTouched();
+  }
+
   openTermsModal(event?: Event): void {
     event?.preventDefault();
     event?.stopPropagation();
@@ -121,13 +156,16 @@ export class MobileStepComponent implements OnInit {
   }
 
   async submit(): Promise<void> {
+    this.onPhoneBlur();
+
     if (this.loginByOtpForm.invalid) {
       this.loginByOtpForm.markAllAsTouched();
       return;
     }
 
     this.submitting = true;
-    const phone = this.loginByOtpForm.value.phone;
+    const national = toIranianMobileNational(this.loginByOtpForm.value.phone);
+    const phone = national ? `0${national}` : this.loginByOtpForm.value.phone;
 
     const data = {
       phone,
