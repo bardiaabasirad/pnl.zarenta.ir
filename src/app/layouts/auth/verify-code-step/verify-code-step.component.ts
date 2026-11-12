@@ -16,7 +16,6 @@ import {NgxMaskDirective, provideNgxMask} from 'ngx-mask';
 import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {convertToEnglishNumbersUtil} from '../../../utils/convert-to-english-numbers.util';
 import {AuthService} from '../../../services/auth.service';
-import {ErrorDisplayComponent} from '../../../components/error-display/error-display.component';
 
 @Component({
   selector: 'app-verify-code-step',
@@ -24,7 +23,6 @@ import {ErrorDisplayComponent} from '../../../components/error-display/error-dis
     ButtonWithLoaderComponent,
     NgxMaskDirective,
     ReactiveFormsModule,
-    ErrorDisplayComponent,
   ],
   templateUrl: './verify-code-step.component.html',
   styleUrl: './verify-code-step.component.css',
@@ -67,7 +65,10 @@ export class VerifyCodeStepComponent implements OnInit, OnDestroy {
     this.verifyForm = this.formBuilder.group({
       phone: new FormControl('', [Validators.required]),
       verification_code: new FormControl('', {
-        validators: [Validators.required, Validators.minLength(6)]
+        validators: [
+          Validators.required,
+          Validators.pattern(/^\d{6}$/),
+        ],
       }),
     });
 
@@ -130,7 +131,9 @@ export class VerifyCodeStepComponent implements OnInit, OnDestroy {
             this.flow.setState({
               ...this.state,
             });
-            this.router.navigate(['/auth/pending']);
+            this.router.navigate(['/auth/pending'], {
+              state: {pendingContext: 'already_pending'},
+            });
             break;
 
           case 'select-business-type':

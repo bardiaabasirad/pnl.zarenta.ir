@@ -71,6 +71,7 @@
              inputmode="numeric"
              autocomplete="one-time-code"
              mask="000000"
+             [validation]="false"
              [inputTransformFn]="p2e"
              name="verification_code"
              id="verification_code"
@@ -78,7 +79,18 @@
              placeholder="کد تایید ۶ رقمی"
              class="text-right block w-full rounded border border-gray-200 bg-transparent text-sm text-gray-700 p-2.5 focus:border-gray-300">
     </div>
-    <app-error-display [control]="verifyForm.get('verification_code')" [style]="'text-xs font-medium text-red-500 text-justify'"></app-error-display>
+    @if (
+      verifyForm.get('verification_code')?.invalid
+      && verifyForm.get('verification_code')?.touched
+    ) {
+      <div class="text-xs font-medium text-red-500 text-justify">
+        @if (verifyForm.get('verification_code')?.errors?.['required']) {
+          کد تایید ضروری است
+        } @else {
+          کد تایید باید ۶ رقم باشد
+        }
+      </div>
+    }
     @if (statusError) {
       <div class="text-xs font-medium text-red-500 text-justify">{{ statusError }}</div>
     }

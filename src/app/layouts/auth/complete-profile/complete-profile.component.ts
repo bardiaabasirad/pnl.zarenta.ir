@@ -89,7 +89,9 @@ export class CompleteProfileComponent {
       next: () => {
         this.submitting = false;
         this.flow.clear();
-        this.router.navigate(['/auth/pending']);
+        this.router.navigate(['/auth/pending'], {
+          state: {pendingContext: 'submitted'},
+        });
       },
 
       error: error => {
