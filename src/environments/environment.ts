@@ -7,7 +7,7 @@ export const environment = {
   apiUrl: 'https://api.zarenta.ir/api',
   access_token: 'YDhX7Ki6Dm86MtijIbHLhEPyVPxapWsi',
   dark_mode: 'TApovoFL7K5h7XfGmNC0XOBxk5iv1FuI',
-  encryptionKey: '4kaEV29FSsPKmQnLq1UHWiQGNlbnijDL',
+  encryptionKey: '3EafTBWHaB35CFec7vE5UeeD6suHOsZD',
   reverb: {
     wsHost: 'api.zarenta.ir',
     key: '74b8c00e38c67ca39cdbcbe54ecc5c5c',
