@@ -4,6 +4,7 @@ import {authGuard} from './guards/auth.guard';
 import {geoBlockGuard} from './guards/geo-block.guard';
 import {resetCredentialsGuard} from './guards/reset-credentials.guard';
 import {PasswordLoginFlowGuard} from './guards/password-login-flow.guard';
+import {RegistrationFlowGuard} from './guards/registration-flow.guard';
 
 export const routes: Routes = [
   {
@@ -28,6 +29,12 @@ export const routes: Routes = [
           import('./layouts/contact/contact.component').then(m => m.ContactComponent),
       },
       {
+        path: 'terms',
+        loadComponent: () =>
+          import('./layouts/pages/terms/terms.component').then(m => m.TermsComponent),
+        data: {standalone: false},
+      },
+      {
         path: 'support',
         loadComponent: () =>
           import('./layouts/support/support-tickets.component').then(m => m.SupportTicketsComponent),
@@ -36,11 +43,6 @@ export const routes: Routes = [
         path: 'support/:id',
         loadComponent: () =>
           import('./layouts/support/support-ticket-detail.component').then(m => m.SupportTicketDetailComponent),
-      },
-      {
-        path: 'inquiries',
-        loadComponent: () =>
-          import('./layouts/inquiries/inquiries/inquiries.component').then(m => m.InquiriesComponent),
       },
       {
         path: 'orders',
@@ -95,9 +97,14 @@ export const routes: Routes = [
         canActivate: [resetCredentialsGuard],
       },
       {
+        path: 'business-type',
+        loadComponent: () => import('./layouts/auth/business-type-step/business-type-step.component').then(m => m.BusinessTypeStepComponent),
+        canActivate: [RegistrationFlowGuard],
+      },
+      {
         path: 'complete-profile',
         loadComponent: () => import('./layouts/auth/complete-profile/complete-profile.component').then(m => m.CompleteProfileComponent),
-        canActivate: [],
+        canActivate: [RegistrationFlowGuard],
       },
       {
         path: 'verify',
@@ -116,6 +123,12 @@ export const routes: Routes = [
         loadComponent: () => import('./layouts/auth/banned/banned.component').then(m => m.BannedComponent),
       }
     ],
+  },
+  {
+    path: 'pages/terms',
+    loadComponent: () =>
+      import('./layouts/pages/terms/terms.component').then(m => m.TermsComponent),
+    data: {standalone: true},
   },
   {
     path: 'blocked',

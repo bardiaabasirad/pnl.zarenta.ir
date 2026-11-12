@@ -12,15 +12,13 @@ import {
   ChangeDetectionStrategy,
   signal
 } from '@angular/core';
-import {KimiaService} from '../../services/kimi.service';
+import {TransactionService} from '../../services/transaction.service';
 import {DatePipe} from '@angular/common';
 import moment from 'jalali-moment';
 import {User} from '../../interfaces/user';
 import {from, Subscription} from 'rxjs';
 import {AuthService} from '../../services/auth.service';
 import {Router} from '@angular/router';
-import {BalanceStateService} from '../../services/balance-state.service';
-import {AppConstants} from '../../constants/app-constants';
 import {PageEvent} from '@angular/material/paginator';
 
 @Component({
@@ -33,12 +31,11 @@ import {PageEvent} from '@angular/material/paginator';
 export class TransactionsComponent implements OnInit, OnDestroy {
   user: User | null | undefined;
   transactions: any[] = [];
-  private kimiaService = inject(KimiaService);
+  private transactionService = inject(TransactionService);
   private datePipe = inject(DatePipe);
   private router = inject(Router);
   @ViewChild('transactionsTable') tableRef!: ElementRef<HTMLTableElement>;
   private authService = inject(AuthService);
-  private balanceState = inject(BalanceStateService);
   private subs: Subscription[] = [];
   start_date: Date | null = null;
   end_date: Date | null = null;
@@ -56,7 +53,6 @@ export class TransactionsComponent implements OnInit, OnDestroy {
   loading = signal<boolean>(false);
   pageEvent: PageEvent = {length: 0, pageSize: 50, pageIndex: 0, previousPageIndex: 0};
   private readonly pageSize = 50;
-  balances: any[] = [];
   @ViewChild('expandableContainer') expandableContainer!: ElementRef;
   isExpanded: boolean = false;
   private scrollPosition: number = 0;
@@ -72,10 +68,6 @@ export class TransactionsComponent implements OnInit, OnDestroy {
     start = today.clone();
     this.start_date = start.toDate();
     this.end_date = today.toDate();
-
-    this.subs.push(
-      this.balanceState.balances$.subscribe(b => this.balances = b)
-    );
 
     this.getUserInfo();
     this.updateRange();
@@ -250,7 +242,7 @@ export class TransactionsComponent implements OnInit, OnDestroy {
 
     this.loading.set(true);
 
-    this.kimiaService.getVoucherTransactions(params).subscribe({
+    this.transactionService.getTransactions(params).subscribe({
       next: result => {
         const pageData = result?.data;
         this.transactions = pageData?.data ?? [];
@@ -328,7 +320,7 @@ export class TransactionsComponent implements OnInit, OnDestroy {
 
     this.generatingPDF.set(true);
 
-    this.kimiaService.generatePDF(params).subscribe({
+    this.transactionService.generatePDF(params).subscribe({
       next: (blob: Blob) => {
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement('a');
@@ -349,98 +341,6 @@ export class TransactionsComponent implements OnInit, OnDestroy {
         this.generatingPDF.set(false);
       }
     });
-  }
-
-  buildBalanceSummary(balances: any[]): string {
-    const A = AppConstants;
-
-    const orderedGoldIds = [
-      A.KIMIA_TODAY_SPOT_SETTLEMENT,
-      A.KIMIA_TOMORROW_SPOT_SETTLEMENT,
-      A.KIMIA_DAY_AFTER_TOMORROW_SPOT_SETTLEMENT
-    ];
-    const orderedCoinIds = [
-      A.KIMIA_GOLD_COIN_86,
-      A.KIMIA_GOLD_HALF_COIN_86,
-      A.KIMIA_GOLD_QUARTER_COIN_86,
-      A.KIMIA_GOLD_COIN_OLD_VERSION
-    ];
-
-    const goldBalances = orderedGoldIds
-      .map(id => balances.find(b => b.CurrencyId === id))
-      .filter(Boolean);
-
-    const coinBalances = orderedCoinIds
-      .map(id => balances.find(b => b.CurrencyId === id))
-      .filter(Boolean);
-
-    const getColor = (n: number) => n > 0 ? 'blue' : n < 0 ? 'red' : 'black';
-    const numFa = (n: number) =>
-      Math.abs(n)
-        .toLocaleString('fa-IR')
-        .replace(/٬/g, ',');
-
-    const moneyLabel = (cid: number) =>
-      cid === A.KIMIA_TODAY_SPOT_SETTLEMENT
-        ? 'تومان'
-        : cid === A.KIMIA_TOMORROW_SPOT_SETTLEMENT
-          ? 'فردایی'
-          : cid === A.KIMIA_DAY_AFTER_TOMORROW_SPOT_SETTLEMENT
-            ? 'پس‌فردایی'
-            : '';
-
-    const coinLabel = (cid: number) => {
-      switch (cid) {
-        case A.KIMIA_GOLD_COIN_OLD_VERSION:
-          return 'تمام سکه قدیم';
-        case A.KIMIA_GOLD_COIN_86:
-          return 'تمام سکه ۸۶';
-        case A.KIMIA_GOLD_HALF_COIN_86:
-          return 'نیم سکه ۸۶';
-        case A.KIMIA_GOLD_QUARTER_COIN_86:
-          return 'ربع سکه ۸۶';
-        default:
-          return '';
-      }
-    };
-
-    let html = `
-    <div style="margin-top:20px;font-size:12px;direction:rtl">
-      <div style="display:flex;font-weight:bold;padding:4px 8px">
-        <div style="width:80px">وزن ۷۵۰</div>
-        <div>مبلغ</div>
-      </div>
-  `;
-
-    goldBalances.forEach(b => {
-      html += `
-      <div style="display:flex;justify-content:space-between;align-items:center;border:1px solid #ccc;padding:6px 8px;border-radius:6px;margin:4px 0">
-        <div style="width:80px;color:${getColor(b.Weight)}">
-          ${b.Weight === 0 ? '۰' : b.Weight > 0 ? 'بس ' + numFa(b.Weight) : 'بد ' + numFa(b.Weight)}
-        </div>
-        <div style="display:flex;align-items:center;justify-content:space-between;flex:1;gap:8px;">
-          <div style="color:${getColor(b.Money)}">
-            ${b.Money === 0 ? '۰' : b.Money > 0 ? 'بس ' + numFa(Math.round(b.Money / 10)) : 'بد ' + numFa(Math.round(Math.abs(b.Money / 10)))}
-          </div>
-          <div style="background:#dcfce7;color:#166534;border-radius:10px;padding:0 4px;font-size:11px">${moneyLabel(b.CurrencyId)}</div>
-        </div>
-      </div>`;
-    });
-
-    if (coinBalances.length) {
-      coinBalances.forEach(b => {
-        html += `
-        <div style="display:flex;justify-content:space-between;align-items:center;border:1px solid #ccc;padding:6px 8px;border-radius:6px;margin:4px 0">
-          <div style="color:${getColor(b.Money)}">
-            ${b.Money === 0 ? '۰' : b.Money > 0 ? 'بس ' + numFa(b.Money) : 'بد ' + numFa(Math.abs(b.Money))}
-          </div>
-          <div style="background:#dcfce7;color:#166534;border-radius:10px;padding:0 4px;font-size:11px">${coinLabel(b.CurrencyId)}</div>
-        </div>`;
-      });
-    }
-
-    html += `</div>`;
-    return html;
   }
 
   protected readonly Math = Math;

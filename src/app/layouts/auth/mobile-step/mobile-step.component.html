@@ -46,7 +46,29 @@
     }
   </div>
 
-  <div class="mb-4">
+  @if (!isForgotPassword) {
+    <div class="mb-4">
+      <div class="flex items-start gap-2">
+        <input id="agreement"
+               type="checkbox"
+               formControlName="agreement"
+               class="mt-0.5 size-4 shrink-0 rounded border-gray-300 text-primary focus:ring-primary cursor-pointer"/>
+        <label for="agreement" class="text-xs text-gray-600 text-justify leading-5 cursor-pointer">
+          شرایط {{ environment.appTitle }} و
+          <button type="button"
+                  (click)="openTermsModal($event)"
+                  class="cursor-pointer text-sky-500 hover:underline align-baseline"
+          >قوانین و مقررات</button>
+          را مطالعه کرده و می‌پذیرم.
+        </label>
+      </div>
+      @if (loginByOtpForm.get('agreement')?.touched && loginByOtpForm.get('agreement')?.invalid) {
+        <div class="mt-1.5 text-xs font-medium text-red-500">پذیرش قوانین و مقررات الزامی است.</div>
+      }
+    </div>
+  }
+
+  <div>
     <app-button-with-loader type="submit" class="relative block"
                             classes="bg-primary rounded-base w-full py-2"
                             loading_bg="bg-primary/70 rounded-base w-full py-2"
@@ -56,6 +78,51 @@
     </app-button-with-loader>
   </div>
 
-  <app-cerificate-section></app-cerificate-section>
-
 </form>
+
+<app-modal #termsModal panelClass="max-w-3xl">
+  <div class="relative rounded-base bg-white shadow dark:bg-gray-800">
+    <div class="px-4 py-3 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between gap-2.5 rounded-t-base">
+      <div class="flex items-center gap-2.5">
+        <div class="font-semibold text-gray-700 pt-0.5">
+          {{ termsPage()?.title || 'قوانین و مقررات' }}
+        </div>
+      </div>
+      <button type="button"
+              (click)="closeTermsModal()"
+              class="cursor-pointer rounded-base p-1.5 text-gray-400 hover:bg-gray-100 hover:text-gray-700">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+
+    <div class="p-4 max-h-[60vh] overflow-y-auto">
+      @if (termsLoading()) {
+        <div class="space-y-3 animate-pulse">
+          <div class="h-4 w-40 rounded bg-gray-200"></div>
+          <div class="h-3 w-full rounded bg-gray-200"></div>
+          <div class="h-3 w-full rounded bg-gray-200"></div>
+          <div class="h-3 w-5/6 rounded bg-gray-200"></div>
+        </div>
+      } @else if (termsBody()) {
+        <div class="text-sm text-gray-700 leading-7 terms-body"
+             [innerHTML]="termsBody()"></div>
+      } @else {
+        <div class="text-sm text-gray-500">بارگذاری قوانین و مقررات ممکن نشد.</div>
+      }
+    </div>
+
+    <div class="flex items-center justify-between gap-3 rounded-b-base p-4 border-t border-gray-200">
+      <a routerLink="/pages/terms"
+         (click)="closeTermsModal()"
+         class="text-sky-500 text-xs">
+        مشاهده در صفحه جداگانه
+      </a>
+      <button type="button"
+              (click)="closeTermsModal()"
+              class="cursor-pointer rounded-base gap-2 bg-primary text-white px-4 py-2 text-sm"
+      >متوجه شدم</button>
+    </div>
+  </div>
+</app-modal>

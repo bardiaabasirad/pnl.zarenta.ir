@@ -17,7 +17,6 @@ import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} fr
 import {convertToEnglishNumbersUtil} from '../../../utils/convert-to-english-numbers.util';
 import {AuthService} from '../../../services/auth.service';
 import {ErrorDisplayComponent} from '../../../components/error-display/error-display.component';
-import {CerificateSectionComponent} from '../partials/cerificate-section/cerificate-section.component';
 
 @Component({
   selector: 'app-verify-code-step',
@@ -26,7 +25,6 @@ import {CerificateSectionComponent} from '../partials/cerificate-section/cerific
     NgxMaskDirective,
     ReactiveFormsModule,
     ErrorDisplayComponent,
-    CerificateSectionComponent
   ],
   templateUrl: './verify-code-step.component.html',
   styleUrl: './verify-code-step.component.css',
@@ -129,19 +127,24 @@ export class VerifyCodeStepComponent implements OnInit, OnDestroy {
 
         switch (res.next_action) {
           case 'pending':
-            // کاربر تازه ثبت شده — نام و نام خانوادگی دریافت شود
             this.flow.setState({
               ...this.state,
-              token: res.token, // توکن موقت برای ذخیره پروفایل
             });
             this.router.navigate(['/auth/pending']);
             break;
 
-          case 'complete-profile':
-            // کاربر تازه ثبت شده — نام و نام خانوادگی دریافت شود
+          case 'select-business-type':
             this.flow.setState({
               ...this.state,
-              token: res.token, // توکن موقت برای ذخیره پروفایل
+              business_type: res.business_type ?? null,
+            });
+            this.router.navigate(['/auth/business-type']);
+            break;
+
+          case 'complete-profile':
+            this.flow.setState({
+              ...this.state,
+              business_type: res.business_type ?? this.state?.business_type ?? null,
             });
             this.router.navigate(['/auth/complete-profile']);
             break;

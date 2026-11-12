@@ -8,8 +8,8 @@ import {ValidationService} from '../../../services/validation.service';
 import {convertToEnglishNumbersUtil} from '../../../utils/convert-to-english-numbers.util';
 import {ButtonWithLoaderComponent} from '../../../components/button-with-loader/button-with-loader.component';
 import {ErrorDisplayComponent} from '../../../components/error-display/error-display.component';
-import {NgClass} from '@angular/common';
-import {CerificateSectionComponent} from '../partials/cerificate-section/cerificate-section.component';
+import {nationalCodeValidator} from '../../../validators/national-code-validator';
+import {NgxMaskDirective, provideNgxMask} from 'ngx-mask';
 
 @Component({
   selector: 'app-complete-profile',
@@ -17,9 +17,9 @@ import {CerificateSectionComponent} from '../partials/cerificate-section/cerific
     ButtonWithLoaderComponent,
     ErrorDisplayComponent,
     ReactiveFormsModule,
-    NgClass,
-    CerificateSectionComponent
+    NgxMaskDirective,
   ],
+  providers: [provideNgxMask()],
   templateUrl: './complete-profile.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './complete-profile.component.css',
@@ -36,45 +36,24 @@ export class CompleteProfileComponent {
   public p2e = (value: unknown): string => convertToEnglishNumbersUtil(String(value));
 
   submitting = false;
-
   form!: FormGroup;
 
-  businessTypes = [
-    {
-      value: 'gold_dealer',
-      label: 'طلافروش',
-      description: 'همکاران ما در صنف طلافروشی',
-      img_src: '/images/37fab7cb2adaee0e5febef01d7085287de17b101.png',
-    },
-    {
-      value: 'trader',
-      label: 'معامله‌گر',
-      description: 'خرید و فروش طلا و مدیریت معاملات',
-      img_src: '/images/9cc4f9ed02c220ea49166ced033bf7802fcf3ba9.png',
-    },
-    {
-      value: 'other',
-      label: 'سایر',
-      description: 'سرمایه‌گذاری و حفظ ارزش دارایی',
-      img_src: '/images/81d836dbc6fa451aa5b40a711854f13b36257d3e.png',
-    },
-  ];
-
   constructor() {
+    if (!this.flow.getState()?.business_type) {
+      this.router.navigate(['/auth/business-type']);
+    }
+
     this.form = this.formBuilder.group({
       full_name: new FormControl('', {validators: [Validators.required]}),
-      business_type: new FormControl('', {validators: [Validators.required]})
+      national_code: new FormControl('', {
+        validators: [Validators.required, Validators.minLength(10), Validators.maxLength(10), nationalCodeValidator],
+      }),
+      address: new FormControl('', {validators: [Validators.required, Validators.maxLength(2000)]}),
     });
   }
 
-  selectBusinessType(value: string): void {
-    this.form.get('business_type')?.setValue(value);
-    this.form.get('business_type')?.markAsTouched();
-  }
-
   back() {
-    this.flow.clear();
-    this.router.navigate(['/auth/mobile'])
+    this.router.navigate(['/auth/business-type']);
   }
 
   get mobile(): string | null {
@@ -87,25 +66,29 @@ export class CompleteProfileComponent {
       return;
     }
 
+    const phone = this.mobile;
+    if (!phone) {
+      this.router.navigate(['/auth/mobile']);
+      return;
+    }
+
     this.submitting = true;
 
     const {
       full_name,
-      business_type,
+      national_code,
+      address,
     } = this.form.getRawValue();
-
-    const phone = this.mobile;
 
     this.authService.completeProfile({
       phone,
       full_name,
-      business_type,
+      national_code,
+      address,
     }).subscribe({
-      next: (res) => {
+      next: () => {
         this.submitting = false;
-
         this.flow.clear();
-
         this.router.navigate(['/auth/pending']);
       },
 
@@ -121,17 +104,19 @@ export class CompleteProfileComponent {
         } else if (error.status === 422) {
           const serverErrors = this.validationService.normalizeBackendErrors(error);
           this.applyServerErrors(this.form, serverErrors);
+
+          if (serverErrors['business_type'] || serverErrors['phone']) {
+            this.router.navigate(['/auth/business-type']);
+          }
         }
       },
     });
   }
 
-  /** Apply server-side validation errors to the matching form controls */
   private applyServerErrors(form: FormGroup, errors: Record<string, any>): void {
     Object.keys(errors).forEach(key => {
       const control = form.get(key);
       if (control) control.setErrors(errors[key]);
     });
   }
-
 }

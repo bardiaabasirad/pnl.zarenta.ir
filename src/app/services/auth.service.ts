@@ -112,6 +112,10 @@ export class AuthService {
     return this.http.post(`${environment.apiUrl}/v1/traders/lead`, data);
   }
 
+  selectBusinessType(data: any): Observable<any> {
+    return this.http.post(`${environment.apiUrl}/v1/traders/auth/select-business-type`, data);
+  }
+
   completeProfile(data: any): Observable<any> {
     return this.http.post(`${environment.apiUrl}/v1/traders/auth/complete-profile`, data);
   }
@@ -193,10 +197,6 @@ export class AuthService {
     this.user = undefined;
     StorageService.removeCookie(StorageKey.ACCESS_TOKEN);
     this.updateAuthState(false);
-  }
-
-  updateBalance(balance: number) {
-    if (this.user) this.user.balance = balance;
   }
 
   public getUserInfo(): Promise<void> {

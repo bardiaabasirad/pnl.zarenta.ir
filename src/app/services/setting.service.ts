@@ -63,11 +63,6 @@ export class SettingService {
     return this.siteInfo;
   }
 
-  public updateAggregatedViewOfInvoices(params: any): Observable<any> {
-    params.append('_method', 'PATCH');
-    return this.http.post<any>(`${environment.apiUrl}/v1/traders/settings/aggregated-view-of-invoices`, params);
-  }
-
   public updateMarketOpeningNotification(params: any): Observable<any> {
     params.append('_method', 'PATCH');
     return this.http.post<any>(`${environment.apiUrl}/v1/traders/settings/market-opening-notification`, params);

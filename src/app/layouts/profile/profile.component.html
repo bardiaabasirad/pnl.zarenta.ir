@@ -118,22 +118,6 @@
       </svg>
     </a>
 
-    @if (user_data && user_data.inquiry_access) {
-      <a routerLink="/inquiries" class="flex items-center justify-between rounded py-3 group active:text-gray-900">
-        <div class="flex gap-1 items-center text-xs lg:text-sm font-medium text-gray-700">
-          <div class="w-6">
-            <svg class="size-5 stroke-gray-700 group-active:stroke-gray-900" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
-            </svg>
-          </div>
-          <span class="group-active:text-gray-900">سرویس استعلام</span>
-        </div>
-        <svg class="stroke-gray-700 group-active:stroke-gray-900 size-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
-        </svg>
-      </a>
-    }
-
     <a routerLink="/contact-us" class="flex items-center justify-between rounded py-3 group active:text-gray-900">
       <div class="flex gap-1 items-center text-xs lg:text-sm font-medium text-gray-700">
         <div class="w-6">
@@ -142,6 +126,21 @@
           </svg>
         </div>
         <span class="group-active:text-gray-900">تماس با ما</span>
+      </div>
+      <svg class="stroke-gray-700 group-active:stroke-gray-900 size-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+      </svg>
+    </a>
+
+    <a routerLink="/terms" class="flex items-center justify-between rounded py-3 group active:text-gray-900">
+      <div class="flex gap-1 items-center text-xs lg:text-sm font-medium text-gray-700">
+        <div class="w-6">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+               class="size-5 text-gray-700 group-active:text-gray-900">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" />
+          </svg>
+        </div>
+        <span class="group-active:text-gray-900">قوانین و مقررات</span>
       </div>
       <svg class="stroke-gray-700 group-active:stroke-gray-900 size-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />

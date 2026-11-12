@@ -165,7 +165,7 @@
           <path d="M7.57422 1.40008L2.14091 6.83341C1.49924 7.47508 1.49924 8.52508 2.14091 9.16675L7.57422 14.6001" stroke="#414042" stroke-opacity="0.5" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
 
-        @if (url === '/profile' || url === '/inquiries' || url === '/settings') {
+        @if (url === '/profile' || url === '/settings') {
           <div class="w-1 rounded-l bg-primary h-10 absolute right-0 top-0.5"></div>
         }
       </a>
@@ -194,6 +194,21 @@
         </svg>
 
         @if (url === '/contact-us') {
+          <div class="w-1 rounded-l bg-primary h-10 absolute right-0 top-0.5"></div>
+        }
+      </a>
+      <a routerLink="/terms" class="relative flex items-center justify-between rounded pr-4 pl-6 py-2.5">
+        <div class="flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5 text-gray-700">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" />
+          </svg>
+          <span class="text-base font-medium mr-2.5">قوانین و مقررات</span>
+        </div>
+        <svg class="size-4" viewBox="0 0 9 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M7.57422 1.40008L2.14091 6.83341C1.49924 7.47508 1.49924 8.52508 2.14091 9.16675L7.57422 14.6001" stroke="#414042" stroke-opacity="0.5" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+
+        @if (url === '/terms') {
           <div class="w-1 rounded-l bg-primary h-10 absolute right-0 top-0.5"></div>
         }
       </a>

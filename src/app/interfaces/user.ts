@@ -1,13 +1,9 @@
 export interface User {
   id: number,
   name: string,
-  api_key: string,
   phone: string,
   avatar: string | null,
-  balance: number,
   request_made: number,
-  buy_fee_margin: number,
-  sell_fee_margin: number,
   group: any,
   last_seen: string,
   remember_token: string,
@@ -16,8 +12,6 @@ export interface User {
   deleted_at: string,
   created_at: string,
   updated_at: string,
-  inquiry_access: boolean,
   has_pass: boolean,
   market_opening_notification: string,
-  aggregated_view_of_invoices: string,
 }

@@ -51,7 +51,6 @@ export class BottomNavComponent implements OnInit {
     switch (this.currentUrl()) {
       case '/settings':
       case '/profile':
-      case '/inquiries':
         return 0;
       case '/':
         return 1;

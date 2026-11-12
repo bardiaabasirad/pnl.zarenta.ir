@@ -1,0 +1,19 @@
+.terms-body :where(h1, h2, h3, h4) {
+  margin-top: 1.25rem;
+  margin-bottom: 0.75rem;
+  font-weight: 600;
+  color: #374151;
+}
+
+.terms-body :where(p, ul, ol) {
+  margin-bottom: 0.75rem;
+}
+
+.terms-body :where(ul, ol) {
+  padding-inline-start: 1.25rem;
+  list-style: disc;
+}
+
+.terms-body a {
+  color: #0ea5e9;
+}

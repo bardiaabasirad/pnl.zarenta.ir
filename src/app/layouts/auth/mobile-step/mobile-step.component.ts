@@ -1,6 +1,6 @@
-import {Component, inject, OnInit, ChangeDetectionStrategy} from '@angular/core';
+import {Component, inject, OnInit, ChangeDetectionStrategy, signal, viewChild} from '@angular/core';
 import {AuthService} from '../../../services/auth.service';
-import {Router} from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 import {AuthFlowService} from '../../../services/auth-flow.service';
 import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {ButtonWithLoaderComponent} from '../../../components/button-with-loader/button-with-loader.component';
@@ -10,7 +10,11 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 import {ValidationService} from '../../../services/validation.service';
 import {ErrorDisplayComponent} from '../../../components/error-display/error-display.component';
 import {maskCompleteValidator} from '../../../validators/mask-complete-validator';
-import {CerificateSectionComponent} from '../partials/cerificate-section/cerificate-section.component';
+import {environment} from '../../../../environments/environment';
+import {AppModal} from '../../../components/modal/modal.component';
+import {PageService} from '../../../services/page.service';
+import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
+import {Page} from '../../../interfaces/page';
 
 @Component({
   selector: 'app-mobile-step',
@@ -19,7 +23,8 @@ import {CerificateSectionComponent} from '../partials/cerificate-section/cerific
     NgxMaskDirective,
     ReactiveFormsModule,
     ErrorDisplayComponent,
-    CerificateSectionComponent
+    RouterLink,
+    AppModal,
   ],
   templateUrl: './mobile-step.component.html',
   styleUrl: './mobile-step.component.css',
@@ -35,6 +40,12 @@ export class MobileStepComponent implements OnInit {
   private flow = inject(AuthFlowService);
   private matSnackBar = inject(MatSnackBar);
   private validationService = inject(ValidationService);
+  private pageService = inject(PageService);
+  private sanitizer = inject(DomSanitizer);
+
+  private readonly termsModal = viewChild.required<AppModal>('termsModal');
+
+  readonly environment = environment;
 
   /** Convert Persian/Arabic numerals to English */
   public p2e = (value: unknown): string => convertToEnglishNumbersUtil(String(value));
@@ -47,6 +58,10 @@ export class MobileStepComponent implements OnInit {
   leadForm!: FormGroup;
   loginByOtpForm!: FormGroup;
 
+  readonly termsLoading = signal(false);
+  readonly termsPage = signal<Page | null>(null);
+  readonly termsBody = signal<SafeHtml | null>(null);
+
   constructor() {
     this.loginByOtpForm = this.formBuilder.group({
       phone: new FormControl('', {
@@ -55,7 +70,9 @@ export class MobileStepComponent implements OnInit {
           maskCompleteValidator(11)
         ]
       }),
-      agreement: new FormControl(true),
+      agreement: new FormControl(false, {
+        validators: [Validators.requiredTrue],
+      }),
     });
 
     this.leadForm = this.formBuilder.group({
@@ -74,15 +91,32 @@ export class MobileStepComponent implements OnInit {
     if (this.state && this.state.mobile) {
       this.loginByOtpForm.get('phone')?.setValue(this.state.mobile);
     }
+
+    this.syncAgreementRequirement();
+  }
+
+  get isForgotPassword(): boolean {
+    return !!this.state?.action && this.state.action === 'forgot_password';
   }
 
   back() {
     this.flow.clear();
     this.state = this.flow.getState();
+    this.syncAgreementRequirement();
+  }
+
+  openTermsModal(event?: Event): void {
+    event?.preventDefault();
+    event?.stopPropagation();
+    this.termsModal().show();
+    this.ensureTermsLoaded();
+  }
+
+  closeTermsModal(): void {
+    this.termsModal().hide();
   }
 
   async submit(): Promise<void> {
-
     if (this.loginByOtpForm.invalid) {
       this.loginByOtpForm.markAllAsTouched();
       return;
@@ -112,7 +146,7 @@ export class MobileStepComponent implements OnInit {
           mobile: phone,
           action: res.action,
           time_remaining: res.time_remaining,
-          otp_sent_at: Date.now(),   // ← زمان دریافت پاسخ برای حساب دقیق
+          otp_sent_at: Date.now(),
         });
         this.router.navigate(['/auth/verify']);
       },
@@ -172,6 +206,42 @@ export class MobileStepComponent implements OnInit {
     });
   }
 
+  private syncAgreementRequirement(): void {
+    const agreement = this.loginByOtpForm.get('agreement');
+    if (!agreement) {
+      return;
+    }
+
+    if (this.isForgotPassword) {
+      agreement.clearValidators();
+      agreement.setValue(true);
+    } else {
+      agreement.setValidators([Validators.requiredTrue]);
+      if (agreement.value !== true) {
+        agreement.setValue(false);
+      }
+    }
+    agreement.updateValueAndValidity({emitEvent: false});
+  }
+
+  private ensureTermsLoaded(): void {
+    if (this.termsPage() || this.termsLoading()) {
+      return;
+    }
+
+    this.termsLoading.set(true);
+    this.pageService.terms().subscribe({
+      next: (page) => {
+        this.termsPage.set(page);
+        this.termsBody.set(this.sanitizer.bypassSecurityTrustHtml(page.body ?? ''));
+        this.termsLoading.set(false);
+      },
+      error: () => {
+        this.termsLoading.set(false);
+      },
+    });
+  }
+
   /** Apply server-side validation errors to the matching form controls */
   private applyServerErrors(form: FormGroup, errors: Record<string, any>): void {
     Object.keys(errors).forEach(key => {
@@ -179,5 +249,4 @@ export class MobileStepComponent implements OnInit {
       if (control) control.setErrors(errors[key]);
     });
   }
-
 }
