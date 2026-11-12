@@ -12,22 +12,20 @@ import {
 import {AuthFlowService} from '../../../services/auth-flow.service';
 import {Router} from '@angular/router';
 import {ButtonWithLoaderComponent} from '../../../components/button-with-loader/button-with-loader.component';
-import {NgxMaskDirective, provideNgxMask} from 'ngx-mask';
 import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {convertToEnglishNumbersUtil} from '../../../utils/convert-to-english-numbers.util';
+import {toIranianMobileNational} from '../../../utils/normalize-iranian-mobile.util';
 import {AuthService} from '../../../services/auth.service';
 
 @Component({
   selector: 'app-verify-code-step',
   imports: [
     ButtonWithLoaderComponent,
-    NgxMaskDirective,
     ReactiveFormsModule,
   ],
   templateUrl: './verify-code-step.component.html',
   styleUrl: './verify-code-step.component.css',
   changeDetection: ChangeDetectionStrategy.Eager,
-  providers: [provideNgxMask()]
 })
 export class VerifyCodeStepComponent implements OnInit, OnDestroy {
   private router = inject(Router);
@@ -58,8 +56,6 @@ export class VerifyCodeStepComponent implements OnInit, OnDestroy {
 
   // ─── View refs ─────────────────────────────────────────────────────
   circle = viewChild<ElementRef>('circle');
-
-  public p2e = (value: unknown): string => convertToEnglishNumbersUtil(String(value));
 
   constructor() {
     this.verifyForm = this.formBuilder.group({
@@ -105,9 +101,34 @@ export class VerifyCodeStepComponent implements OnInit, OnDestroy {
     this.router.navigate(['/auth/mobile']);
   }
 
+  onCodeInput(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const digits = convertToEnglishNumbersUtil(input.value).replace(/\D/g, '').slice(0, 6);
+    if (input.value === digits) {
+      return;
+    }
+    this.verifyForm.get('verification_code')?.setValue(digits, {emitEvent: false});
+    input.value = digits;
+  }
+
   // ─── تایید کد ──────────────────────────────────────────────────────
   async verify(): Promise<void> {
-    if (this.verifyForm.invalid) {
+    if (this.submitting()) {
+      return;
+    }
+
+    const phone =
+      toIranianMobileNational(this.verifyForm.value.phone ?? this.state?.mobile) ?? '';
+    const verificationCode = convertToEnglishNumbersUtil(
+      String(this.verifyForm.value.verification_code ?? '')
+    ).replace(/\D/g, '');
+
+    this.verifyForm.patchValue({
+      phone: phone ? `0${phone}` : this.verifyForm.value.phone,
+      verification_code: verificationCode,
+    });
+
+    if (this.verifyForm.invalid || !phone || verificationCode.length !== 6) {
       this.verifyForm.markAllAsTouched();
       return;
     }
@@ -116,14 +137,13 @@ export class VerifyCodeStepComponent implements OnInit, OnDestroy {
     this.statusError = '';
 
     const payload = {
-      phone: this.verifyForm.value.phone,
-      verification_code: this.verifyForm.value.verification_code,
+      phone,
+      verification_code: verificationCode,
       action: this.state?.action ?? 'login',
     };
 
     this.authService.verifyOtp(payload).subscribe({
       next: (res) => {
-        console.log('set to false')
         this.submitting.set(false);
 
         switch (res.next_action) {
@@ -183,7 +203,6 @@ export class VerifyCodeStepComponent implements OnInit, OnDestroy {
         }
       },
       error: (err) => {
-        console.log('set to false')
         this.submitting.set(false);
 
         if (err.status === 422) {
@@ -212,9 +231,10 @@ export class VerifyCodeStepComponent implements OnInit, OnDestroy {
     this.isResending.set(true);
     this.statusError = '';
 
-    this.authService.sendOtp({phone: this.state.mobile, force_otp: this.state.force_otp, action: this.state.action}).subscribe({
+    const phone = toIranianMobileNational(this.state.mobile) ?? this.state.mobile;
+
+    this.authService.sendOtp({phone, force_otp: this.state.force_otp, action: this.state.action}).subscribe({
       next: (res) => {
-        console.log('isResending set to false');
         this.isResending.set(false);
 
         // state جدید با timestamp تازه
@@ -228,7 +248,6 @@ export class VerifyCodeStepComponent implements OnInit, OnDestroy {
         this.startCountdown(res.time_remaining, Date.now());
       },
       error: (err) => {
-        console.log('isResending set to false');
         this.isResending.set(false);
 
         if (err.status === 429) {

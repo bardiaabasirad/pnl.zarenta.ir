@@ -71,13 +71,12 @@
              inputmode="numeric"
              pattern="[0-9]*"
              autocomplete="one-time-code"
-             mask="000000"
-             [validation]="false"
-             [inputTransformFn]="p2e"
+             maxlength="6"
              name="verification_code"
              id="verification_code"
              dir="ltr"
              placeholder="کد تایید ۶ رقمی"
+             (input)="onCodeInput($event)"
              class="text-right block w-full rounded border border-gray-200 bg-transparent text-sm text-gray-700 p-2.5 focus:border-gray-300">
     </div>
     @if (
