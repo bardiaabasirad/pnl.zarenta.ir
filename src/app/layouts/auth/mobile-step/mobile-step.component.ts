@@ -6,6 +6,7 @@ import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} fr
 import {ButtonWithLoaderComponent} from '../../../components/button-with-loader/button-with-loader.component';
 import {NgxMaskDirective, provideNgxMask} from 'ngx-mask';
 import {convertToEnglishNumbersUtil} from '../../../utils/convert-to-english-numbers.util';
+import {normalizeIranianMobileInput} from '../../../utils/normalize-iranian-mobile.util';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {ValidationService} from '../../../services/validation.service';
 import {ErrorDisplayComponent} from '../../../components/error-display/error-display.component';
@@ -49,6 +50,9 @@ export class MobileStepComponent implements OnInit {
 
   /** Convert Persian/Arabic numerals to English */
   public p2e = (value: unknown): string => convertToEnglishNumbersUtil(String(value));
+
+  /** Normalize autofill/paste (+98...) for mask prefix 0 + 10 digits */
+  public normalizeMobile = (value: unknown): string => normalizeIranianMobileInput(value);
 
   submitting = false;
   submittingLeadForm = false;

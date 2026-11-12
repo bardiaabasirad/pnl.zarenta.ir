@@ -69,6 +69,7 @@
       <input type="text"
              formControlName="verification_code"
              inputmode="numeric"
+             pattern="[0-9]*"
              autocomplete="one-time-code"
              mask="000000"
              [validation]="false"

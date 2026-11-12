@@ -3,6 +3,8 @@
     <input #inputRef
            class="p-0 text-center w-5 border-none outline-none focus:outline-none focus:ring-0 focus:border-transparent bg-transparent text-gray-800"
            type="text"
+           inputmode="numeric"
+           pattern="[0-9]*"
            name="start-day"
            [(ngModel)]="start.day"
            [disabled]="disableDay"
@@ -14,6 +16,8 @@
     <input #inputRef
            class="p-0 text-center w-5 border-none outline-none focus:outline-none focus:ring-0 focus:border-transparent bg-transparent text-gray-800"
            type="text"
+           inputmode="numeric"
+           pattern="[0-9]*"
            name="start-month"
            [disabled]="disableMonth"
            [(ngModel)]="start.month"
@@ -25,6 +29,8 @@
     <input #inputRef
            class="p-0 text-center w-10 border-none outline-none focus:outline-none focus:ring-0 focus:border-transparent bg-transparent text-gray-800"
            type="text"
+           inputmode="numeric"
+           pattern="[0-9]*"
            name="start-year"
            [disabled]="disableYear"
            [(ngModel)]="start.year"
@@ -38,6 +44,8 @@
     <input #inputRef
            class="p-0 text-center w-5 border-none outline-none focus:outline-none focus:ring-0 focus:border-transparent bg-transparent text-gray-800"
            type="text"
+           inputmode="numeric"
+           pattern="[0-9]*"
            name="end-day"
            [disabled]="disableDay"
            [(ngModel)]="end.day"
@@ -49,6 +57,8 @@
     <input #inputRef
            class="p-0 text-center w-5 border-none outline-none focus:outline-none focus:ring-0 focus:border-transparent bg-transparent text-gray-800"
            type="text"
+           inputmode="numeric"
+           pattern="[0-9]*"
            name="end-month"
            [disabled]="disableMonth"
            [(ngModel)]="end.month"
@@ -60,6 +70,8 @@
     <input #inputRef
            class="p-0 text-center w-10 border-none outline-none focus:outline-none focus:ring-0 focus:border-transparent bg-transparent text-gray-800"
            type="text"
+           inputmode="numeric"
+           pattern="[0-9]*"
            name="end-year"
            [disabled]="disableYear"
            [(ngModel)]="end.year"
