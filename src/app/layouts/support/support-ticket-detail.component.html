@@ -2,19 +2,41 @@
   <div class="flex flex-wrap items-center justify-between gap-3">
     <a routerLink="/support" class="text-sm text-primary">بازگشت به تیکت‌ها</a>
     @if (ticket(); as t) {
-      <span class="rounded-full bg-gray-100 px-2.5 py-1 text-xs text-gray-700">{{ statusLabel(t.status) }}</span>
+      <span class="rounded-full bg-gray-100 px-2.5 py-1 text-xs text-gray-700 dark:bg-gray-700 dark:text-gray-200">{{ statusLabel(t.status) }}</span>
     }
   </div>
 
   @if (loading()) {
-    <p class="text-sm text-gray-500">در حال بارگذاری...</p>
+    <div role="status" class="animate-pulse space-y-4 rounded-base border border-gray-200 p-3 lg:p-4 dark:border-gray-700">
+      <div class="space-y-2">
+        <div class="h-5 w-56 rounded bg-gray-300 dark:bg-gray-600"></div>
+        <div class="h-3 w-40 rounded bg-gray-200 dark:bg-gray-700"></div>
+      </div>
+      <div class="space-y-3 rounded-md bg-gray-50 p-3 dark:bg-gray-900">
+        @for (bubble of [0, 1, 2]; track bubble) {
+          <div class="space-y-2 rounded-md border border-gray-200 bg-white p-3 dark:border-gray-700 dark:bg-gray-800">
+            <div class="flex items-center justify-between">
+              <div class="h-3 w-16 rounded bg-gray-300 dark:bg-gray-600"></div>
+              <div class="h-3 w-24 rounded bg-gray-200 dark:bg-gray-700"></div>
+            </div>
+            <div class="h-3 w-full rounded bg-gray-200 dark:bg-gray-700"></div>
+            <div class="h-3 w-4/5 rounded bg-gray-200 dark:bg-gray-700"></div>
+          </div>
+        }
+      </div>
+      <div class="space-y-3 border-t border-gray-100 pt-4 dark:border-gray-700">
+        <div class="h-20 w-full rounded-base border border-gray-200 bg-gray-200 dark:border-gray-700 dark:bg-gray-700"></div>
+        <div class="h-10 w-28 rounded-base border border-dashed border-gray-300 dark:border-gray-600"></div>
+        <div class="h-10 w-28 rounded-base bg-gray-300 dark:bg-gray-600"></div>
+      </div>
+    </div>
   } @else if (ticket(); as t) {
-    <section class="rounded-base border border-gray-200 p-3 lg:p-4 space-y-4">
+    <section class="rounded-base border border-gray-200 p-3 lg:p-4 space-y-4 dark:border-gray-700">
       <div>
         <h1 class="text-lg font-medium">{{ t.subject }}</h1>
-        <p class="mt-1 text-xs text-gray-500">{{ t.code }} · {{ formatDate(t.created_at) }}</p>
+        <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">{{ t.code }} · {{ formatDate(t.created_at) }}</p>
         @if (t.operators?.length) {
-          <p class="mt-2 text-xs text-gray-600">
+          <p class="mt-2 text-xs text-gray-600 dark:text-gray-400">
             پاسخ‌دهنده:
             @for (op of t.operators; track op.admin_id; let last = $last) {
               {{ op.full_name }}@if (!last) {، }
@@ -22,29 +44,28 @@
           </p>
         }
         @if (t.rating) {
-          <p class="mt-1 text-xs text-amber-700">امتیاز شما: {{ t.rating }} از ۵</p>
+          <p class="mt-1 text-xs text-amber-700 dark:text-amber-300">امتیاز شما: {{ t.rating }} از ۵</p>
         }
       </div>
 
       @if (error()) {
-        <div class="rounded bg-rose-50 px-3 py-2 text-sm text-rose-700">{{ error() }}</div>
+        <div class="rounded bg-rose-50 px-3 py-2 text-sm text-rose-700 dark:bg-rose-950/40 dark:text-rose-300">{{ error() }}</div>
       }
 
       <div #messagesContainer
            (scroll)="onMessagesScroll()"
-           class="max-h-[28rem] overflow-y-auto rounded-md bg-gray-50 p-3">
+           class="max-h-[28rem] overflow-y-auto rounded-md bg-gray-50 p-3 dark:bg-gray-900">
         <div #messagesContent class="space-y-3">
           @for (message of t.messages; track message.id) {
             <div class="rounded-md p-3 text-sm border"
-                 [class.bg-white]="!isAdminMessage(message)"
-                 [class.border-gray-200]="!isAdminMessage(message)"
-                 [class.bg-emerald-50]="isAdminMessage(message)"
-                 [class.border-emerald-100]="isAdminMessage(message)">
-              <div class="mb-1 flex items-center justify-between gap-2 text-xs text-gray-500">
+                 [ngClass]="isAdminMessage(message)
+                   ? 'bg-emerald-50 border-emerald-100 dark:bg-emerald-950/40 dark:border-emerald-800'
+                   : 'bg-white border-gray-200 dark:bg-gray-800 dark:border-gray-700'">
+              <div class="mb-1 flex items-center justify-between gap-2 text-xs text-gray-500 dark:text-gray-400">
                 <span>{{ message.sender?.name || (isAdminMessage(message) ? 'پشتیبانی' : 'شما') }}</span>
                 <span>{{ formatDate(message.created_at) }}</span>
               </div>
-              <p class="whitespace-pre-wrap text-gray-800">{{ message.body }}</p>
+              <p class="whitespace-pre-wrap text-gray-800 dark:text-gray-100">{{ message.body }}</p>
               @if (message.image_path) {
                 <a [href]="message.image_path | sanitizeImageURL:'1200':'1200'" target="_blank" rel="noopener"
                    class="mt-2 inline-block">
@@ -58,9 +79,9 @@
       </div>
 
       @if (!t.is_closed) {
-        <form class="space-y-3 border-t border-gray-100 pt-4" (ngSubmit)="sendReply()">
+        <form class="space-y-3 border-t border-gray-100 pt-4 dark:border-gray-700" (ngSubmit)="sendReply()">
           <textarea [(ngModel)]="replyBody" name="replyBody" rows="3" maxlength="5000"
-                    class="w-full rounded-base border border-gray-200 px-3 py-2.5 text-sm"
+                    class="w-full rounded-base border border-gray-200 bg-white px-3 py-2.5 text-sm text-gray-900 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
                     placeholder="پاسخ خود را بنویسید"></textarea>
           <div>
             <input #replyImage type="file" accept="image/jpeg,image/png,image/webp"
@@ -69,15 +90,15 @@
             <div class="flex flex-wrap items-center gap-3">
               <button type="button"
                       (click)="pickImage()"
-                      class="inline-flex items-center gap-2 rounded-base border border-dashed border-gray-300 bg-gray-50 px-3.5 py-2.5 text-sm text-gray-700 transition hover:border-primary hover:bg-primary/5 hover:text-primary">
+                      class="inline-flex items-center gap-2 rounded-base border border-dashed border-gray-300 bg-gray-50 px-3.5 py-2.5 text-sm text-gray-700 transition hover:border-primary hover:bg-primary/5 hover:text-primary dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
                   <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909M3.75 21h16.5A2.25 2.25 0 0 0 22.5 18.75V5.25A2.25 2.25 0 0 0 20.25 3H3.75A2.25 2.25 0 0 0 1.5 5.25v13.5A2.25 2.25 0 0 0 3.75 21Z" />
                 </svg>
                 {{ imageFile ? 'تغییر تصویر' : 'پیوست تصویر' }}
               </button>
               @if (imageFile) {
-                <span class="max-w-48 truncate text-xs text-gray-500">{{ imageFile.name }}</span>
-                <button type="button" class="text-sm text-rose-600" (click)="clearImage()">حذف</button>
+                <span class="max-w-48 truncate text-xs text-gray-500 dark:text-gray-400">{{ imageFile.name }}</span>
+                <button type="button" class="text-sm text-rose-600 dark:text-rose-400" (click)="clearImage()">حذف</button>
               }
             </div>
             @if (imagePreview) {
@@ -94,13 +115,13 @@
               classes="rounded-base bg-primary px-4 py-2.5 text-sm text-white disabled:opacity-50">
               ارسال پیام
             </app-button-with-loader>
-            <button type="button" class="text-sm text-rose-600" (click)="showClosePanel = true">بستن تیکت</button>
+            <button type="button" class="text-sm text-rose-600 dark:text-rose-400" (click)="showClosePanel = true">بستن تیکت</button>
           </div>
         </form>
 
         @if (showClosePanel) {
-          <div class="rounded-base border border-amber-200 bg-amber-50 p-4 space-y-3">
-            <p class="text-sm text-gray-700">امتیاز به پشتیبانی اختیاری است.</p>
+          <div class="rounded-base border border-amber-200 bg-amber-50 p-4 space-y-3 dark:border-amber-800 dark:bg-amber-950/40">
+            <p class="text-sm text-gray-700 dark:text-gray-200">امتیاز به پشتیبانی اختیاری است.</p>
             <div class="flex gap-2">
               @for (n of [1,2,3,4,5]; track n) {
                 <button type="button"
@@ -108,7 +129,7 @@
                         [class.bg-amber-400]="selectedRating === n"
                         [class.text-white]="selectedRating === n"
                         [class.border-amber-400]="selectedRating === n"
-                        [class.border-gray-300]="selectedRating !== n"
+                        [ngClass]="selectedRating !== n ? 'border-gray-300 dark:border-gray-600' : ''"
                         (click)="selectedRating = selectedRating === n ? null : n">
                   {{ n }}
                 </button>
@@ -123,12 +144,12 @@
                 classes="rounded-base bg-rose-600 px-4 py-2 text-sm text-white">
                 تأیید بستن تیکت
               </app-button-with-loader>
-              <button type="button" class="text-sm text-gray-600" (click)="showClosePanel = false">انصراف</button>
+              <button type="button" class="text-sm text-gray-600 dark:text-gray-400" (click)="showClosePanel = false">انصراف</button>
             </div>
           </div>
         }
       } @else {
-        <p class="text-sm text-gray-500">این تیکت بسته شده است.</p>
+        <p class="text-sm text-gray-500 dark:text-gray-400">این تیکت بسته شده است.</p>
       }
     </section>
   }

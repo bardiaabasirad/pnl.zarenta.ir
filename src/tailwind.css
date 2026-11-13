@@ -26,6 +26,16 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+html {
+  color-scheme: light;
+}
+
+body.dark {
+  color-scheme: dark;
+  background-color: var(--color-gray-900);
+  color: var(--color-gray-100);
+}
+
 @layer base {
   input:-webkit-autofill,
   input:-webkit-autofill:hover,
@@ -33,6 +43,13 @@
     -webkit-box-shadow: 0 0 0px 1000px var(--color-white) inset !important;
     -webkit-text-fill-color: var(--color-gray-900) !important;
     transition: background-color 5000s ease-in-out 0s;
+  }
+
+  .dark input:-webkit-autofill,
+  .dark input:-webkit-autofill:hover,
+  .dark input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0px 1000px var(--color-gray-700) inset !important;
+    -webkit-text-fill-color: var(--color-gray-100) !important;
   }
 }
 

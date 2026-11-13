@@ -7,6 +7,7 @@ import {RouterOutlet} from '@angular/router';
 import {environment} from '../../../environments/environment';
 import {Title} from '@angular/platform-browser';
 import {PwaInstallBannerComponent} from '../../components/pwa-install-banner/pwa-install-banner.component';
+import {DarkModeService} from '../../services/dark-mode.service';
 
 @Component({
   selector: 'app-root',
@@ -24,9 +25,11 @@ export class AppComponent implements OnInit, OnDestroy {
   private presenceService = inject(OnlinePresenceService);
   private authService = inject(AuthService);
   private readonly titleService = inject(Title);
+  private readonly darkModeService = inject(DarkModeService);
   private authSub?: Subscription;
 
   ngOnInit(): void {
+    this.darkModeService.init();
     this.titleService.setTitle(`سامانه معاملات ${environment.appTitle}`);
 
     if (this.authService.isLoggedIn()) {

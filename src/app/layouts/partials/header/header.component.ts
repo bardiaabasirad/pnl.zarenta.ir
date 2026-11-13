@@ -18,6 +18,7 @@ import {AuthService} from '../../../services/auth.service';
 import {TraderNotificationApiService} from '../../../services/trader-notification.service';
 import {WebSocketService} from '../../../services/web-socket.service';
 import {PwaInstallService} from '../../../services/pwa-install.service';
+import {DarkModeService} from '../../../services/dark-mode.service';
 import {CommonModule} from '@angular/common';
 
 interface TraderNotification {
@@ -60,6 +61,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   private webSocketService = inject(WebSocketService);
   private router = inject(Router);
   readonly pwaInstall = inject(PwaInstallService);
+  readonly darkMode = inject(DarkModeService);
   private readonly channelUnsubscribers: (() => void)[] = [];
   installingPwa = false;
 

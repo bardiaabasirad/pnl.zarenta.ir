@@ -9,6 +9,7 @@ export class EventService {
   public userUpdateEvent: EventEmitter<void> = new EventEmitter<void>();
   public priceUpdateEvent: EventEmitter<void> = new EventEmitter<void>();
   public canNotUpdateMarketPriceEvent: EventEmitter<void> = new EventEmitter<void>();
+  public darkModeToggled: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   constructor() { }
 

@@ -36,7 +36,7 @@
           <a (click)="onPageClick(item)"
              [ngClass]="{
                'bg-primary dark:bg-primary-800 text-white border-primary': activePage === item,
-               'cursor-pointer border-gray-200 hover:bg-primary hover:border-primary hover:text-white transition-colors': activePage !== item
+               'cursor-pointer border-gray-200 hover:bg-primary hover:border-primary hover:text-white transition-colors dark:border-gray-700': activePage !== item
              }"
              class="flex ml-1.5 h-7 border rounded items-center transition-all px-2.5 dark:text-white"
           >{{ item }}</a>

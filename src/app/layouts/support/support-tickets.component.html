@@ -1,42 +1,42 @@
 <div class="py-2.5 space-y-4">
   <div>
     <h1 class="text-lg font-medium">ارسال تیکت به پشتیبانی</h1>
-    <p class="mt-1 text-sm text-gray-600">درخواست یا مشکل خود را ثبت کنید؛ اپراتور پاسخ می‌دهد.</p>
+    <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">درخواست یا مشکل خود را ثبت کنید؛ اپراتور پاسخ می‌دهد.</p>
   </div>
 
   @if (error()) {
-    <div class="rounded bg-rose-50 px-3 py-2 text-sm text-rose-700">{{ error() }}</div>
+    <div class="rounded bg-rose-50 px-3 py-2 text-sm text-rose-700 dark:bg-rose-950/40 dark:text-rose-300">{{ error() }}</div>
   }
   @if (success()) {
-    <div class="rounded bg-emerald-50 px-3 py-2 text-sm text-emerald-700">{{ success() }}</div>
+    <div class="rounded bg-emerald-50 px-3 py-2 text-sm text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-300">{{ success() }}</div>
   }
 
-  <section class="rounded-base border border-gray-200 p-3 lg:p-4 space-y-3">
+  <section class="rounded-base border border-gray-200 p-3 lg:p-4 space-y-3 dark:border-gray-700">
     <h2 class="text-sm font-medium">ثبت تیکت جدید</h2>
     <form class="space-y-3" (ngSubmit)="submit()">
       <input [(ngModel)]="subject" name="subject" type="text" maxlength="255"
-             class="w-full rounded-base border border-gray-200 px-3 py-2.5 text-sm"
+             class="w-full rounded-base border border-gray-200 bg-white px-3 py-2.5 text-sm text-gray-900 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
              placeholder="موضوع">
       <textarea [(ngModel)]="body" name="body" rows="4" maxlength="5000"
-                class="w-full rounded-base border border-gray-200 px-3 py-2.5 text-sm"
+                class="w-full rounded-base border border-gray-200 bg-white px-3 py-2.5 text-sm text-gray-900 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
                 placeholder="توضیحات درخواست"></textarea>
       <div>
-        <label class="mb-1 block text-xs text-gray-500">تصویر اختیاری (حداکثر ۲ مگابایت)</label>
+        <label class="mb-1 block text-xs text-gray-500 dark:text-gray-400">تصویر اختیاری (حداکثر ۲ مگابایت)</label>
         <input #imageInput type="file" accept="image/jpeg,image/png,image/webp"
                class="hidden"
                (change)="onImageSelected($event)">
         <div class="flex flex-wrap items-center gap-3">
           <button type="button"
                   (click)="pickImage()"
-                  class="cursor-pointer inline-flex items-center gap-2 rounded-base border border-dashed border-gray-300 bg-gray-50 px-3.5 py-2.5 text-sm text-gray-700 transition hover:border-primary hover:bg-primary/5 hover:text-primary">
+                  class="cursor-pointer inline-flex items-center gap-2 rounded-base border border-dashed border-gray-300 bg-gray-50 px-3.5 py-2.5 text-sm text-gray-700 transition hover:border-primary hover:bg-primary/5 hover:text-primary dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
               <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909M3.75 21h16.5A2.25 2.25 0 0 0 22.5 18.75V5.25A2.25 2.25 0 0 0 20.25 3H3.75A2.25 2.25 0 0 0 1.5 5.25v13.5A2.25 2.25 0 0 0 3.75 21Z" />
             </svg>
             {{ imageFile ? 'تغییر تصویر' : 'انتخاب تصویر' }}
           </button>
           @if (imageFile) {
-            <span class="max-w-48 truncate text-xs text-gray-500">{{ imageFile.name }}</span>
-            <button type="button" class="text-sm text-rose-600" (click)="clearImage()">حذف</button>
+            <span class="max-w-48 truncate text-xs text-gray-500 dark:text-gray-400">{{ imageFile.name }}</span>
+            <button type="button" class="text-sm text-rose-600 dark:text-rose-400" (click)="clearImage()">حذف</button>
           }
         </div>
         @if (imagePreview) {
@@ -58,14 +58,24 @@
   <section class="space-y-2">
     <h2 class="text-sm font-medium">تیکت‌های من</h2>
     @if (loading()) {
-      <p class="text-sm text-gray-500">در حال بارگذاری...</p>
+      <div role="status" class="space-y-2 animate-pulse">
+        @for (row of [0, 1, 2, 3]; track row) {
+          <div class="rounded-base border border-gray-200 bg-white p-3 dark:border-gray-700 dark:bg-gray-800">
+            <div class="flex flex-wrap items-center gap-2">
+              <div class="h-4 w-40 rounded bg-gray-300 dark:bg-gray-600"></div>
+              <div class="h-5 w-16 rounded-full bg-gray-200 dark:bg-gray-700"></div>
+            </div>
+            <div class="mt-2 h-3 w-32 rounded bg-gray-200 dark:bg-gray-700"></div>
+          </div>
+        }
+      </div>
     } @else if (tickets().length === 0) {
-      <p class="text-sm text-gray-500">هنوز تیکتی ثبت نکرده‌اید.</p>
+      <p class="text-sm text-gray-500 dark:text-gray-400">هنوز تیکتی ثبت نکرده‌اید.</p>
     } @else {
       <div class="space-y-2">
         @for (ticket of tickets(); track ticket.id) {
           <a [routerLink]="['/support', ticket.id]"
-             class="block rounded-base border border-gray-200 p-3 hover:bg-gray-50">
+             class="block rounded-base border border-gray-200 bg-white p-3 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
             <div class="flex flex-wrap items-center justify-between gap-2">
               <div class="min-w-0 space-y-1">
                 <div class="flex flex-wrap items-center gap-2">
@@ -74,7 +84,7 @@
                     {{ statusLabel(ticket.status) }}
                   </span>
                 </div>
-                <div class="text-xs text-gray-500">
+                <div class="text-xs text-gray-500 dark:text-gray-400">
                   {{ ticket.code }}
                   @if (ticket.last_message_at) {
                     · {{ formatDate(ticket.last_message_at) }}

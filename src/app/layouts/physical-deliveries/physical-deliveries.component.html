@@ -1,14 +1,14 @@
 <div class="py-2.5 space-y-4">
   <div>
     <h1 class="text-lg font-medium">تحویل فیزیکی فلز</h1>
-    <p class="mt-1 text-sm text-gray-600">فقط از موجودی آزاد فلز حاضر. با ثبت درخواست، وزن رزرو و کارمزد کسر می‌شود.</p>
+    <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">فقط از موجودی آزاد فلز حاضر. با ثبت درخواست، وزن رزرو و کارمزد کسر می‌شود.</p>
   </div>
 
   @if (error()) {
-    <div class="rounded bg-rose-50 px-3 py-2 text-sm text-rose-700">{{ error() }}</div>
+    <div class="rounded bg-rose-50 px-3 py-2 text-sm text-rose-700 dark:bg-rose-950/40 dark:text-rose-300">{{ error() }}</div>
   }
 
-  <section class="rounded-base border border-gray-200 p-3 lg:p-4 space-y-3">
+  <section class="rounded-base border border-gray-200 p-3 lg:p-4 space-y-3 dark:border-gray-700">
     <h2 class="text-sm font-medium">ثبت درخواست جدید</h2>
     <div class="grid gap-3 lg:grid-cols-3">
       <app-dropdown-select
@@ -18,9 +18,9 @@
         bindValue="metal_item_id"
         bindLabel="label"
         placeholder="انتخاب فلز حاضر"
-        triggerClass="w-full rounded-base border border-gray-200 bg-white text-sm"
+        triggerClass="w-full rounded-base border border-gray-200 bg-white text-sm dark:border-gray-700 dark:bg-gray-800"
       />
-      <input class="rounded-base border border-gray-200 px-3 py-2.5 text-sm" type="text"
+      <input class="rounded-base border border-gray-200 bg-white px-3 py-2.5 text-sm text-gray-900 dark:border-gray-700 dark:bg-gray-800 dark:text-white" type="text"
              placeholder="وزن (گرم)"
              [ngModel]="qty()"
              (ngModelChange)="onQtyChange($event)">
@@ -33,11 +33,11 @@
     </div>
 
     @if (quote(); as q) {
-      <div class="rounded-md bg-gray-50 px-3 py-2 text-sm space-y-1">
+      <div class="rounded-md bg-gray-50 px-3 py-2 text-sm space-y-1 dark:bg-gray-800">
         <div>نرخ کارمزد اعمال‌شده: <b>{{ q.fee_rate_percent | number:'1.0-6' }}٪</b></div>
         <div>قیمت مبنا (هر واحد فیزیکی): <b>{{ q.fee_unit_price | number }}</b> تومان</div>
         <div class="text-base font-medium">کارمزد قطعی: {{ q.fee_amount | number }} تومان</div>
-        <p class="text-xs text-gray-500">کارمزد از کیف تومان کسر می‌شود و تا قبل از تحویل قابل استرداد است.</p>
+        <p class="text-xs text-gray-500 dark:text-gray-400">کارمزد از کیف تومان کسر می‌شود و تا قبل از تحویل قابل استرداد است.</p>
       </div>
     }
   </section>
@@ -45,13 +45,23 @@
   <section class="space-y-2">
     <h2 class="text-sm font-medium">درخواست‌های من</h2>
     @if (loading()) {
-      <p class="text-sm text-gray-500">در حال بارگذاری...</p>
+      <div role="status" class="space-y-2 animate-pulse">
+        @for (row of [0, 1, 2]; track row) {
+          <div class="flex flex-wrap items-center justify-between gap-3 rounded-base border border-gray-200 p-3 dark:border-gray-700">
+            <div class="w-full space-y-2">
+              <div class="h-4 w-48 max-w-full rounded bg-gray-300 dark:bg-gray-600"></div>
+              <div class="h-3.5 w-full max-w-md rounded bg-gray-200 dark:bg-gray-700"></div>
+              <div class="h-3 w-20 rounded bg-gray-200 dark:bg-gray-700"></div>
+            </div>
+          </div>
+        }
+      </div>
     } @else if (items().length === 0) {
-      <p class="text-sm text-gray-500">هنوز درخواستی ثبت نکرده‌اید.</p>
+      <p class="text-sm text-gray-500 dark:text-gray-400">هنوز درخواستی ثبت نکرده‌اید.</p>
     } @else {
       <div class="space-y-2">
         @for (row of items(); track row.id) {
-          <div class="rounded-base border border-gray-200 p-3 flex flex-wrap items-center justify-between gap-3">
+          <div class="rounded-base border border-gray-200 p-3 flex flex-wrap items-center justify-between gap-3 dark:border-gray-700">
             <div class="text-sm space-y-1">
               <div class="font-medium">#{{ row.tracking_code }} — {{ row.metal_item?.title }}</div>
               <div>
@@ -64,10 +74,10 @@
                   (تعدیل: {{ row.fee_adjustment_amount | number }})
                 }
               </div>
-              <div class="text-xs text-gray-500">{{ statusLabel(row.status) }}</div>
+              <div class="text-xs text-gray-500 dark:text-gray-400">{{ statusLabel(row.status) }}</div>
             </div>
             @if (canCancel(row.status)) {
-              <button type="button" class="text-sm text-rose-700" [disabled]="submitting()" (click)="cancel(row)">
+              <button type="button" class="text-sm text-rose-700 dark:text-rose-300" [disabled]="submitting()" (click)="cancel(row)">
                 لغو و استرداد کارمزد
               </button>
             }

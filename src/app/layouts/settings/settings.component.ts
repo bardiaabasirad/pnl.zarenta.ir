@@ -12,6 +12,7 @@ import {
 import {SettingService} from '../../services/setting.service';
 import {toSignal} from '@angular/core/rxjs-interop';
 import {environment} from '../../../environments/environment';
+import {DarkModeService} from '../../services/dark-mode.service';
 
 @Component({
   selector: 'app-settings',
@@ -30,6 +31,7 @@ export class SettingsComponent implements OnInit {
   private eventService = inject(EventService);
   private settingService = inject(SettingService);
   private title = inject(Title);
+  readonly darkMode = inject(DarkModeService);
 
   // Signals
   user = signal<User | null | undefined>(undefined);

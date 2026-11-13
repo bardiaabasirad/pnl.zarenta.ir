@@ -199,6 +199,20 @@ input[type=number] {
   }
 }
 
+.dark {
+  .filter,
+  .form {
+    .mat-mdc-text-field-wrapper.mdc-text-field {
+      border: 1px solid var(--color-gray-700);
+    }
+
+    .mat-mdc-form-field-has-icon-suffix.mat-mdc-text-field-wrapper,
+    .mdc-text-field--filled:not(.mdc-text-field--disabled) {
+      background-color: var(--color-gray-700) !important;
+    }
+  }
+}
+
 .z-60 {
   z-index: 60 !important;
 }

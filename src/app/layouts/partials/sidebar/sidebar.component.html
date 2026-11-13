@@ -2,60 +2,70 @@
 
 <div class="space-y-4 sticky top-24">
 
-  <div class="rounded-base bg-white border border-gray-200">
+  <div class="rounded-base bg-white border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
 
     <div class="flex items-center justify-between pr-4 pl-6 py-4">
-      <div class="flex items-center gap-3.5">
-        <input #avatarFileInput
-               type="file"
-               accept="image/jpeg,image/png,image/jpg"
-               class="hidden"
-               (change)="onAvatarFileSelected($event)">
-        <div class="relative shrink-0">
-          <button id="avatar"
-                  type="button"
-                  (click)="openAvatarPicker()"
-                  class="cursor-pointer w-16 h-16 flex items-center justify-center aspect-square rounded-full border border-gray-300 dark:border-gray-600 overflow-hidden bg-gray-50">
-            @if (user_data?.avatar; as avatar) {
-              <img [src]="avatar | sanitizeImageURL:'100':'100'"
-                   alt="آواتار"
-                   class="w-full h-full object-cover">
-            } @else {
-              <svg width="20" height="23" viewBox="0 0 20 23" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M9.02418 10.3413C11.6037 10.3413 13.6948 8.2502 13.6948 5.67067C13.6948 3.09113 11.6037 1 9.02418 1C6.44465 1 4.35352 3.09113 4.35352 5.67067C4.35352 8.2502 6.44465 10.3413 9.02418 10.3413Z" stroke="#A7A9AC" stroke-width="1.74199" stroke-linecap="round" stroke-linejoin="round"></path>
-                <path d="M1 19.6827C1 16.0676 4.59641 13.1438 9.0242 13.1438C9.88794 13.1438 10.7201 13.255 11.5 13.461C11.6153 13.4914 11.7294 13.5239 11.8423 13.5585" stroke="#A7A9AC" stroke-width="1.74199" stroke-linecap="round" stroke-linejoin="round"></path>
-                <path d="M15.25 21.5V15M15.25 15L18.5 18.25M15.25 15L12 18.25" stroke="#A7A9AC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-              </svg>
-            }
-          </button>
-
-          @if (user_data?.avatar) {
-            <button type="button"
-                    (click)="deleteAvatar($event)"
-                    [disabled]="deletingAvatar"
-                    title="حذف تصویر"
-                    class="absolute -bottom-1 -left-1 cursor-pointer flex items-center justify-center size-6 rounded-full bg-white border border-gray-200 shadow-sm disabled:opacity-50">
-              <app-svg-icon name="delete" class="size-3.5 fill-rose-300 hover:fill-rose-500 transition-colors" />
+      @if (user_data) {
+        <div class="flex items-center gap-3.5">
+          <input #avatarFileInput
+                 type="file"
+                 accept="image/jpeg,image/png,image/jpg"
+                 class="hidden"
+                 (change)="onAvatarFileSelected($event)">
+          <div class="relative shrink-0">
+            <button id="avatar"
+                    type="button"
+                    (click)="openAvatarPicker()"
+                    class="cursor-pointer w-16 h-16 flex items-center justify-center aspect-square rounded-full border border-gray-300 dark:border-gray-600 overflow-hidden bg-gray-50 dark:bg-gray-800">
+              @if (user_data.avatar; as avatar) {
+                <img [src]="avatar | sanitizeImageURL:'100':'100'"
+                     alt="آواتار"
+                     class="w-full h-full object-cover">
+              } @else {
+                <svg width="20" height="23" viewBox="0 0 20 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M9.02418 10.3413C11.6037 10.3413 13.6948 8.2502 13.6948 5.67067C13.6948 3.09113 11.6037 1 9.02418 1C6.44465 1 4.35352 3.09113 4.35352 5.67067C4.35352 8.2502 6.44465 10.3413 9.02418 10.3413Z" stroke="#A7A9AC" stroke-width="1.74199" stroke-linecap="round" stroke-linejoin="round"></path>
+                  <path d="M1 19.6827C1 16.0676 4.59641 13.1438 9.0242 13.1438C9.88794 13.1438 10.7201 13.255 11.5 13.461C11.6153 13.4914 11.7294 13.5239 11.8423 13.5585" stroke="#A7A9AC" stroke-width="1.74199" stroke-linecap="round" stroke-linejoin="round"></path>
+                  <path d="M15.25 21.5V15M15.25 15L18.5 18.25M15.25 15L12 18.25" stroke="#A7A9AC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+              }
             </button>
-          }
+
+            @if (user_data.avatar) {
+              <button type="button"
+                      (click)="deleteAvatar($event)"
+                      [disabled]="deletingAvatar"
+                      title="حذف تصویر"
+                      class="absolute -bottom-1 -left-1 cursor-pointer flex items-center justify-center size-6 rounded-full bg-white border border-gray-200 shadow-sm disabled:opacity-50 dark:bg-gray-800 dark:border-gray-700">
+                <app-svg-icon name="delete" class="size-3.5 fill-rose-300 hover:fill-rose-500 transition-colors" />
+              </button>
+            }
+          </div>
+          <div>
+            <div class="text-base font-medium mb-1.5 dark:text-white">{{ user_data.name }}</div>
+            <div class="text-base font-medium dark:text-gray-200">{{ user_data.phone }}</div>
+          </div>
         </div>
-        <div>
-          <div class="text-base font-medium mb-1.5">{{ user_data?.name }}</div>
-          <div class="text-base font-medium">{{ user_data?.phone }}</div>
+      } @else {
+        <div role="status" class="flex animate-pulse items-center gap-3.5">
+          <div class="size-16 rounded-full border border-gray-300 bg-gray-200 dark:border-gray-600 dark:bg-gray-700"></div>
+          <div class="space-y-2">
+            <div class="h-4 w-28 rounded bg-gray-300 dark:bg-gray-600"></div>
+            <div class="h-4 w-24 rounded bg-gray-200 dark:bg-gray-700"></div>
+          </div>
         </div>
-      </div>
+      }
     </div>
 
-    <div class="h-[1px] bg-gradient-to-r from-white via-gray-200 to-white mx-auto"></div>
+    <div class="h-[1px] bg-gradient-to-r from-white via-gray-200 to-white mx-auto dark:from-gray-800 dark:via-gray-700 dark:to-gray-800"></div>
 
     <div class="py-4">
       <a routerLink="/" class="relative flex items-center justify-between rounded pr-4 pl-6 py-2.5">
         <div class="flex items-center">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="-32 -32 1088 1088" class="size-5 fill-gray-700"><g transform="translate(0, 960) scale(1, -1)"><path d="M810.296 938.667c118.026 0 213.704-95.679 213.704-213.704s-95.679-213.704-213.704-213.704c-118.026 0-213.704 95.679-213.704 213.704v0c0 118.026 95.679 213.704 213.704 213.704v0zM810.296 600.302c68.848 0 124.661 55.813 124.661 124.661s-55.813 124.661-124.661 124.661c-68.848 0-124.661-55.813-124.661-124.661v0c0-68.848 55.813-124.661 124.661-124.661v0zM213.704 342.076c118.026 0 213.704-95.679 213.704-213.704s-95.679-213.704-213.704-213.704c-118.026 0-213.704 95.679-213.704 213.704v0c0 118.026 95.679 213.704 213.704 213.704v0zM213.704 3.71c68.848 0 124.661 55.813 124.661 124.661s-55.813 124.661-124.661 124.661c-68.848 0-124.661-55.813-124.661-124.661v0c0-68.848 55.813-124.661 124.661-124.661v0zM556.522 3.71h-44.522v89.043h44.522c115.567 0 209.252 93.685 209.252 209.252v0 84.591h89.043v-84.591c-0.203-164.663-133.633-298.093-298.276-298.296h-0.019zM917.148 216.792l-106.184 106.184-101.732-106.14-64.289 61.618 164.73 171.809 170.474-170.474zM262.678 466.737h-89.043v89.043c0.203 164.663 133.633 298.093 298.276 298.296h44.541v-89.043h-44.522c-115.567 0-209.252-93.685-209.252-209.252v0zM213.704 409.526l-169.806 162.727 61.618 64.289 108.188-103.691 108.188 103.691 61.618-64.289z"/></g></svg>
-          <span class="text-base font-medium mr-2.5">معامله</span>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="-32 -32 1088 1088" class="size-5 fill-gray-700 dark:fill-gray-300"><g transform="translate(0, 960) scale(1, -1)"><path d="M810.296 938.667c118.026 0 213.704-95.679 213.704-213.704s-95.679-213.704-213.704-213.704c-118.026 0-213.704 95.679-213.704 213.704v0c0 118.026 95.679 213.704 213.704 213.704v0zM810.296 600.302c68.848 0 124.661 55.813 124.661 124.661s-55.813 124.661-124.661 124.661c-68.848 0-124.661-55.813-124.661-124.661v0c0-68.848 55.813-124.661 124.661-124.661v0zM213.704 342.076c118.026 0 213.704-95.679 213.704-213.704s-95.679-213.704-213.704-213.704c-118.026 0-213.704 95.679-213.704 213.704v0c0 118.026 95.679 213.704 213.704 213.704v0zM213.704 3.71c68.848 0 124.661 55.813 124.661 124.661s-55.813 124.661-124.661 124.661c-68.848 0-124.661-55.813-124.661-124.661v0c0-68.848 55.813-124.661 124.661-124.661v0zM556.522 3.71h-44.522v89.043h44.522c115.567 0 209.252 93.685 209.252 209.252v0 84.591h89.043v-84.591c-0.203-164.663-133.633-298.093-298.276-298.296h-0.019zM917.148 216.792l-106.184 106.184-101.732-106.14-64.289 61.618 164.73 171.809 170.474-170.474zM262.678 466.737h-89.043v89.043c0.203 164.663 133.633 298.093 298.276 298.296h44.541v-89.043h-44.522c-115.567 0-209.252-93.685-209.252-209.252v0zM213.704 409.526l-169.806 162.727 61.618 64.289 108.188-103.691 108.188 103.691 61.618-64.289z"/></g></svg>
+          <span class="text-base font-medium mr-2.5 dark:text-gray-100">معامله</span>
         </div>
-        <svg class="size-4" viewBox="0 0 9 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M7.57422 1.40008L2.14091 6.83341C1.49924 7.47508 1.49924 8.52508 2.14091 9.16675L7.57422 14.6001" stroke="#414042" stroke-opacity="0.5" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+        <svg class="size-4 text-gray-500 dark:text-gray-400" viewBox="0 0 9 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M7.57422 1.40008L2.14091 6.83341C1.49924 7.47508 1.49924 8.52508 2.14091 9.16675L7.57422 14.6001" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
 
         @if (url === '/') {
@@ -66,11 +76,11 @@
          class="relative flex items-center justify-between rounded pr-4 pl-6 py-2.5"
       >
         <div class="flex items-center">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="-32 -32 1088 1088" class="size-5 fill-gray-700"><g transform="translate(0, 960) scale(1, -1)"><path d="M511.8-85.333c-0.046 0-0.101 0-0.156 0-282.758 0-511.978 229.22-511.978 511.978 0 282.703 229.132 511.889 511.814 511.978h44.528v-344.005h-44.52c-92.495-0.264-167.375-75.307-167.375-167.839 0-92.695 75.144-167.84 167.84-167.84 46.232 0 88.098 18.692 118.453 48.932l-0.005-0.005 31.476 31.164 243.212-243.212-31.52-31.476c-92.581-92.481-220.428-149.676-361.633-149.676-0.047 0-0.095 0-0.142 0h0.007zM466.968 847.179c-213.361-23.555-377.831-202.833-377.831-420.526 0-233.582 189.356-422.938 422.938-422.938 100.963 0 193.662 35.377 266.38 94.411l-0.783-0.616-118.467 118.467c-41.024-28.981-92.069-46.323-147.163-46.323-141.895 0-256.924 115.029-256.924 256.924 0 125.965 90.651 230.758 210.275 252.699l1.576 0.24zM678.348 471.165h345.118v-44.52c0.001-0.343 0.001-0.749 0.001-1.155 0-141.088-57.219-268.812-149.718-361.233l-31.479-31.435-240.407 240.407 30.318 31.476c29.227 30.458 47.223 71.887 47.223 117.52 0 1.163-0.012 2.322-0.035 3.479l0.003-0.173zM932.111 382.125h-166.86c-6.451-39.712-21.001-75.125-41.939-105.835l0.58 0.902 116.686-116.686c49.23 60.842 82.231 136.685 91.362 219.712l0.17 1.907zM1023.466 382.125h-344.049v44.52c-0.453 92.544-75.378 167.437-167.89 167.84h-44.558v344.138h44.52c282.757 0 511.978-229.22 511.978-511.978v0zM764.405 471.165h167.662c-21.895 198.269-177.796 354.185-374.151 375.932l-1.908 0.172v-167.706c106.255-19.632 188.765-102.143 208.152-206.806l0.245-1.591z"/></g></svg>
-          <span class="text-base font-medium mr-2.5">دارایی</span>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="-32 -32 1088 1088" class="size-5 fill-gray-700 dark:fill-gray-300"><g transform="translate(0, 960) scale(1, -1)"><path d="M511.8-85.333c-0.046 0-0.101 0-0.156 0-282.758 0-511.978 229.22-511.978 511.978 0 282.703 229.132 511.889 511.814 511.978h44.528v-344.005h-44.52c-92.495-0.264-167.375-75.307-167.375-167.839 0-92.695 75.144-167.84 167.84-167.84 46.232 0 88.098 18.692 118.453 48.932l-0.005-0.005 31.476 31.164 243.212-243.212-31.52-31.476c-92.581-92.481-220.428-149.676-361.633-149.676-0.047 0-0.095 0-0.142 0h0.007zM466.968 847.179c-213.361-23.555-377.831-202.833-377.831-420.526 0-233.582 189.356-422.938 422.938-422.938 100.963 0 193.662 35.377 266.38 94.411l-0.783-0.616-118.467 118.467c-41.024-28.981-92.069-46.323-147.163-46.323-141.895 0-256.924 115.029-256.924 256.924 0 125.965 90.651 230.758 210.275 252.699l1.576 0.24zM678.348 471.165h345.118v-44.52c0.001-0.343 0.001-0.749 0.001-1.155 0-141.088-57.219-268.812-149.718-361.233l-31.479-31.435-240.407 240.407 30.318 31.476c29.227 30.458 47.223 71.887 47.223 117.52 0 1.163-0.012 2.322-0.035 3.479l0.003-0.173zM932.111 382.125h-166.86c-6.451-39.712-21.001-75.125-41.939-105.835l0.58 0.902 116.686-116.686c49.23 60.842 82.231 136.685 91.362 219.712l0.17 1.907zM1023.466 382.125h-344.049v44.52c-0.453 92.544-75.378 167.437-167.89 167.84h-44.558v344.138h44.52c282.757 0 511.978-229.22 511.978-511.978v0zM764.405 471.165h167.662c-21.895 198.269-177.796 354.185-374.151 375.932l-1.908 0.172v-167.706c106.255-19.632 188.765-102.143 208.152-206.806l0.245-1.591z"/></g></svg>
+          <span class="text-base font-medium mr-2.5 dark:text-gray-100">دارایی</span>
         </div>
-        <svg class="size-4" viewBox="0 0 9 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M7.57422 1.40008L2.14091 6.83341C1.49924 7.47508 1.49924 8.52508 2.14091 9.16675L7.57422 14.6001" stroke="#414042" stroke-opacity="0.5" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+        <svg class="size-4 text-gray-500 dark:text-gray-400" viewBox="0 0 9 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M7.57422 1.40008L2.14091 6.83341C1.49924 7.47508 1.49924 8.52508 2.14091 9.16675L7.57422 14.6001" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
 
         @if (url === '/assets') {
@@ -81,11 +91,11 @@
          class="relative flex items-center justify-between rounded pr-4 pl-6 py-2.5"
       >
         <div class="flex items-center">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="size-5 fill-gray-700"><path d="M19 7h-3V6a4 4 0 0 0-8 0v1H5a1 1 0 0 0-1 1v11a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V8a1 1 0 0 0-1-1zm-9-1a2 2 0 0 1 4 0v1h-4V6zm8 13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V9h2v1a1 1 0 0 0 2 0V9h4v1a1 1 0 0 0 2 0V9h2z"/></svg>
-          <span class="text-base font-medium mr-2.5">تحویل فیزیکی</span>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="size-5 fill-gray-700 dark:fill-gray-300"><path d="M19 7h-3V6a4 4 0 0 0-8 0v1H5a1 1 0 0 0-1 1v11a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V8a1 1 0 0 0-1-1zm-9-1a2 2 0 0 1 4 0v1h-4V6zm8 13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V9h2v1a1 1 0 0 0 2 0V9h4v1a1 1 0 0 0 2 0V9h2z"/></svg>
+          <span class="text-base font-medium mr-2.5 dark:text-gray-100">تحویل فیزیکی</span>
         </div>
-        <svg class="size-4" viewBox="0 0 9 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M7.57422 1.40008L2.14091 6.83341C1.49924 7.47508 1.49924 8.52508 2.14091 9.16675L7.57422 14.6001" stroke="#414042" stroke-opacity="0.5" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+        <svg class="size-4 text-gray-500 dark:text-gray-400" viewBox="0 0 9 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M7.57422 1.40008L2.14091 6.83341C1.49924 7.47508 1.49924 8.52508 2.14091 9.16675L7.57422 14.6001" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
 
         @if (url === '/physical-deliveries') {
@@ -96,13 +106,13 @@
          class="relative flex items-center justify-between rounded pr-4 pl-6 py-2.5"
       >
         <div class="flex items-center">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5 text-gray-700">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5 text-gray-700 dark:text-gray-200">
             <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Z" />
           </svg>
-          <span class="text-base font-medium mr-2.5">حساب‌های بانکی</span>
+          <span class="text-base font-medium mr-2.5 dark:text-gray-100">حساب‌های بانکی</span>
         </div>
-        <svg class="size-4" viewBox="0 0 9 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M7.57422 1.40008L2.14091 6.83341C1.49924 7.47508 1.49924 8.52508 2.14091 9.16675L7.57422 14.6001" stroke="#414042" stroke-opacity="0.5" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+        <svg class="size-4 text-gray-500 dark:text-gray-400" viewBox="0 0 9 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M7.57422 1.40008L2.14091 6.83341C1.49924 7.47508 1.49924 8.52508 2.14091 9.16675L7.57422 14.6001" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
 
         @if (url === '/bank-accounts') {
@@ -113,11 +123,11 @@
          class="relative flex items-center justify-between rounded pr-4 pl-6 py-2.5"
       >
         <div class="flex items-center">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="size-5 fill-gray-700"><path d="M12 2a1 1 0 0 1 1 1v11.59l3.3-3.3a1 1 0 1 1 1.4 1.42l-5 5a1 1 0 0 1-1.4 0l-5-5a1 1 0 1 1 1.4-1.42L11 14.59V3a1 1 0 0 1 1-1zm-7 18a1 1 0 1 0 0 2h14a1 1 0 1 0 0-2H5z"/></svg>
-          <span class="text-base font-medium mr-2.5">برداشت تومان</span>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="size-5 fill-gray-700 dark:fill-gray-300"><path d="M12 2a1 1 0 0 1 1 1v11.59l3.3-3.3a1 1 0 1 1 1.4 1.42l-5 5a1 1 0 0 1-1.4 0l-5-5a1 1 0 1 1 1.4-1.42L11 14.59V3a1 1 0 0 1 1-1zm-7 18a1 1 0 1 0 0 2h14a1 1 0 1 0 0-2H5z"/></svg>
+          <span class="text-base font-medium mr-2.5 dark:text-gray-100">برداشت تومان</span>
         </div>
-        <svg class="size-4" viewBox="0 0 9 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M7.57422 1.40008L2.14091 6.83341C1.49924 7.47508 1.49924 8.52508 2.14091 9.16675L7.57422 14.6001" stroke="#414042" stroke-opacity="0.5" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+        <svg class="size-4 text-gray-500 dark:text-gray-400" viewBox="0 0 9 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M7.57422 1.40008L2.14091 6.83341C1.49924 7.47508 1.49924 8.52508 2.14091 9.16675L7.57422 14.6001" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
 
         @if (url === '/withdrawals') {
@@ -126,15 +136,15 @@
       </a>
       <a routerLink="/orders" class="relative flex items-center justify-between rounded pr-4 pl-6 py-2.5">
         <div class="flex items-center relative">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="-32 -32 1088 1088" class="size-5 fill-gray-700"><g transform="translate(0, 960) scale(1, -1)"><path d="M745.249-0.475h-466.499c-0.15 0-0.327-0.001-0.504-0.001-85.075 0-155.701 61.867-169.34 143.066l-0.14 1.007-75.821 456.971h958.108l-75.687-456.971c-13.779-82.206-84.405-144.074-169.48-144.074-0.224 0-0.448 0-0.672 0.001h0.035zM279.018 88.569h466.232c0.070 0 0.153 0 0.236 0 41.117 0 75.25 29.902 81.839 69.146l0.068 0.487 58.591 353.325h-747.965l58.635-353.325c6.657-39.731 40.79-69.632 81.907-69.632 0.067 0 0.135 0 0.202 0h-0.011zM1024 511.525h-1024v89.043h1024zM343.263 470.565h-89.043v94.386l131.384 306.933 81.875-35.083-124.216-289.881zM769.781 470.565h-89.043v76.355l-124.216 289.881 81.831 35.039 131.428-306.888zM556.522 171.825h-89.043v213.259h89.043zM386.003 171.825h-89.043v213.259h89.043zM727.040 171.825h-89.043v213.259h89.043z"/></g></svg>
-          <span class="text-base font-medium mr-2.5">سفارش‌ها</span>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="-32 -32 1088 1088" class="size-5 fill-gray-700 dark:fill-gray-300"><g transform="translate(0, 960) scale(1, -1)"><path d="M745.249-0.475h-466.499c-0.15 0-0.327-0.001-0.504-0.001-85.075 0-155.701 61.867-169.34 143.066l-0.14 1.007-75.821 456.971h958.108l-75.687-456.971c-13.779-82.206-84.405-144.074-169.48-144.074-0.224 0-0.448 0-0.672 0.001h0.035zM279.018 88.569h466.232c0.070 0 0.153 0 0.236 0 41.117 0 75.25 29.902 81.839 69.146l0.068 0.487 58.591 353.325h-747.965l58.635-353.325c6.657-39.731 40.79-69.632 81.907-69.632 0.067 0 0.135 0 0.202 0h-0.011zM1024 511.525h-1024v89.043h1024zM343.263 470.565h-89.043v94.386l131.384 306.933 81.875-35.083-124.216-289.881zM769.781 470.565h-89.043v76.355l-124.216 289.881 81.831 35.039 131.428-306.888zM556.522 171.825h-89.043v213.259h89.043zM386.003 171.825h-89.043v213.259h89.043zM727.040 171.825h-89.043v213.259h89.043z"/></g></svg>
+          <span class="text-base font-medium mr-2.5 dark:text-gray-100">سفارش‌ها</span>
 
           @if (hasUnseenUpdate()) {
             <span class="absolute top-0 -right-1 h-2.5 w-2.5 rounded-full bg-red-500"></span>
           }
         </div>
-        <svg class="size-4" viewBox="0 0 9 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M7.57422 1.40008L2.14091 6.83341C1.49924 7.47508 1.49924 8.52508 2.14091 9.16675L7.57422 14.6001" stroke="#414042" stroke-opacity="0.5" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+        <svg class="size-4 text-gray-500 dark:text-gray-400" viewBox="0 0 9 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M7.57422 1.40008L2.14091 6.83341C1.49924 7.47508 1.49924 8.52508 2.14091 9.16675L7.57422 14.6001" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
 
         @if (url === '/orders') {
@@ -145,11 +155,11 @@
          class="relative flex items-center justify-between rounded pr-4 pl-6 py-2.5"
       >
         <div class="flex items-center">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="-32 -32 1088 1088" class="size-5 fill-gray-700"><g transform="translate(0, 960) scale(1, -1)"><path d="M979.596 126.962h-932.483v66.606h932.483zM245.598-85.289l-245.598 245.554 245.554 245.554 47.113-47.068-198.441-198.486 198.486-198.486zM935.192 659.81h-932.483v66.606h932.483zM736.706 447.559l-47.068 47.068 198.441 198.486-198.441 198.486 47.068 47.068 245.598-245.554z"/></g></svg>
-          <span class="text-base font-medium mr-2.5">تراکنش‌ها</span>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="-32 -32 1088 1088" class="size-5 fill-gray-700 dark:fill-gray-300"><g transform="translate(0, 960) scale(1, -1)"><path d="M979.596 126.962h-932.483v66.606h932.483zM245.598-85.289l-245.598 245.554 245.554 245.554 47.113-47.068-198.441-198.486 198.486-198.486zM935.192 659.81h-932.483v66.606h932.483zM736.706 447.559l-47.068 47.068 198.441 198.486-198.441 198.486 47.068 47.068 245.598-245.554z"/></g></svg>
+          <span class="text-base font-medium mr-2.5 dark:text-gray-100">تراکنش‌ها</span>
         </div>
-        <svg class="size-4" viewBox="0 0 9 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M7.57422 1.40008L2.14091 6.83341C1.49924 7.47508 1.49924 8.52508 2.14091 9.16675L7.57422 14.6001" stroke="#414042" stroke-opacity="0.5" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+        <svg class="size-4 text-gray-500 dark:text-gray-400" viewBox="0 0 9 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M7.57422 1.40008L2.14091 6.83341C1.49924 7.47508 1.49924 8.52508 2.14091 9.16675L7.57422 14.6001" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
 
         @if (url === '/transactions') {
@@ -158,11 +168,11 @@
       </a>
       <a routerLink="/profile" class="relative flex items-center justify-between rounded pr-4 pl-6 py-2.5">
         <div class="flex items-center">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="-32 -32 1088 1088" class="size-5 fill-gray-700"><g transform="translate(0, 960) scale(1, -1)"><path d="M507.799 938.667c164.353 0 297.587-133.234 297.587-297.587s-133.234-297.587-297.587-297.587c-164.353 0-297.587 133.234-297.587 297.587v0c0.201 164.272 133.315 297.386 297.568 297.587h0.019zM507.799 431.929c115.511 0 209.151 93.64 209.151 209.151s-93.64 209.151-209.151 209.151c-115.511 0-209.151-93.64-209.151-209.151v0c0.126-115.46 93.691-209.025 209.139-209.151h0.012zM928.578-85.333l-16.361 90.735c-36.275 193.045-203.51 337.16-404.413 337.206h-0.005c-0.006 0-0.014 0-0.021 0-200.725 0-367.861-143.813-403.992-334.023l-0.405-2.565-16.316-90.47-87.065 15.83 16.361 90.647c44.374 234.253 247.464 409.016 491.372 409.016 0.023 0 0.047 0 0.070 0h-0.003c244.141-0.062 447.356-175.213 490.909-406.71l0.485-3.102 16.405-90.868z"/></g></svg>
-          <span class="text-base font-medium mr-2.5">اطلاعات حساب کاربری</span>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="-32 -32 1088 1088" class="size-5 fill-gray-700 dark:fill-gray-300"><g transform="translate(0, 960) scale(1, -1)"><path d="M507.799 938.667c164.353 0 297.587-133.234 297.587-297.587s-133.234-297.587-297.587-297.587c-164.353 0-297.587 133.234-297.587 297.587v0c0.201 164.272 133.315 297.386 297.568 297.587h0.019zM507.799 431.929c115.511 0 209.151 93.64 209.151 209.151s-93.64 209.151-209.151 209.151c-115.511 0-209.151-93.64-209.151-209.151v0c0.126-115.46 93.691-209.025 209.139-209.151h0.012zM928.578-85.333l-16.361 90.735c-36.275 193.045-203.51 337.16-404.413 337.206h-0.005c-0.006 0-0.014 0-0.021 0-200.725 0-367.861-143.813-403.992-334.023l-0.405-2.565-16.316-90.47-87.065 15.83 16.361 90.647c44.374 234.253 247.464 409.016 491.372 409.016 0.023 0 0.047 0 0.070 0h-0.003c244.141-0.062 447.356-175.213 490.909-406.71l0.485-3.102 16.405-90.868z"/></g></svg>
+          <span class="text-base font-medium mr-2.5 dark:text-gray-100">اطلاعات حساب کاربری</span>
         </div>
-        <svg class="size-4" viewBox="0 0 9 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M7.57422 1.40008L2.14091 6.83341C1.49924 7.47508 1.49924 8.52508 2.14091 9.16675L7.57422 14.6001" stroke="#414042" stroke-opacity="0.5" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+        <svg class="size-4 text-gray-500 dark:text-gray-400" viewBox="0 0 9 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M7.57422 1.40008L2.14091 6.83341C1.49924 7.47508 1.49924 8.52508 2.14091 9.16675L7.57422 14.6001" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
 
         @if (url === '/profile' || url === '/settings') {
@@ -171,13 +181,13 @@
       </a>
       <a routerLink="/support" class="relative flex items-center justify-between rounded pr-4 pl-6 py-2.5">
         <div class="flex items-center">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5 text-gray-700">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5 text-gray-700 dark:text-gray-200">
             <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 0 1-.825-.242m9.345-8.334a2.126 2.126 0 0 0-.476-.095 48.64 48.64 0 0 0-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0 0 11.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155" />
           </svg>
-          <span class="text-base font-medium mr-2.5">ارسال تیکت به پشتیبانی</span>
+          <span class="text-base font-medium mr-2.5 dark:text-gray-100">ارسال تیکت به پشتیبانی</span>
         </div>
-        <svg class="size-4" viewBox="0 0 9 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M7.57422 1.40008L2.14091 6.83341C1.49924 7.47508 1.49924 8.52508 2.14091 9.16675L7.57422 14.6001" stroke="#414042" stroke-opacity="0.5" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+        <svg class="size-4 text-gray-500 dark:text-gray-400" viewBox="0 0 9 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M7.57422 1.40008L2.14091 6.83341C1.49924 7.47508 1.49924 8.52508 2.14091 9.16675L7.57422 14.6001" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
 
         @if (url === '/support' || url.startsWith('/support/')) {
@@ -186,11 +196,11 @@
       </a>
       <a routerLink="/contact-us" class="relative flex items-center justify-between rounded pr-4 pl-6 py-2.5">
         <div class="flex items-center">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="-32 -32 1088 1088" class="size-5 fill-gray-700"><g transform="translate(0, 960) scale(1, -1)"><path d="M129.558 515.71h129.647v-429.19h-129.558c-0.008 0-0.018 0-0.028 0-70.614 0-128.033 56.492-129.528 126.747l-0.002 0.14v167.802c-0.060 1.474-0.094 3.204-0.094 4.942 0 71.553 58.005 129.558 129.558 129.558 0.002 0 0.004 0 0.006 0v0zM170.162 426.667h-40.604c0 0 0 0-0.001 0-22.376 0-40.515-18.139-40.515-40.515 0-0.673 0.016-1.343 0.049-2.008l-0.004 0.094v-169.183c0.787-21.809 18.602-39.203 40.504-39.313h40.526zM764.973 515.71h129.558v-89.043h-40.515v-255.11h40.515c22.366 0.025 40.489 18.149 40.515 40.512v172.168c0.029 0.572 0.045 1.241 0.045 1.914 0 22.36-18.114 40.49-40.469 40.515h-0.002v89.043c0.002 0 0.003 0 0.005 0 71.553 0 129.558-58.005 129.558-129.558 0-1.738-0.034-3.468-0.102-5.189l0.008 0.248v-169.183c-0.076-71.522-58.036-129.482-129.551-129.558h-129.566zM682.162-85.333h-170.073v89.043h170.073c69.31 0.076 125.475 56.242 125.551 125.544v0.007h89.043c-0.127-118.466-96.128-214.468-214.582-214.595h-0.012zM896.757 468.963h-89.043v85.037c0 163.269-132.356 295.624-295.624 295.624s-295.624-132.356-295.624-295.624v0-85.037h-89.043v85.037c0 212.446 172.222 384.668 384.668 384.668s384.668-172.222 384.668-384.668v0z"/></g></svg>
-          <span class="text-base font-medium mr-2.5">تماس با ما</span>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="-32 -32 1088 1088" class="size-5 fill-gray-700 dark:fill-gray-300"><g transform="translate(0, 960) scale(1, -1)"><path d="M129.558 515.71h129.647v-429.19h-129.558c-0.008 0-0.018 0-0.028 0-70.614 0-128.033 56.492-129.528 126.747l-0.002 0.14v167.802c-0.060 1.474-0.094 3.204-0.094 4.942 0 71.553 58.005 129.558 129.558 129.558 0.002 0 0.004 0 0.006 0v0zM170.162 426.667h-40.604c0 0 0 0-0.001 0-22.376 0-40.515-18.139-40.515-40.515 0-0.673 0.016-1.343 0.049-2.008l-0.004 0.094v-169.183c0.787-21.809 18.602-39.203 40.504-39.313h40.526zM764.973 515.71h129.558v-89.043h-40.515v-255.11h40.515c22.366 0.025 40.489 18.149 40.515 40.512v172.168c0.029 0.572 0.045 1.241 0.045 1.914 0 22.36-18.114 40.49-40.469 40.515h-0.002v89.043c0.002 0 0.003 0 0.005 0 71.553 0 129.558-58.005 129.558-129.558 0-1.738-0.034-3.468-0.102-5.189l0.008 0.248v-169.183c-0.076-71.522-58.036-129.482-129.551-129.558h-129.566zM682.162-85.333h-170.073v89.043h170.073c69.31 0.076 125.475 56.242 125.551 125.544v0.007h89.043c-0.127-118.466-96.128-214.468-214.582-214.595h-0.012zM896.757 468.963h-89.043v85.037c0 163.269-132.356 295.624-295.624 295.624s-295.624-132.356-295.624-295.624v0-85.037h-89.043v85.037c0 212.446 172.222 384.668 384.668 384.668s384.668-172.222 384.668-384.668v0z"/></g></svg>
+          <span class="text-base font-medium mr-2.5 dark:text-gray-100">تماس با ما</span>
         </div>
-        <svg class="size-4" viewBox="0 0 9 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M7.57422 1.40008L2.14091 6.83341C1.49924 7.47508 1.49924 8.52508 2.14091 9.16675L7.57422 14.6001" stroke="#414042" stroke-opacity="0.5" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+        <svg class="size-4 text-gray-500 dark:text-gray-400" viewBox="0 0 9 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M7.57422 1.40008L2.14091 6.83341C1.49924 7.47508 1.49924 8.52508 2.14091 9.16675L7.57422 14.6001" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
 
         @if (url === '/contact-us') {
@@ -199,13 +209,13 @@
       </a>
       <a routerLink="/terms" class="relative flex items-center justify-between rounded pr-4 pl-6 py-2.5">
         <div class="flex items-center">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5 text-gray-700">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5 text-gray-700 dark:text-gray-200">
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" />
           </svg>
-          <span class="text-base font-medium mr-2.5">قوانین و مقررات</span>
+          <span class="text-base font-medium mr-2.5 dark:text-gray-100">قوانین و مقررات</span>
         </div>
-        <svg class="size-4" viewBox="0 0 9 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M7.57422 1.40008L2.14091 6.83341C1.49924 7.47508 1.49924 8.52508 2.14091 9.16675L7.57422 14.6001" stroke="#414042" stroke-opacity="0.5" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+        <svg class="size-4 text-gray-500 dark:text-gray-400" viewBox="0 0 9 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M7.57422 1.40008L2.14091 6.83341C1.49924 7.47508 1.49924 8.52508 2.14091 9.16675L7.57422 14.6001" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
 
         @if (url === '/terms') {
@@ -241,15 +251,15 @@
      class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
   <div class="relative max-h-full w-full max-w-md p-4">
     <div class="relative rounded-base bg-white shadow dark:bg-gray-800">
-      <div class="px-4 py-3 bg-teal-50 flex gap-2.5 rounded-t-lg">
-        <div class="flex items-center justify-center p-1.5 bg-teal-200/50 rounded-full">
+      <div class="px-4 py-3 bg-teal-50 flex gap-2.5 rounded-t-lg dark:bg-teal-950/40">
+        <div class="flex items-center justify-center p-1.5 bg-teal-200/50 rounded-full dark:bg-teal-900/50">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-               class="size-5 text-teal-800">
+               class="size-5 text-teal-800 dark:text-teal-200">
             <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.055-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z" />
             <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0Z" />
           </svg>
         </div>
-        <div class="font-semibold text-gray-700 pt-1">برش تصویر پروفایل</div>
+        <div class="font-semibold text-gray-700 pt-1 dark:text-gray-200">برش تصویر پروفایل</div>
       </div>
 
       <div class="p-4">
@@ -267,13 +277,13 @@
             class="max-h-80">
           </image-cropper>
         }
-        <p class="mt-3 text-xs text-gray-500">تصویر مربعی با اندازه ۱۰۰×۱۰۰ پیکسل ذخیره می‌شود.</p>
+        <p class="mt-3 text-xs text-gray-500 dark:text-gray-400">تصویر مربعی با اندازه ۱۰۰×۱۰۰ پیکسل ذخیره می‌شود.</p>
       </div>
 
       <div class="flex gap-4 rounded-b p-4 dark:border-gray-600">
         <button type="button"
                 (click)="closeAvatarCropModal()"
-                class="cursor-pointer flex-1 flex items-center justify-center rounded gap-2 border border-gray-200 text-gray-600 hover:text-gray-700 py-2">
+                class="cursor-pointer flex-1 flex items-center justify-center rounded gap-2 border border-gray-200 text-gray-600 hover:text-gray-700 py-2 dark:border-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
           بی‌خیال
         </button>
         <div class="flex-1">

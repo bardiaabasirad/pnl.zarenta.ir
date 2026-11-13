@@ -1,39 +1,49 @@
 @let user_data = user();
 
 <div class="space-y-4">
-  <div class="rounded-base bg-white p-4 border border-gray-200">
+  <div class="rounded-base bg-white p-4 border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
     <div class="mb-4 text-sm lg:text-xl font-medium">اطلاعات فردی</div>
     <div class="space-y-4 lg:space-y-0 lg:grid lg:grid-cols-1 lg:gap-4">
       <div class="flex items-center justify-between rounded border border-gray-300 dark:border-gray-600 px-4 py-2.5">
-        <div class="flex items-center text-xs lg:text-sm font-medium text-gray-700">
+        <div class="flex items-center text-xs lg:text-sm font-medium text-gray-700 dark:text-gray-200">
           <div class="w-6">
-            <svg class="text-gray-700 size-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <svg class="text-gray-700 size-5 dark:text-gray-200" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
             </svg>
           </div>
           <span class="mr-1 line-clamp-1">نام و نام خانوادگی</span>
         </div>
         <div class="flex items-center gap-1.5 lg:gap-2.5">
-          <span class="text-xs font-medium text-gray-700 line-clamp-1 lg:text-base">{{user_data?.name}}</span>
+          @if (user_data) {
+            <span class="text-xs font-medium text-gray-700 line-clamp-1 lg:text-base dark:text-gray-200">{{user_data.name}}</span>
+          } @else {
+            <div class="h-4 w-28 animate-pulse rounded bg-gray-200 dark:bg-gray-700" role="status">
+            </div>
+          }
         </div>
       </div>
 
       <div class="flex items-center justify-between rounded border border-gray-300 dark:border-gray-600 px-4 py-2.5">
-        <div class="flex items-center text-xs lg:text-sm font-medium text-gray-700">
+        <div class="flex items-center text-xs lg:text-sm font-medium text-gray-700 dark:text-gray-200">
           <div class="w-6">
-            <svg class="text-gray-700 size-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <svg class="text-gray-700 size-5 dark:text-gray-200" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 0 0 6 3.75v16.5a2.25 2.25 0 0 0 2.25 2.25h7.5A2.25 2.25 0 0 0 18 20.25V3.75a2.25 2.25 0 0 0-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3" />
             </svg>
           </div>
           <span class="mr-1 line-clamp-1">شماره موبایل</span>
         </div>
         <div class="flex items-center gap-1.5 lg:gap-2.5">
-          <span class="text-xs font-medium text-gray-700 line-clamp-1 lg:text-base">0{{user_data?.phone}}</span>
+          @if (user_data) {
+            <span class="text-xs font-medium text-gray-700 line-clamp-1 lg:text-base dark:text-gray-200">0{{user_data.phone}}</span>
+          } @else {
+            <div class="h-4 w-24 animate-pulse rounded bg-gray-200 dark:bg-gray-700" role="status">
+            </div>
+          }
         </div>
       </div>
 
       <div class="flex items-center justify-between rounded border border-gray-300 dark:border-gray-600 px-4 py-2.5">
-        <div class="flex items-center text-xs lg:text-sm font-medium text-gray-700">
+        <div class="flex items-center text-xs lg:text-sm font-medium text-gray-700 dark:text-gray-200">
           <div class="w-6">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
               <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
@@ -42,11 +52,11 @@
           <span class="mr-1 line-clamp-1">رمز ورود</span>
         </div>
         <div class="flex items-center gap-1.5 lg:gap-2.5">
-          <span class="text-xs text-gray-700 line-clamp-1"> * * * * * </span>
+          <span class="text-xs text-gray-700 line-clamp-1 dark:text-gray-200"> * * * * * </span>
 
           <button (click)="showChangePasswordModal()" class="cursor-pointer">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="size-5">
-              <path class="fill-gray-700" d="M1.5 3C0.6774686 3 0 3.6774686 0 4.5L0 9.5C0 10.322531 0.6774686 11 1.5 11L8 11L8 10L1.5 10C1.2185314 10 1 9.7814686 1 9.5L1 4.5C1 4.2185314 1.2185314 4 1.5 4L13.5 4C13.781469 4 14 4.2185314 14 4.5L14 8L15 8L15 4.5C15 3.6774686 14.322531 3 13.5 3L1.5 3 z M 3 6 A 1 1 0 0 0 2 7 A 1 1 0 0 0 3 8 A 1 1 0 0 0 4 7 A 1 1 0 0 0 3 6 z M 6 6 A 1 1 0 0 0 5 7 A 1 1 0 0 0 6 8 A 1 1 0 0 0 7 7 A 1 1 0 0 0 6 6 z M 9 6 A 1 1 0 0 0 8 7 A 1 1 0 0 0 9 8 A 1 1 0 0 0 10 7 A 1 1 0 0 0 9 6 z M 12 6 A 1 1 0 0 0 11 7 A 1 1 0 0 0 12 8 A 1 1 0 0 0 13 7 A 1 1 0 0 0 12 6 z M 12.5 9C10.744116 9 9.2967432 10.310272 9.0507812 12L6.5 12L9.5 15L12.5 12L10.050781 12C10.280654 10.855042 11.284533 10 12.5 10C13.886833 10 15 11.113167 15 12.5C15 13.886833 13.886833 15 12.5 15L12.5 16C14.427167 16 16 14.427167 16 12.5C16 10.572833 14.427167 9 12.5 9 z"/>
+              <path class="fill-gray-700 dark:fill-gray-300" d="M1.5 3C0.6774686 3 0 3.6774686 0 4.5L0 9.5C0 10.322531 0.6774686 11 1.5 11L8 11L8 10L1.5 10C1.2185314 10 1 9.7814686 1 9.5L1 4.5C1 4.2185314 1.2185314 4 1.5 4L13.5 4C13.781469 4 14 4.2185314 14 4.5L14 8L15 8L15 4.5C15 3.6774686 14.322531 3 13.5 3L1.5 3 z M 3 6 A 1 1 0 0 0 2 7 A 1 1 0 0 0 3 8 A 1 1 0 0 0 4 7 A 1 1 0 0 0 3 6 z M 6 6 A 1 1 0 0 0 5 7 A 1 1 0 0 0 6 8 A 1 1 0 0 0 7 7 A 1 1 0 0 0 6 6 z M 9 6 A 1 1 0 0 0 8 7 A 1 1 0 0 0 9 8 A 1 1 0 0 0 10 7 A 1 1 0 0 0 9 6 z M 12 6 A 1 1 0 0 0 11 7 A 1 1 0 0 0 12 8 A 1 1 0 0 0 13 7 A 1 1 0 0 0 12 6 z M 12.5 9C10.744116 9 9.2967432 10.310272 9.0507812 12L6.5 12L9.5 15L12.5 12L10.050781 12C10.280654 10.855042 11.284533 10 12.5 10C13.886833 10 15 11.113167 15 12.5C15 13.886833 13.886833 15 12.5 15L12.5 16C14.427167 16 16 14.427167 16 12.5C16 10.572833 14.427167 9 12.5 9 z"/>
             </svg>
           </button>
         </div>
@@ -55,99 +65,99 @@
     </div>
   </div>
 
-  <div class="rounded-base bg-white p-4 border border-gray-200">
+  <div class="rounded-base bg-white p-4 border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
 
     <a routerLink="/physical-deliveries"
-       class="flex items-center justify-between rounded py-3 group active:text-gray-900 lg:hidden">
-      <div class="flex gap-1 items-center text-xs font-medium text-gray-700">
+       class="flex items-center justify-between rounded py-3 group active:text-gray-900 lg:hidden dark:active:text-white">
+      <div class="flex gap-1 items-center text-xs font-medium text-gray-700 dark:text-gray-200">
         <div class="w-6">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="size-5 fill-gray-700 group-active:fill-gray-900">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="size-5 fill-gray-700 group-active:fill-gray-900 dark:fill-gray-300 dark:group-active:fill-gray-100">
             <path d="M19 7h-3V6a4 4 0 0 0-8 0v1H5a1 1 0 0 0-1 1v11a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V8a1 1 0 0 0-1-1zm-9-1a2 2 0 0 1 4 0v1h-4V6zm8 13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V9h2v1a1 1 0 0 0 2 0V9h4v1a1 1 0 0 0 2 0V9h2z"/>
           </svg>
         </div>
-        <span class="group-active:text-gray-900">تحویل فیزیکی</span>
+        <span class="group-active:text-gray-900 dark:group-active:text-white">تحویل فیزیکی</span>
       </div>
-      <svg class="stroke-gray-700 group-active:stroke-gray-900 size-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+      <svg class="stroke-gray-700 group-active:stroke-gray-900 size-4 dark:stroke-gray-300 dark:group-active:stroke-gray-100" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
       </svg>
     </a>
 
     <a routerLink="/bank-accounts"
-       class="flex items-center justify-between rounded py-3 group active:text-gray-900 lg:hidden">
-      <div class="flex gap-1 items-center text-xs font-medium text-gray-700">
+       class="flex items-center justify-between rounded py-3 group active:text-gray-900 lg:hidden dark:active:text-white">
+      <div class="flex gap-1 items-center text-xs font-medium text-gray-700 dark:text-gray-200">
         <div class="w-6">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-               class="size-5 text-gray-700 group-active:text-gray-900">
+               class="size-5 text-gray-700 group-active:text-gray-900 dark:text-gray-200 dark:group-active:text-white">
             <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Z" />
           </svg>
         </div>
-        <span class="group-active:text-gray-900">حساب‌های بانکی</span>
+        <span class="group-active:text-gray-900 dark:group-active:text-white">حساب‌های بانکی</span>
       </div>
-      <svg class="stroke-gray-700 group-active:stroke-gray-900 size-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+      <svg class="stroke-gray-700 group-active:stroke-gray-900 size-4 dark:stroke-gray-300 dark:group-active:stroke-gray-100" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
       </svg>
     </a>
 
     <a routerLink="/withdrawals"
-       class="flex items-center justify-between rounded py-3 group active:text-gray-900 lg:hidden">
-      <div class="flex gap-1 items-center text-xs font-medium text-gray-700">
+       class="flex items-center justify-between rounded py-3 group active:text-gray-900 lg:hidden dark:active:text-white">
+      <div class="flex gap-1 items-center text-xs font-medium text-gray-700 dark:text-gray-200">
         <div class="w-6">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="size-5 fill-gray-700 group-active:fill-gray-900">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="size-5 fill-gray-700 group-active:fill-gray-900 dark:fill-gray-300 dark:group-active:fill-gray-100">
             <path d="M12 2a1 1 0 0 1 1 1v11.59l3.3-3.3a1 1 0 1 1 1.4 1.42l-5 5a1 1 0 0 1-1.4 0l-5-5a1 1 0 1 1 1.4-1.42L11 14.59V3a1 1 0 0 1 1-1zm-7 18a1 1 0 1 0 0 2h14a1 1 0 1 0 0-2H5z"/>
           </svg>
         </div>
-        <span class="group-active:text-gray-900">برداشت تومان</span>
+        <span class="group-active:text-gray-900 dark:group-active:text-white">برداشت تومان</span>
       </div>
-      <svg class="stroke-gray-700 group-active:stroke-gray-900 size-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+      <svg class="stroke-gray-700 group-active:stroke-gray-900 size-4 dark:stroke-gray-300 dark:group-active:stroke-gray-100" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
       </svg>
     </a>
 
-    <a routerLink="/settings" class="flex items-center justify-between rounded py-3 group active:text-gray-900">
-      <div class="flex gap-1 items-center text-xs lg:text-sm font-medium text-gray-700">
+    <a routerLink="/settings" class="flex items-center justify-between rounded py-3 group active:text-gray-900 dark:active:text-white">
+      <div class="flex gap-1 items-center text-xs lg:text-sm font-medium text-gray-700 dark:text-gray-200">
         <div class="w-6">
-          <svg class="size-5 stroke-gray-700 group-active:stroke-gray-900" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5">
+          <svg class="size-5 stroke-gray-700 group-active:stroke-gray-900 dark:stroke-gray-300 dark:group-active:stroke-gray-100" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5">
             <path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.325.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 0 1 1.37.49l1.296 2.247a1.125 1.125 0 0 1-.26 1.431l-1.003.827c-.293.241-.438.613-.43.992a7.723 7.723 0 0 1 0 .255c-.008.378.137.75.43.991l1.004.827c.424.35.534.955.26 1.43l-1.298 2.247a1.125 1.125 0 0 1-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.47 6.47 0 0 1-.22.128c-.331.183-.581.495-.644.869l-.213 1.281c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.019-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 0 1-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 0 1-1.369-.49l-1.297-2.247a1.125 1.125 0 0 1 .26-1.431l1.004-.827c.292-.24.437-.613.43-.991a6.932 6.932 0 0 1 0-.255c.007-.38-.138-.751-.43-.992l-1.004-.827a1.125 1.125 0 0 1-.26-1.43l1.297-2.247a1.125 1.125 0 0 1 1.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.086.22-.128.332-.183.582-.495.644-.869l.214-1.28Z" />
             <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
           </svg>
         </div>
-        <span class="group-active:text-gray-900">تنظیمات</span>
+        <span class="group-active:text-gray-900 dark:group-active:text-white">تنظیمات</span>
       </div>
-      <svg class="stroke-gray-700 group-active:stroke-gray-900 size-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5">
+      <svg class="stroke-gray-700 group-active:stroke-gray-900 size-4 dark:stroke-gray-300 dark:group-active:stroke-gray-100" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5">
         <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
       </svg>
     </a>
 
-    <a routerLink="/contact-us" class="flex items-center justify-between rounded py-3 group active:text-gray-900">
-      <div class="flex gap-1 items-center text-xs lg:text-sm font-medium text-gray-700">
+    <a routerLink="/contact-us" class="flex items-center justify-between rounded py-3 group active:text-gray-900 dark:active:text-white">
+      <div class="flex gap-1 items-center text-xs lg:text-sm font-medium text-gray-700 dark:text-gray-200">
         <div class="w-6">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="-32 -32 1088 1088" class="size-5 fill-gray-700 group-active:fill-gray-900">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="-32 -32 1088 1088" class="size-5 fill-gray-700 group-active:fill-gray-900 dark:fill-gray-300 dark:group-active:fill-gray-100">
             <g transform="translate(0, 960) scale(1, -1)"><path d="M129.558 515.71h129.647v-429.19h-129.558c-0.008 0-0.018 0-0.028 0-70.614 0-128.033 56.492-129.528 126.747l-0.002 0.14v167.802c-0.060 1.474-0.094 3.204-0.094 4.942 0 71.553 58.005 129.558 129.558 129.558 0.002 0 0.004 0 0.006 0v0zM170.162 426.667h-40.604c0 0 0 0-0.001 0-22.376 0-40.515-18.139-40.515-40.515 0-0.673 0.016-1.343 0.049-2.008l-0.004 0.094v-169.183c0.787-21.809 18.602-39.203 40.504-39.313h40.526zM764.973 515.71h129.558v-89.043h-40.515v-255.11h40.515c22.366 0.025 40.489 18.149 40.515 40.512v172.168c0.029 0.572 0.045 1.241 0.045 1.914 0 22.36-18.114 40.49-40.469 40.515h-0.002v89.043c0.002 0 0.003 0 0.005 0 71.553 0 129.558-58.005 129.558-129.558 0-1.738-0.034-3.468-0.102-5.189l0.008 0.248v-169.183c-0.076-71.522-58.036-129.482-129.551-129.558h-129.566zM682.162-85.333h-170.073v89.043h170.073c69.31 0.076 125.475 56.242 125.551 125.544v0.007h89.043c-0.127-118.466-96.128-214.468-214.582-214.595h-0.012zM896.757 468.963h-89.043v85.037c0 163.269-132.356 295.624-295.624 295.624s-295.624-132.356-295.624-295.624v0-85.037h-89.043v85.037c0 212.446 172.222 384.668 384.668 384.668s384.668-172.222 384.668-384.668v0z"></path></g>
           </svg>
         </div>
-        <span class="group-active:text-gray-900">تماس با ما</span>
+        <span class="group-active:text-gray-900 dark:group-active:text-white">تماس با ما</span>
       </div>
-      <svg class="stroke-gray-700 group-active:stroke-gray-900 size-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+      <svg class="stroke-gray-700 group-active:stroke-gray-900 size-4 dark:stroke-gray-300 dark:group-active:stroke-gray-100" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
       </svg>
     </a>
 
-    <a routerLink="/terms" class="flex items-center justify-between rounded py-3 group active:text-gray-900">
-      <div class="flex gap-1 items-center text-xs lg:text-sm font-medium text-gray-700">
+    <a routerLink="/terms" class="flex items-center justify-between rounded py-3 group active:text-gray-900 dark:active:text-white">
+      <div class="flex gap-1 items-center text-xs lg:text-sm font-medium text-gray-700 dark:text-gray-200">
         <div class="w-6">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-               class="size-5 text-gray-700 group-active:text-gray-900">
+               class="size-5 text-gray-700 group-active:text-gray-900 dark:text-gray-200 dark:group-active:text-white">
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" />
           </svg>
         </div>
-        <span class="group-active:text-gray-900">قوانین و مقررات</span>
+        <span class="group-active:text-gray-900 dark:group-active:text-white">قوانین و مقررات</span>
       </div>
-      <svg class="stroke-gray-700 group-active:stroke-gray-900 size-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+      <svg class="stroke-gray-700 group-active:stroke-gray-900 size-4 dark:stroke-gray-300 dark:group-active:stroke-gray-100" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
       </svg>
     </a>
 
-    <button (click)="logout()" class="flex items-center text-xs lg:text-sm font-medium text-rose-500 py-3 group active:text-red-700 lg:hidden">
+    <button (click)="logout()" class="flex items-center text-xs lg:text-sm font-medium text-rose-500 py-3 group active:text-red-700 lg:hidden dark:active:text-red-300">
       <div class="w-6">
         <svg class="size-5" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path class="stroke-rose-500 group-active:stroke-red-700" d="M12.5827 13.7C12.3243 16.7 10.7827 17.925 7.40768 17.925L7.29935 17.925C3.57435 17.925 2.08268 16.4334 2.08268 12.7084L2.08268 7.27505C2.08268 3.55005 3.57435 2.05838 7.29935 2.05838L7.40768 2.05838C10.7577 2.05838 12.2994 3.26672 12.5744 6.21672M7.49935 10L16.9827 10M15.1243 12.7917L17.916 10L15.1244 7.20838" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -176,29 +186,29 @@
     <!-- Modal content -->
     <div class="relative rounded-base bg-white shadow dark:bg-gray-800">
 
-      <div class="px-4 py-3 bg-teal-50 flex gap-2.5 rounded-t-lg">
-        <div class="flex items-center justify-center p-1.5 bg-teal-200/50 rounded-full">
+      <div class="px-4 py-3 bg-teal-50 flex gap-2.5 rounded-t-lg dark:bg-teal-950/40">
+        <div class="flex items-center justify-center p-1.5 bg-teal-200/50 rounded-full dark:bg-teal-900/50">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-               class="size-5 text-teal-800">
+               class="size-5 text-teal-800 dark:text-teal-200">
             <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
           </svg>
         </div>
-        <div class="font-semibold text-gray-700 pt-1">تغییر رمز ورود</div>
+        <div class="font-semibold text-gray-700 pt-1 dark:text-gray-200">تغییر رمز ورود</div>
       </div>
 
       <form [formGroup]="changePasswordForm" class="p-4 space-y-4">
 
         <div>
-          <div class="flex items-center border border-gray-200 rounded px-2">
+          <div class="flex items-center border border-gray-200 rounded px-2 dark:border-gray-700">
             <button (click)="togglePassword()"
                     [attr.aria-label]="showPassword() ? 'مخفی کردن رمز جدید' : 'نمایش رمز جدید'"
-                    class="cursor-pointer bg-gray-100 rounded-base flex items-center justify-center p-1">
+                    class="cursor-pointer bg-gray-100 rounded-base flex items-center justify-center p-1 dark:bg-gray-700">
               @if (showPassword()) {
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4 text-gray-500">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4 text-gray-500 dark:text-gray-400">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M3.98 8.223A10.477 10.477 0 0 0 1.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.451 10.451 0 0 1 12 4.5c4.756 0 8.773 3.162 10.065 7.498a10.522 10.522 0 0 1-4.293 5.774M6.228 6.228 3 3m3.228 3.228 3.65 3.65m7.894 7.894L21 21m-3.228-3.228-3.65-3.65m0 0a3 3 0 1 0-4.243-4.243m4.242 4.242L9.88 9.88" />
                 </svg>
               } @else {
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4 text-gray-500">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4 text-gray-500 dark:text-gray-400">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
                   <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                 </svg>
@@ -211,8 +221,8 @@
                    autocomplete="new-password"
                    dir="ltr"
                    placeholder="رمز جدید"
-                   class="w-full text-right bg-transparent text-sm text-gray-900 py-2.5 border-0 focus:ring-0">
-            <div class="bg-gray-100 rounded-base flex items-center justify-center p-1">
+                   class="w-full text-right bg-transparent text-sm text-gray-900 py-2.5 border-0 focus:ring-0 dark:text-white">
+            <div class="bg-gray-100 rounded-base flex items-center justify-center p-1 dark:bg-gray-700">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-4 text-gray-400">
                 <path fill-rule="evenodd" d="M15.75 1.5a6.75 6.75 0 0 0-6.651 7.906c.067.39-.032.717-.221.906l-6.5 6.499a3 3 0 0 0-.878 2.121v2.818c0 .414.336.75.75.75H6a.75.75 0 0 0 .75-.75v-1.5h1.5A.75.75 0 0 0 9 19.5V18h1.5a.75.75 0 0 0 .53-.22l2.658-2.658c.19-.189.517-.288.906-.22A6.75 6.75 0 1 0 15.75 1.5Zm0 3a.75.75 0 0 0 0 1.5A2.25 2.25 0 0 1 18 8.25a.75.75 0 0 0 1.5 0 3.75 3.75 0 0 0-3.75-3.75Z" clip-rule="evenodd" />
               </svg>
@@ -228,17 +238,17 @@
         </div>
 
         <div>
-          <div class="flex items-center border border-gray-200 rounded px-2">
+          <div class="flex items-center border border-gray-200 rounded px-2 dark:border-gray-700">
             <button (click)="toggleConfirmPassword()"
                     [attr.aria-label]="showConfirmPassword() ? 'مخفی کردن تکرار رمز جدید' : 'نمایش تکرار رمز جدید'"
-                    class="cursor-pointer bg-gray-100 rounded-base flex items-center justify-center p-1">
+                    class="cursor-pointer bg-gray-100 rounded-base flex items-center justify-center p-1 dark:bg-gray-700">
               @if (showConfirmPassword()) {
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4 text-gray-500">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4 text-gray-500 dark:text-gray-400">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M3.98 8.223A10.477 10.477 0 0 0 1.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.451 10.451 0 0 1 12 4.5c4.756 0 8.773 3.162 10.065 7.498a10.522 10.522 0 0 1-4.293 5.774M6.228 6.228 3 3m3.228 3.228 3.65 3.65m7.894 7.894L21 21m-3.228-3.228-3.65-3.65m0 0a3 3 0 1 0-4.243-4.243m4.242 4.242L9.88 9.88" />
                 </svg>
               } @else {
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                     stroke="currentColor" class="size-4 text-gray-500">
+                     stroke="currentColor" class="size-4 text-gray-500 dark:text-gray-400">
                   <path stroke-linecap="round" stroke-linejoin="round"
                         d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z"/>
                   <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
@@ -252,8 +262,8 @@
                    autocomplete="confirm-password"
                    dir="ltr"
                    placeholder="تکرار رمز جدید"
-                   class="w-full text-right bg-transparent text-sm text-gray-900 py-2.5 border-0 focus:ring-0">
-            <div class="bg-gray-100 rounded-base flex items-center justify-center p-1">
+                   class="w-full text-right bg-transparent text-sm text-gray-900 py-2.5 border-0 focus:ring-0 dark:text-white">
+            <div class="bg-gray-100 rounded-base flex items-center justify-center p-1 dark:bg-gray-700">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-4 text-gray-400">
                 <path fill-rule="evenodd" d="M15.75 1.5a6.75 6.75 0 0 0-6.651 7.906c.067.39-.032.717-.221.906l-6.5 6.499a3 3 0 0 0-.878 2.121v2.818c0 .414.336.75.75.75H6a.75.75 0 0 0 .75-.75v-1.5h1.5A.75.75 0 0 0 9 19.5V18h1.5a.75.75 0 0 0 .53-.22l2.658-2.658c.19-.189.517-.288.906-.22A6.75 6.75 0 1 0 15.75 1.5Zm0 3a.75.75 0 0 0 0 1.5A2.25 2.25 0 0 1 18 8.25a.75.75 0 0 0 1.5 0 3.75 3.75 0 0 0-3.75-3.75Z" clip-rule="evenodd" />
               </svg>
@@ -277,7 +287,7 @@
       </form>
       <!-- Modal footer -->
       <div class="flex gap-4 rounded-b p-4 dark:border-gray-600 md:p-5">
-        <button (click)="changePasswordModal?.hide()" class="cursor-pointer flex-1 flex items-center justify-center rounded gap-2 border border-gray-200 text-gay-600 hover:text-gray-700">
+        <button (click)="changePasswordModal?.hide()" class="cursor-pointer flex-1 flex items-center justify-center rounded gap-2 border border-gray-200 text-gay-600 hover:text-gray-700 dark:border-gray-700 dark:hover:text-gray-200">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
             <path d="M6.28 5.22a.75.75 0 0 0-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 1 0 1.06 1.06L10 11.06l3.72 3.72a.75.75 0 1 0 1.06-1.06L11.06 10l3.72-3.72a.75.75 0 0 0-1.06-1.06L10 8.94 6.28 5.22Z" />
           </svg>

@@ -1,5 +1,5 @@
 <div class="mb-4">
-  <button (click)="back()" type="button" class="cursor-pointer flex gap-2 items-center text-gray-500">
+  <button (click)="back()" type="button" class="cursor-pointer flex gap-2 items-center text-gray-500 dark:text-gray-400">
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
          class="size-6">
       <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"/>
@@ -44,7 +44,7 @@
                    viewBox="0 0 50 50"
                    [class.animate-spin]="isResending()"
                    class="size-4">
-                <path class="fill-sky-600 group-hover:fill-sky-700"
+                <path class="fill-sky-600 group-hover:fill-sky-700 dark:group-hover:fill-sky-300"
                       d="M25 2C12.321124 2 2 12.321124 2 25C2 37.678876 12.321124 48 25 48C37.678876 48 48 37.678876 48 25 A 2.0002 2.0002 0 1 0 44 25C44 35.517124 35.517124 44 25 44C14.482876 44 6 35.517124 6 25C6 14.482876 14.482876 6 25 6C30.475799 6 35.391893 8.3080175 38.855469 12L35 12 A 2.0002 2.0002 0 1 0 35 16L46 16L46 5 A 2.0002 2.0002 0 0 0 43.970703 2.9726562 A 2.0002 2.0002 0 0 0 42 5L42 9.5253906C37.79052 4.9067015 31.727675 2 25 2 z"/>
               </svg>
               <span class="mr-2 text-sky-600 group-hover:text-sky-700 text-sm">دریافت مجدد کد</span>
@@ -59,11 +59,11 @@
                fill="none"
                viewBox="0 0 24 24"
                stroke-width="1.5"
-               stroke="currentColor" class="size-5 text-gray-500 group-hover:text-gray-600">
+               stroke="currentColor" class="size-5 text-gray-500 group-hover:text-gray-600 dark:text-gray-400 dark:group-hover:text-gray-300">
             <path stroke-linecap="round" stroke-linejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3"/>
           </svg>
 
-          <span class="text-gray-500 group-hover:text-gray-600 mr-1.5">تغییر شماره</span>
+          <span class="text-gray-500 group-hover:text-gray-600 mr-1.5 dark:text-gray-400 dark:group-hover:text-gray-300">تغییر شماره</span>
         </button>
       </div>
       <input type="text"
@@ -77,7 +77,7 @@
              dir="ltr"
              placeholder="کد تایید ۶ رقمی"
              (input)="onCodeInput($event)"
-             class="text-right block w-full rounded border border-gray-200 bg-transparent text-sm text-gray-700 p-2.5 focus:border-gray-300">
+             class="text-right block w-full rounded border border-gray-200 bg-transparent text-sm text-gray-700 p-2.5 focus:border-gray-300 dark:border-gray-700 dark:text-gray-200 dark:focus:border-gray-500">
     </div>
     @if (
       verifyForm.get('verification_code')?.invalid

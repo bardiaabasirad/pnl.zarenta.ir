@@ -7,6 +7,7 @@ export interface MetalItem {
   is_buy_active: boolean,
   is_sell_active: boolean,
   is_spot: boolean,
+  allows_physical_delivery?: boolean,
   metal_item_group_id: boolean,
   price_change_threshold: number,
   settlement_metal_item_id: number | null;

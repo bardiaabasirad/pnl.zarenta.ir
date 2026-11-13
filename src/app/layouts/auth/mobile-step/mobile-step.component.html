@@ -1,6 +1,6 @@
 @if (state && state.action && state.action == 'forgot_password') {
   <div class="mb-4">
-    <button (click)="back()" class="cursor-pointer flex gap-2 items-center text-gray-500">
+    <button (click)="back()" class="cursor-pointer flex gap-2 items-center text-gray-500 dark:text-gray-400">
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
            stroke="currentColor"
            class="size-6">
@@ -56,8 +56,8 @@
         <input id="agreement"
                type="checkbox"
                formControlName="agreement"
-               class="mt-0.5 size-4 shrink-0 rounded border-gray-300 text-primary focus:ring-primary cursor-pointer"/>
-        <label for="agreement" class="text-xs text-gray-600 text-justify leading-5 cursor-pointer">
+               class="mt-0.5 size-4 shrink-0 rounded border-gray-300 text-primary focus:ring-primary cursor-pointer dark:border-gray-600"/>
+        <label for="agreement" class="text-xs text-gray-600 text-justify leading-5 cursor-pointer dark:text-gray-400">
           شرایط {{ environment.appTitle }} و
           <button type="button"
                   (click)="openTermsModal($event)"
@@ -88,13 +88,13 @@
   <div class="relative rounded-base bg-white shadow dark:bg-gray-800">
     <div class="px-4 py-3 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between gap-2.5 rounded-t-base">
       <div class="flex items-center gap-2.5">
-        <div class="font-semibold text-gray-700 pt-0.5">
+        <div class="font-semibold text-gray-700 pt-0.5 dark:text-gray-200">
           {{ termsPage()?.title || 'قوانین و مقررات' }}
         </div>
       </div>
       <button type="button"
               (click)="closeTermsModal()"
-              class="cursor-pointer rounded-base p-1.5 text-gray-400 hover:bg-gray-100 hover:text-gray-700">
+              class="cursor-pointer rounded-base p-1.5 text-gray-400 hover:bg-gray-100 hover:text-gray-700 dark:hover:bg-gray-600 dark:hover:text-gray-200">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
           <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
         </svg>
@@ -103,21 +103,23 @@
 
     <div class="p-4 max-h-[60vh] overflow-y-auto">
       @if (termsLoading()) {
-        <div class="space-y-3 animate-pulse">
-          <div class="h-4 w-40 rounded bg-gray-200"></div>
-          <div class="h-3 w-full rounded bg-gray-200"></div>
-          <div class="h-3 w-full rounded bg-gray-200"></div>
-          <div class="h-3 w-5/6 rounded bg-gray-200"></div>
+        <div role="status" class="animate-pulse space-y-2.5">
+          <div class="h-3 w-full rounded bg-gray-200 dark:bg-gray-700"></div>
+          <div class="h-3 w-full rounded bg-gray-200 dark:bg-gray-700"></div>
+          <div class="h-3 w-11/12 rounded bg-gray-200 dark:bg-gray-700"></div>
+          <div class="h-3 w-4/5 rounded bg-gray-300 dark:bg-gray-600"></div>
+          <div class="h-3 w-full rounded bg-gray-200 dark:bg-gray-700"></div>
+          <div class="h-3 w-2/3 rounded bg-gray-200 dark:bg-gray-700"></div>
         </div>
       } @else if (termsBody()) {
-        <div class="text-sm text-gray-700 leading-7 terms-body"
+        <div class="text-sm text-gray-700 leading-7 terms-body dark:text-gray-200"
              [innerHTML]="termsBody()"></div>
       } @else {
-        <div class="text-sm text-gray-500">بارگذاری قوانین و مقررات ممکن نشد.</div>
+        <div class="text-sm text-gray-500 dark:text-gray-400">بارگذاری قوانین و مقررات ممکن نشد.</div>
       }
     </div>
 
-    <div class="flex items-center justify-between gap-3 rounded-b-base p-4 border-t border-gray-200">
+    <div class="flex items-center justify-between gap-3 rounded-b-base p-4 border-t border-gray-200 dark:border-gray-700">
       <a routerLink="/pages/terms"
          (click)="closeTermsModal()"
          class="text-sky-500 text-xs">

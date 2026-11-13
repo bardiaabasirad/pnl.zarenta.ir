@@ -1,5 +1,5 @@
 @if (messages()) {
-  <div class="relative border border-amber-500/30 rounded-base p-4 text-sm bg-amber-50 mb-4">
+  <div class="relative border border-amber-500/30 rounded-base p-4 text-sm bg-amber-50 mb-4 dark:bg-amber-950/40">
     <div #contentBox
          class="overflow-hidden transition-[max-height] duration-300"
          [style.max-height.px]="(effectiveShowToggle() && !expanded())
@@ -21,22 +21,22 @@
 
     @if (effectiveShowToggle() && !expanded()) {
       <div class="pointer-events-none absolute inset-x-0 bottom-13 h-8
-                  bg-gradient-to-t from-amber-50 to-transparent"></div>
+                  bg-gradient-to-t from-amber-50 to-transparent dark:from-amber-950/40"></div>
     }
 
     @if (effectiveShowToggle()) {
       <div class="flex justify-center mt-3">
         <button (click)="expanded.set(!expanded())"
-                class="cursor-pointer px-2 py-1 text-amber-700 flex items-center gap-2 text-xs">
+                class="cursor-pointer px-2 py-1 text-amber-700 flex items-center gap-2 text-xs dark:text-amber-300">
           @if (expanded()) {
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                 stroke-width="1.5" stroke="currentColor" class="text-amber-700 size-3.5">
+                 stroke-width="1.5" stroke="currentColor" class="text-amber-700 size-3.5 dark:text-amber-300">
               <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 15.75 7.5-7.5 7.5 7.5"/>
             </svg>
             مشاهده کمتر
           } @else {
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                 stroke-width="1.5" stroke="currentColor" class="text-amber-700 size-3.5">
+                 stroke-width="1.5" stroke="currentColor" class="text-amber-700 size-3.5 dark:text-amber-300">
               <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/>
             </svg>
             مشاهده بیشتر
@@ -54,13 +54,17 @@
   @if (filteredGroups().length) {
     <div class="space-y-4">
       @for (group of filteredGroups(); track group.id) {
-        <div class="border border-gray-200 bg-white p-4 rounded-base space-y-10">
+        <div class="border border-gray-200 bg-white p-4 rounded-base space-y-10 dark:border-gray-700 dark:bg-gray-800">
           <div class="space-y-6">
-            <div class="flex gap-1.5 pb-4 lg:gap-4 border-b border-gray-200 items-center justify-between">
-              <div class="flex items-center gap-2 font-medium text-sm text-gray-700 lg:text-base">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 text-gray-600">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 0 1 6 3.75h2.25A2.25 2.25 0 0 1 10.5 6v2.25a2.25 2.25 0 0 1-2.25 2.25H6a2.25 2.25 0 0 1-2.25-2.25V6ZM3.75 15.75A2.25 2.25 0 0 1 6 13.5h2.25a2.25 2.25 0 0 1 2.25 2.25V18a2.25 2.25 0 0 1-2.25 2.25H6A2.25 2.25 0 0 1 3.75 18v-2.25ZM13.5 6a2.25 2.25 0 0 1 2.25-2.25H18A2.25 2.25 0 0 1 20.25 6v2.25A2.25 2.25 0 0 1 18 10.5h-2.25a2.25 2.25 0 0 1-2.25-2.25V6ZM13.5 15.75a2.25 2.25 0 0 1 2.25-2.25H18a2.25 2.25 0 0 1 2.25 2.25V18A2.25 2.25 0 0 1 18 20.25h-2.25A2.25 2.25 0 0 1 13.5 18v-2.25Z" />
-                </svg>
+            <div class="flex gap-1.5 pb-4 lg:gap-4 border-b border-gray-200 items-center justify-between dark:border-gray-700">
+              <div class="flex items-center gap-2 font-medium text-sm text-gray-700 lg:text-base dark:text-gray-200">
+                @if (group.icon) {
+                  <app-svg-icon [name]="group.icon" class="size-6 fill-gray-600 dark:fill-gray-400"/>
+                } @else {
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 text-gray-600 dark:text-gray-400">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 0 1 6 3.75h2.25A2.25 2.25 0 0 1 10.5 6v2.25a2.25 2.25 0 0 1-2.25 2.25H6a2.25 2.25 0 0 1-2.25-2.25V6ZM3.75 15.75A2.25 2.25 0 0 1 6 13.5h2.25a2.25 2.25 0 0 1 2.25 2.25V18a2.25 2.25 0 0 1-2.25 2.25H6A2.25 2.25 0 0 1 3.75 18v-2.25ZM13.5 6a2.25 2.25 0 0 1 2.25-2.25H18A2.25 2.25 0 0 1 20.25 6v2.25A2.25 2.25 0 0 1 18 10.5h-2.25a2.25 2.25 0 0 1-2.25-2.25V6ZM13.5 15.75a2.25 2.25 0 0 1 2.25-2.25H18a2.25 2.25 0 0 1 2.25 2.25V18A2.25 2.25 0 0 1 18 20.25h-2.25A2.25 2.25 0 0 1 13.5 18v-2.25Z" />
+                  </svg>
+                }
                 <div class="">{{ group.title }}</div>
               </div>
               <div class="flex justify-end gap-2 items-center">
@@ -79,10 +83,10 @@
 
                 @if (isToday(updated_at)) {
                   <span
-                    class="text-gray-700 text-xs lg:text-sm font-medium">بروزرسانی در {{ updated_at | jalali:'HH:mm:ss' }}</span>
+                    class="text-gray-700 text-xs lg:text-sm font-medium dark:text-gray-200">بروزرسانی در {{ updated_at | jalali:'HH:mm:ss' }}</span>
                 } @else {
                   <span
-                    class="text-gray-700 text-xs lg:text-sm font-medium">بروزرسانی در {{ updated_at | jalali:'YYYY/MM/DD ساعت HH:mm:ss' }}</span>
+                    class="text-gray-700 text-xs lg:text-sm font-medium dark:text-gray-200">بروزرسانی در {{ updated_at | jalali:'YYYY/MM/DD ساعت HH:mm:ss' }}</span>
                 }
               </div>
             </div>
@@ -135,13 +139,13 @@
       }
     </div>
   } @else {
-    <div class="shadow bg-white p-4 rounded">
+    <div class="shadow bg-white p-4 rounded dark:bg-gray-800">
       <div class="flex justify-center mb-4">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="-32 -32 1088 1088" class="size-16 fill-gray-700">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="-32 -32 1088 1088" class="size-16 fill-gray-700 dark:fill-gray-300">
           <g transform="translate(0, 960) scale(1, -1)"><path d="M512 938.667c282.763-0.009 511.984-229.236 511.984-512 0-141.381-57.304-269.378-149.953-362.031v0c-92.888-94.106-221.865-152.395-364.456-152.395-282.77 0-512 229.23-512 512 0 142.591 58.29 271.568 152.34 364.402l0.055 0.054c92.145 92.639 219.706 149.971 360.658 149.971 0.483 0 0.966-0.001 1.448-0.002h-0.075zM512-38.788c257.063 0 465.455 208.391 465.455 465.455s-208.391 465.455-465.455 465.455c-257.063 0-465.455-208.391-465.455-465.455v0c0.291-256.946 208.508-465.163 465.427-465.455h0.028zM512 494.158c37.274 0 67.491-30.217 67.491-67.491s-30.217-67.491-67.491-67.491c-37.274 0-67.491 30.217-67.491 67.491v0c0.053 37.253 30.238 67.438 67.486 67.491h0.005zM512 405.722c11.568 0 20.945 9.378 20.945 20.945s-9.378 20.945-20.945 20.945c-11.568 0-20.945-9.378-20.945-20.945v0c0.026-11.557 9.388-20.919 20.943-20.945h0.003zM535.273 470.885h-46.545v311.389h46.545zM717.545 188.168l-177.804 177.804 32.954 32.954 177.804-177.804z"/></g>
         </svg>
       </div>
-      <div class="text-center text-gray-700 text-base">در حال حاضر بازار بسته است</div>
+      <div class="text-center text-gray-700 text-base dark:text-gray-200">در حال حاضر بازار بسته است</div>
     </div>
   }
 
@@ -158,23 +162,31 @@
   ></app-exchange-modal>
 
 } @else {
-  <div class="border border-gray-200 bg-white p-4 rounded-base space-y-10">
-    <div class="mx-auto w-full max-w-44 rounded h-6 bg-gray-200 animate-pulse mb-8"></div>
+  <div role="status" class="border border-gray-200 bg-white p-4 rounded-base space-y-6 animate-pulse dark:border-gray-700 dark:bg-gray-800">
+    <div class="flex items-center justify-between gap-4 border-b border-gray-200 pb-4 dark:border-gray-700">
+      <div class="flex items-center gap-2">
+        <div class="size-6 rounded bg-gray-200 dark:bg-gray-700"></div>
+        <div class="h-4 w-28 rounded bg-gray-300 dark:bg-gray-600"></div>
+      </div>
+      <div class="h-3 w-36 rounded bg-gray-200 dark:bg-gray-700"></div>
+    </div>
     <div class="space-y-4">
-      <div class="flex gap-1.5 lg:gap-4 items-center">
+      <div class="flex items-center gap-1.5 lg:gap-4">
         <div class="w-20 lg:w-40"></div>
-        <div class="flex-1 flex gap-1.5 lg:gap-4 items-center">
-          <div class="mx-auto w-full max-w-28 rounded h-5 bg-gray-200 animate-pulse"></div>
-          <div class="mx-auto w-full max-w-28 rounded h-5 bg-gray-200 animate-pulse"></div>
+        <div class="flex flex-1 gap-1.5 lg:gap-4">
+          <div class="mx-auto h-4 w-24 rounded bg-gray-300 dark:bg-gray-600"></div>
+          <div class="mx-auto h-4 w-24 rounded bg-gray-300 dark:bg-gray-600"></div>
         </div>
       </div>
-      <div class="flex items-center gap-4">
-        <div class="w-20 lg:w-40 rounded h-5 bg-gray-200 animate-pulse"></div>
-        <div class="flex-1 flex gap-1.5 lg:gap-4 items-center">
-          <div class="mx-auto w-full rounded h-12 bg-gray-200 animate-pulse"></div>
-          <div class="mx-auto w-full rounded h-12 bg-gray-200 animate-pulse"></div>
+      @for (row of [0, 1, 2, 3]; track row) {
+        <div class="flex items-center gap-1.5 lg:gap-4">
+          <div class="h-4 w-16 rounded bg-gray-300 dark:bg-gray-600 lg:w-28"></div>
+          <div class="flex flex-1 gap-1.5 lg:gap-4">
+            <div class="h-10 w-full rounded-base bg-gray-200 dark:bg-gray-700"></div>
+            <div class="h-10 w-full rounded-base bg-gray-200 dark:bg-gray-700"></div>
+          </div>
         </div>
-      </div>
+      }
     </div>
   </div>
 }

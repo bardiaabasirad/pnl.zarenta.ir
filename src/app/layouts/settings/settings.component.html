@@ -1,13 +1,21 @@
 <div class="space-y-4">
   @let client = user();
 
-  <div class="rounded-base bg-white p-4 border border-gray-200 space-y-4">
+  <div class="rounded-base bg-white p-4 border border-gray-200 space-y-4 dark:bg-gray-800 dark:border-gray-700">
+
+    <h2 class="dark:text-white">تنظیمات</h2>
+
+    <div class="border border-gray-300 dark:border-gray-600 rounded flex justify-between items-center px-4 py-2.5">
+      <label class="text-xs lg:text-sm font-medium text-gray-700 dark:text-gray-200">حالت تاریک</label>
+      <app-custom-checkbox
+        [value]="darkMode.isDark() ? 'active' : 'inactive'"
+        (onChanged)="darkMode.setEnabled($event)"
+      ></app-custom-checkbox>
+    </div>
 
     @if (client) {
-      <h2>تنظیمات</h2>
-
       <div class="border border-gray-300 dark:border-gray-600 rounded flex justify-between items-center px-4 py-2.5">
-        <label class="text-xs lg:text-sm font-medium text-gray-700">دریافت پیامک باز شدن بازار</label>
+        <label class="text-xs lg:text-sm font-medium text-gray-700 dark:text-gray-200">دریافت پیامک باز شدن بازار</label>
         <app-custom-checkbox
           [(value)]="client.market_opening_notification"
           (onChanged)="update(client.market_opening_notification, 'market_opening_notification')"
@@ -16,7 +24,10 @@
     }
 
     @if (isLoading()) {
-      <div class="loading">در حال بارگذاری...</div>
+      <div role="status" class="flex animate-pulse items-center justify-between rounded border border-gray-300 px-4 py-2.5 dark:border-gray-600">
+        <div class="h-3.5 w-44 rounded bg-gray-300 dark:bg-gray-600"></div>
+        <div class="h-5 w-9 rounded-full bg-gray-200 dark:bg-gray-700"></div>
+      </div>
     }
   </div>
 </div>

@@ -65,7 +65,10 @@ export class PhysicalDeliveriesComponent implements OnInit {
       next: (res) => {
         const spot = res?.assets?.spot_and_cash ?? [];
         const metals = (Array.isArray(spot) ? spot : []).filter(
-          (w: any) => w.metal_item_id && w.metal_item?.is_spot && Number(w.available_balance) > 0
+          (w: any) => w.metal_item_id
+            && w.metal_item?.is_spot
+            && w.metal_item?.allows_physical_delivery
+            && Number(w.available_balance) > 0
         );
         this.spotMetals.set(metals);
       },

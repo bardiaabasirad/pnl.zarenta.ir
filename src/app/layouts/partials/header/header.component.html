@@ -1,5 +1,5 @@
-<div class="sticky top-0 right-0 z-10 border-b border-gray-200 w-full mb-4">
-  <div class="flex items-center justify-between bg-white px-4 py-2 lg:py-4 mx-auto max-w-content-large">
+<div class="sticky top-0 right-0 z-10 border-b border-gray-200 w-full mb-4 dark:border-gray-700">
+  <div class="flex items-center justify-between bg-white px-4 py-2 lg:py-4 mx-auto max-w-content-large dark:bg-gray-900">
     <a routerLink="/" class="flex items-center gap-2">
       <svg xmlns="http://www.w3.org/2000/svg" class="w-6 lg:w-10" viewBox="0 0 359.32 428.02">
         <path class="fill-primary" d="M111.18,3.35s-11.55,25.51,21.66,48.13,133.32,54.87,180.97,101.07,59.2,95.78,28.4,157.38c0,0,2.41-27.43-25.99-60.16s-55.35-57.76-145.83-108.29S82.3,49.07,111.18,3.35Z"/>
@@ -17,7 +17,7 @@
       @if (pwaInstall.canInstall()) {
         <button
           type="button"
-          class="cursor-pointer inline-flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-semibold text-gray-800 rounded-full bg-primary/20 border border-primary/40 hover:bg-primary/30 disabled:opacity-60"
+          class="cursor-pointer inline-flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-semibold text-gray-800 rounded-full bg-primary/20 border border-primary/40 hover:bg-primary/30 disabled:opacity-60 dark:text-gray-100"
           [disabled]="installingPwa"
           (click)="installPwa()"
           title="نصب اپلیکیشن"
@@ -30,12 +30,31 @@
         </button>
       }
 
+      <button
+        type="button"
+        (click)="darkMode.toggle()"
+        class="cursor-pointer p-1.5 text-gray-700 rounded-full bg-white border border-gray-200 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-200"
+        title="تغییر تم"
+      >
+        @if (darkMode.isDark()) {
+          <svg class="size-5 text-gray-200" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
+              fill-rule="evenodd" clip-rule="evenodd"></path>
+          </svg>
+        } @else {
+          <svg class="size-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+          </svg>
+        }
+      </button>
+
       <div class="relative">
         <button type="button"
                 data-dropdown-toggle="trader-notification-dropdown"
-                class="cursor-pointer relative p-1.5 text-gray-700 rounded-full bg-white border border-gray-200">
+                class="cursor-pointer relative p-1.5 text-gray-700 rounded-full bg-white border border-gray-200 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-200">
           <span class="sr-only">مشاهده اطلاعیه‌ها</span>
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5 text-gray-500">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5 text-gray-500 dark:text-gray-300">
             <path fill-rule="evenodd" d="M10 2a6 6 0 0 0-6 6c0 1.887-.454 3.665-1.257 5.234a.75.75 0 0 0 .515 1.076 32.91 32.91 0 0 0 3.256.508 3.5 3.5 0 0 0 6.972 0 32.903 32.903 0 0 0 3.256-.508.75.75 0 0 0 .515-1.076A11.448 11.448 0 0 1 16 8a6 6 0 0 0-6-6ZM8.05 14.943a33.54 33.54 0 0 0 3.9 0 2 2 0 0 1-3.9 0Z" clip-rule="evenodd" />
           </svg>
           @if (hasNotifications()) {
@@ -47,26 +66,26 @@
         </button>
 
         <div id="trader-notification-dropdown"
-             class="z-50 hidden min-w-72 max-w-sm my-4 text-sm bg-white divide-y divide-gray-100 rounded shadow-lg border border-gray-200">
-          <div class="px-4 py-2 font-medium text-gray-700">اطلاعیه‌ها</div>
+             class="z-50 hidden min-w-72 max-w-sm my-4 text-sm bg-white divide-y divide-gray-100 rounded shadow-lg border border-gray-200 dark:bg-gray-800 dark:divide-gray-700 dark:border-gray-700">
+          <div class="px-4 py-2 font-medium text-gray-700 dark:text-gray-200">اطلاعیه‌ها</div>
           <div class="max-h-80 overflow-y-auto">
             @if (!hasNotifications()) {
-              <div class="px-4 py-6 text-center text-gray-500">اطلاعیه خوانده‌نشده‌ای نیست</div>
+              <div class="px-4 py-6 text-center text-gray-500 dark:text-gray-400">اطلاعیه خوانده‌نشده‌ای نیست</div>
             } @else {
               @for (notification of notifications(); track notification.id) {
                 <button type="button"
-                        class="w-full text-right px-4 py-3 hover:bg-gray-50 disabled:opacity-60"
+                        class="w-full text-right px-4 py-3 hover:bg-gray-50 disabled:opacity-60 dark:hover:bg-gray-700"
                         [disabled]="isLoading(notification.id)"
                         (click)="openNotification(notification)">
-                  <div class="font-medium text-gray-800">{{ notification.title }}</div>
-                  <div class="mt-1 text-xs text-gray-600 leading-5">{{ notification.content }}</div>
+                  <div class="font-medium text-gray-800 dark:text-gray-100">{{ notification.title }}</div>
+                  <div class="mt-1 text-xs text-gray-600 leading-5 dark:text-gray-400">{{ notification.content }}</div>
                 </button>
               }
             }
           </div>
           @if (hasNotifications()) {
             <button type="button"
-                    class="w-full px-4 py-2 text-xs text-gray-600 hover:bg-gray-50 disabled:opacity-50"
+                    class="w-full px-4 py-2 text-xs text-gray-600 hover:bg-gray-50 disabled:opacity-50 dark:text-gray-400 dark:hover:bg-gray-700"
                     [disabled]="markingAll()"
                     (click)="markAllAsRead()">
               @if (markingAll()) { در حال علامت‌گذاری... } @else { خواندن همه }
@@ -75,13 +94,13 @@
         </div>
       </div>
 
-      <div class="flex items-center lg:justify-center gap-2 bg-gray-100 pl-2 rounded-full">
-        <div class="relative p-1.5 text-gray-500 rounded-full bg-white border border-gray-200">
+      <div class="flex items-center lg:justify-center gap-2 bg-gray-100 pl-2 rounded-full dark:bg-gray-800">
+        <div class="relative p-1.5 text-gray-500 rounded-full bg-white border border-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
             <path fill-rule="evenodd" d="M5.75 2a.75.75 0 0 1 .75.75V4h7V2.75a.75.75 0 0 1 1.5 0V4h.25A2.75 2.75 0 0 1 18 6.75v8.5A2.75 2.75 0 0 1 15.25 18H4.75A2.75 2.75 0 0 1 2 15.25v-8.5A2.75 2.75 0 0 1 4.75 4H5V2.75A.75.75 0 0 1 5.75 2Zm-1 5.5c-.69 0-1.25.56-1.25 1.25v6.5c0 .69.56 1.25 1.25 1.25h10.5c.69 0 1.25-.56 1.25-1.25v-6.5c0-.69-.56-1.25-1.25-1.25H4.75Z" clip-rule="evenodd" />
           </svg>
         </div>
-        <span class="text-xs text-gray-700 lg:text-sm">{{ rxTime() | jalali }}</span>
+        <span class="text-xs text-gray-700 lg:text-sm dark:text-gray-200">{{ rxTime() | jalali }}</span>
       </div>
 
     </div>

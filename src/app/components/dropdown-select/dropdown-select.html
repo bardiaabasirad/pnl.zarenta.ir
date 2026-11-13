@@ -1,6 +1,6 @@
 <div class="relative">
   <div
-    class="flex w-full items-center border border-gray-200 leading-5 rounded-base text-sm focus-within:outline-none {{ triggerClass() }}"
+    class="flex w-full items-center border border-gray-200 leading-5 rounded-base text-sm focus-within:outline-none {{ triggerClass() }} dark:border-gray-700"
   >
     <button
       #trigger
@@ -9,7 +9,7 @@
       [disabled]="disabled()"
       [attr.aria-expanded]="false"
       [attr.aria-controls]="menuId"
-      class="min-w-0 flex-1 flex items-center justify-between text-gray-700 bg-transparent border-0 px-4 py-2.5 focus:outline-none disabled:cursor-not-allowed disabled:opacity-60"
+      class="min-w-0 flex-1 flex items-center justify-between text-gray-700 bg-transparent border-0 px-4 py-2.5 focus:outline-none disabled:cursor-not-allowed disabled:opacity-60 dark:text-gray-200"
     >
       @if (selectedLabel(); as label) {
         <span class="truncate">{{ label }}</span>
@@ -32,17 +32,19 @@
   <div
     #menu
     [id]="menuId"
-    class="z-[70] hidden bg-neutral-primary-medium border border-default-medium rounded-base shadow-lg"
+    class="z-[70] hidden bg-neutral-primary-medium border border-default-medium rounded-base shadow-lg dark:bg-gray-800 dark:border-gray-700"
     [attr.aria-labelledby]="buttonId"
   >
-    <ul class="p-2 text-sm text-body font-medium">
+    <ul class="p-2 text-sm text-body font-medium dark:text-gray-200">
       @for (option of options(); track optionValue(option)) {
         <li>
           <button
             type="button"
             (click)="select(option)"
-            [class.bg-gray-100]="isSelected(option)"
-            class="inline-flex items-center w-full p-2 hover:bg-gray-50 hover:text-heading rounded-base"
+            class="inline-flex items-center w-full p-2 hover:bg-gray-50 hover:text-heading rounded-base dark:text-gray-200 dark:hover:bg-gray-700 dark:hover:text-white"
+            [class]="isSelected(option)
+              ? 'inline-flex items-center w-full p-2 hover:bg-gray-50 hover:text-heading rounded-base dark:text-gray-200 dark:hover:bg-gray-700 dark:hover:text-white bg-gray-100 dark:bg-gray-700'
+              : 'inline-flex items-center w-full p-2 hover:bg-gray-50 hover:text-heading rounded-base dark:text-gray-200 dark:hover:bg-gray-700 dark:hover:text-white'"
           >
             {{ optionLabel(option) }}
           </button>

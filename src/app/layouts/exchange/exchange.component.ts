@@ -27,6 +27,7 @@ import {DomSanitizer, SafeHtml, Title} from '@angular/platform-browser';
 import {RouterLinkHandlerDirective} from '../../directives/router-link-handler.directive';
 import {environment} from '../../../environments/environment';
 import {Holiday} from '../../interfaces/holiday';
+import {SvgIcon} from '../../components/svg-icon/svg-icon';
 
 @Component({
   selector: 'app-exchange',
@@ -36,7 +37,8 @@ import {Holiday} from '../../interfaces/holiday';
     ExchangeBtnComponent,
     JalaliPipe,
     ExchangeModalComponent,
-    RouterLinkHandlerDirective
+    RouterLinkHandlerDirective,
+    SvgIcon,
   ],
   templateUrl: './exchange.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,

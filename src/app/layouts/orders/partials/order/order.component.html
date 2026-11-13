@@ -3,8 +3,8 @@
        [ngClass]="order.order_type == 'buy'? 'border-r-emerald-500':'border-r-red-500'">
     <div class="flex justify-between gap-4">
       <span
-        class="px-2 rounded bg-slate-100 text-slate-800 text-xs lg:text-sm font-medium whitespace-nowrap">#{{ order.tracking_code }}</span>
-      <span class="px-2 rounded bg-slate-100 text-slate-800 text-xs lg:text-sm font-medium whitespace-nowrap"
+        class="px-2 rounded bg-slate-100 text-slate-800 text-xs lg:text-sm font-medium whitespace-nowrap dark:bg-slate-700 dark:text-slate-100">#{{ order.tracking_code }}</span>
+      <span class="px-2 rounded bg-slate-100 text-slate-800 text-xs lg:text-sm font-medium whitespace-nowrap dark:bg-slate-700 dark:text-slate-100"
             dir="ltr">{{ order.created_at | jalali: 'YYYY/MM/DD HH:mm:ss' }}</span>
     </div>
 
@@ -13,7 +13,7 @@
         <div class="text-sm">
           @switch (order.order_type) {
             @case ('buy') {
-              <div class="text-emerald-800">
+              <div class="text-emerald-800 dark:text-emerald-300">
                 خرید
 
                 @if (order.frozen == 'cash') {
@@ -51,7 +51,7 @@
               </div>
             }
             @case ('sell') {
-              <div class="text-red-800">
+              <div class="text-red-800 dark:text-red-300">
                 فروش
 
                 @if (order.frozen == 'cash') {
@@ -99,12 +99,12 @@
 
               <div class="flex justify-between items-center">
                 <div
-                  class="px-2 flex items-center gap-1 py-0.5 bg-gray-100 text-gray-900 text-sm rounded-full whitespace-nowrap">
+                  class="px-2 flex items-center gap-1 py-0.5 bg-gray-100 text-gray-900 text-sm rounded-full whitespace-nowrap dark:bg-gray-700 dark:text-white">
                   <span class="w-2 h-2 bg-gray-500 animate-pulse rounded-full"></span>
                   <span>در حال بررسی</span>
                 </div>
                 @if (currentRemainingTime > 0) {
-                  <div class="text-sm text-gray-700">{{ currentRemainingTime }} ثانیه</div>
+                  <div class="text-sm text-gray-700 dark:text-gray-200">{{ currentRemainingTime }} ثانیه</div>
                 }
               </div>
 
@@ -123,17 +123,17 @@
           }
           @case ('succeed') {
             <div class="flex justify-end">
-              <span class="bg-emerald-50 text-emerald-800 px-2.5 py-1 rounded whitespace-nowrap text-sm">تایید شد</span>
+              <span class="bg-emerald-50 text-emerald-800 px-2.5 py-1 rounded whitespace-nowrap text-sm dark:bg-emerald-950/40 dark:text-emerald-300">تایید شد</span>
             </div>
           }
           @case ('rejected') {
             @if (order.message) {
               <div class="flex justify-end">
-                <span class="inline-flex bg-red-50 text-red-800 px-2.5 py-1 rounded text-sm">سفارش شما به علت {{ order.message }} رد شد</span>
+                <span class="inline-flex bg-red-50 text-red-800 px-2.5 py-1 rounded text-sm dark:bg-red-950/40 dark:text-red-300">سفارش شما به علت {{ order.message }} رد شد</span>
               </div>
             } @else {
               <div class="flex justify-end">
-                <span class="inline-flex bg-red-50 text-red-800 px-2.5 py-1 rounded text-sm">سفارش شما رد شد</span>
+                <span class="inline-flex bg-red-50 text-red-800 px-2.5 py-1 rounded text-sm dark:bg-red-950/40 dark:text-red-300">سفارش شما رد شد</span>
               </div>
             }
           }

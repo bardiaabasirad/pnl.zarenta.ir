@@ -18,7 +18,7 @@
         <!-- Modal header -->
         <div class="relative">
           <div
-            class="absolute left-1/2 flex h-24 w-24 -translate-x-1/2 items-center justify-center rounded-full bg-white shadow-sm -top-[6.5rem]">
+            class="absolute left-1/2 flex h-24 w-24 -translate-x-1/2 items-center justify-center rounded-full bg-white shadow-sm -top-[6.5rem] dark:bg-gray-700">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 359.32 428.02" width="37">
               <path class="fill-primary" d="M111.18,3.35s-11.55,25.51,21.66,48.13,133.32,54.87,180.97,101.07,59.2,95.78,28.4,157.38c0,0,2.41-27.43-25.99-60.16s-55.35-57.76-145.83-108.29S82.3,49.07,111.18,3.35Z"></path>
               <path class="fill-primary" d="M172.3,154.47l25.99,14.92s-20.21,50.05-100.59,199.74L0,385.02s43.32-69.31,73.16-107.81,54.39-65.94,99.15-122.73Z"></path>
@@ -61,8 +61,8 @@
               در {{ environment.appTitle }} ثبت شد.
             </div>
             @if (settlementMessage(); as message) {
-              <div class="flex gap-1 items-center text-xs text-gray-600">
-                <div class="size-6 rounded-full bg-gray-200 flex items-center justify-center">
+              <div class="flex gap-1 items-center text-xs text-gray-600 dark:text-gray-400">
+                <div class="size-6 rounded-full bg-gray-200 flex items-center justify-center dark:bg-gray-700">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-4">
                     <path fill-rule="evenodd" d="M5.75 2a.75.75 0 0 1 .75.75V4h7V2.75a.75.75 0 0 1 1.5 0V4h.25A2.75 2.75 0 0 1 18 6.75v8.5A2.75 2.75 0 0 1 15.25 18H4.75A2.75 2.75 0 0 1 2 15.25v-8.5A2.75 2.75 0 0 1 4.75 4H5V2.75A.75.75 0 0 1 5.75 2Zm-1 5.5c-.69 0-1.25.56-1.25 1.25v6.5c0 .69.56 1.25 1.25 1.25h10.5c.69 0 1.25-.56 1.25-1.25v-6.5c0-.69-.56-1.25-1.25-1.25H4.75Z" clip-rule="evenodd" />
                   </svg>
@@ -76,20 +76,20 @@
                   @case ('pending') {
                     <div class="flex items-center justify-between">
                       <div
-                        class="flex items-center gap-1 whitespace-nowrap rounded-full bg-gray-100 px-2 text-sm text-gray-900 py-0.5">
+                        class="flex items-center gap-1 whitespace-nowrap rounded-full bg-gray-100 px-2 text-sm text-gray-900 py-0.5 dark:bg-gray-700 dark:text-white">
                         <span class="h-2 w-2 animate-pulse rounded-full bg-gray-500"></span>
                         <span>در حال بررسی</span>
                       </div>
                       @if (currentRemainingTime > 0) {
-                        <div class="text-sm text-gray-700">{{ currentRemainingTime }} ثانیه</div>
+                        <div class="text-sm text-gray-700 dark:text-gray-200">{{ currentRemainingTime }} ثانیه</div>
                       } @else {
                         <div
-                          class="text-sm text-gray-700 tv-button--loader relative overflow-hidden i-loading h-5 w-12">
+                          class="text-sm text-gray-700 tv-button--loader relative overflow-hidden i-loading h-5 w-12 dark:text-gray-200">
                                 <span
                                   class="tv-button__loader justify-end items-center flex bottom-0 h-full left-0 my-0 mx-auto opacity-0 absolute right-0 text-center top-0">
-                                  <span class="tv-button__loader-item bg-gray-200"></span>
-                                  <span class="tv-button__loader-item bg-gray-200"></span>
-                                  <span class="tv-button__loader-item bg-gray-200"></span>
+                                  <span class="tv-button__loader-item bg-gray-200 dark:bg-gray-700"></span>
+                                  <span class="tv-button__loader-item bg-gray-200 dark:bg-gray-700"></span>
+                                  <span class="tv-button__loader-item bg-gray-200 dark:bg-gray-700"></span>
                                 </span>
                         </div>
                       }
@@ -97,7 +97,7 @@
                   }
                   @case ('succeed') {
                     <span
-                      class="whitespace-nowrap rounded-full bg-teal-100 px-2 text-sm text-teal-900 py-0.5">تایید شد</span>
+                      class="whitespace-nowrap rounded-full bg-teal-100 px-2 text-sm text-teal-900 py-0.5 dark:bg-teal-900/40 dark:text-teal-200">تایید شد</span>
                   }
                   @case ('rejected') {
                     @if (metal_order.message) {
@@ -113,24 +113,24 @@
 
                     @if (metal_order.retry == 'active' && metal_order.product.fee != calculated_price!) {
                       <div class="text-sm">در حال حاضر نرخ {{ actionText }} <span
-                        [ngClass]="metal_order.order_type == 'buy' ? 'text-teal-700':'text-red-700'"
+                        [ngClass]="metal_order.order_type == 'buy' ? 'text-teal-700':'text-red-700 dark:text-red-300'"
                         class="font-semibold">
                         {{ display_price! | number }}
                         تومان</span> می‌باشد؛ آیا می‌خواهید
                         سفارش شما به میزان <span
-                          [ngClass]="metal_order.order_type == 'buy' ? 'text-teal-700':'text-red-700'"
+                          [ngClass]="metal_order.order_type == 'buy' ? 'text-teal-700':'text-red-700 dark:text-red-300'"
                           class="font-semibold">{{ amountOfMetal | number }}
                           {{ metal_item.unit == 'gram' ? 'گرم' : 'عدد' }}</span> را با نرخ جدید <span
-                          [ngClass]="metal_order.order_type == 'buy' ? 'text-teal-700':'text-red-700'"
+                          [ngClass]="metal_order.order_type == 'buy' ? 'text-teal-700':'text-red-700 dark:text-red-300'"
                           class="font-semibold">
                             {{ display_price! | number }}
                             تومان</span> ثبت نمایم؟
                       </div>
                     } @else if (metal_order.retry == 'active') {
                       <div class="text-sm">آیا می‌خواهید سفارش شما به میزان <span
-                        [ngClass]="metal_order.order_type == 'buy' ? 'text-teal-700':'text-red-700'"
+                        [ngClass]="metal_order.order_type == 'buy' ? 'text-teal-700':'text-red-700 dark:text-red-300'"
                         class="font-semibold">{{ amountOfMetal | number }} {{ metal_item.unit == 'gram' ? 'گرم' : 'عدد' }}</span> را با نرخ <span
-                        [ngClass]="metal_order.order_type == 'buy' ? 'text-teal-700':'text-red-700'"
+                        [ngClass]="metal_order.order_type == 'buy' ? 'text-teal-700':'text-red-700 dark:text-red-300'"
                         class="font-semibold">
                           {{ display_price! | number }}
                           تومان</span> مجدد ثبت نمایم؟
@@ -202,11 +202,11 @@
           <!-- Modal body -->
           <div class="space-y-4">
             <div class="relative">
-              <div [ngClass]="action == 'buy' ? 'text-teal-700':'text-red-700'"
+              <div [ngClass]="action == 'buy' ? 'text-teal-700':'text-red-700 dark:text-red-300'"
                    class="relative z-10 text-center text-lg font-medium">نرخ
                 {{ display_price! | number }}
                 تومان
-                <span class="text-xs text-gray-500">({{ unitLabel(resolveTargetUnitId(metal_item_config)) }})</span>
+                <span class="text-xs text-gray-500 dark:text-gray-400">({{ unitLabel(resolveTargetUnitId(metal_item_config)) }})</span>
               </div>
               @if (rateChanging) {
                 <div
@@ -220,8 +220,8 @@
 
           @if (settlementMessage(); as message) {
             <div class="flex justify-center">
-              <div class="flex gap-1 items-center text-xs text-gray-600">
-                <div class="size-6 rounded-full bg-gray-200 flex items-center justify-center">
+              <div class="flex gap-1 items-center text-xs text-gray-600 dark:text-gray-400">
+                <div class="size-6 rounded-full bg-gray-200 flex items-center justify-center dark:bg-gray-700">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-4">
                     <path fill-rule="evenodd" d="M5.75 2a.75.75 0 0 1 .75.75V4h7V2.75a.75.75 0 0 1 1.5 0V4h.25A2.75 2.75 0 0 1 18 6.75v8.5A2.75 2.75 0 0 1 15.25 18H4.75A2.75 2.75 0 0 1 2 15.25v-8.5A2.75 2.75 0 0 1 4.75 4H5V2.75A.75.75 0 0 1 5.75 2Zm-1 5.5c-.69 0-1.25.56-1.25 1.25v6.5c0 .69.56 1.25 1.25 1.25h10.5c.69 0 1.25-.56 1.25-1.25v-6.5c0-.69-.56-1.25-1.25-1.25H4.75Z" clip-rule="evenodd" />
                   </svg>
@@ -236,7 +236,7 @@
               <label for="amount"
                      class="mb-2 block text-xs font-medium text-gray-900 dark:text-white lg:text-sm">مقدار</label>
               @if (metal_item_config.min_order || metal_item_config.max_order) {
-                <span [ngClass]="errors['amountOfMetal'] || errors['quantity'] ? 'text-red-500':'text-gray-500'"
+                <span [ngClass]="errors['amountOfMetal'] || errors['quantity'] ? 'text-red-500':'text-gray-500 dark:text-gray-400'"
                       class="text-xs font-medium">
                     @if (metal_item_config.min_order) {
                       حداقل
@@ -257,8 +257,8 @@
               [ngClass]="errors['amountOfMetal'] || errors['quantity'] ? 'border-red-300 dark:border-red-600':'border-gray-300 dark:border-gray-600'"
               class="flex items-center gap-2 rounded-base px-2.5 border">
               <div>
-                <svg class="text-gray-500 size-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
-                  <path class="fill-gray-500"
+                <svg class="text-gray-500 size-5 dark:text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+                  <path class="fill-gray-500 dark:fill-gray-400"
                         d="M18 7C8.6289209 7 1 14.628928 1 24C1 33.371072 8.6289209 41 18 41C19.024962 41 20.024423 40.893576 21 40.71875C21.972139 40.893461 22.971565 41 24 41C25.025423 41 26.023999 40.893748 27 40.71875C27.972139 40.893461 28.971565 41 30 41C39.370748 41 47 33.370748 47 24C47 14.629252 39.370748 7 30 7C28.971565 7 27.972139 7.1065393 27 7.28125C26.023999 7.106252 25.025423 7 24 7C22.971565 7 21.972139 7.1065393 21 7.28125C20.024423 7.1064244 19.024962 7 18 7 z M 18 10C18.871542 10 19.72002 10.088893 20.546875 10.240234 A 1.50015 1.50015 0 0 0 20.888672 10.298828C27.244913 11.625402 32 17.241461 32 24C32 30.759199 27.243895 36.375307 20.886719 37.701172 A 1.50015 1.50015 0 0 0 20.541016 37.759766C19.715933 37.910431 18.86955 38 18 38C10.25024 38 4 31.749755 4 24C4 16.250245 10.25024 10 18 10 z M 28.734375 10.833984C34.140345 12.770915 38 17.916072 38 24C38 30.083928 34.140345 35.229085 28.734375 37.166016C32.554462 34.045593 35 29.303658 35 24C35 18.696342 32.554462 13.954407 28.734375 10.833984 z M 34.734375 10.833984C40.140345 12.770915 44 17.916072 44 24C44 30.083928 40.140345 35.229085 34.734375 37.166016C38.554494 34.045537 41 29.303474 41 24C41 18.696526 38.554494 13.954463 34.734375 10.833984 z M 18 13C17.24 13 16.625953 13.616953 16.626953 14.376953L16.626953 15.785156C14.135953 15.965156 12.15625 18.028453 12.15625 20.564453C12.15625 23.217453 14.31575 25.376953 16.96875 25.376953L19.375 25.376953C20.512 25.376953 21.4375 26.3005 21.4375 27.4375C21.4375 28.5745 20.512 29.5 19.375 29.5L16.677734 29.5C15.400734 29.5 14.601203 28.970344 14.158203 28.527344C13.621203 27.990344 12.751844 27.990344 12.214844 28.527344C11.677844 29.064344 11.677844 29.935656 12.214844 30.472656C13.349844 31.607656 14.915 32.231141 16.625 32.244141L16.625 33.625C16.625 34.384 17.24 35 18 35C18.76 35 19.375 34.384 19.375 33.625L19.375 32.25C22.028 32.25 24.185547 30.088547 24.185547 27.435547C24.185547 24.782547 22.026047 22.623047 19.373047 22.623047L16.96875 22.623047C15.83175 22.623047 14.90625 21.6995 14.90625 20.5625C14.90625 19.4255 15.83175 18.5 16.96875 18.5L19.082031 18.5C20.371294 18.5 20.964229 19.240993 20.970703 19.244141L20.970703 19.246094C21.381028 19.883023 22.230582 20.063015 22.869141 19.654297C23.507141 19.242297 23.691297 18.391906 23.279297 17.753906C22.851297 17.091906 21.497 15.877531 19.375 15.769531L19.375 14.375C19.375 13.616 18.76 13 18 13 z"/>
                 </svg>
               </div>
@@ -277,8 +277,8 @@
                      [inputTransformFn]="p2e"
                      id="amount"
                      autocomplete="off"
-                     class="w-full border-0 bg-transparent px-0 text-sm text-gray-900 py-2.5 focus:ring-0"/>
-              <span class="text-sm text-gray-500">{{ metal_item.unit == 'gram' ? 'گرم' : 'عدد' }}</span>
+                     class="w-full border-0 bg-transparent px-0 text-sm text-gray-900 py-2.5 focus:ring-0 dark:text-white"/>
+              <span class="text-sm text-gray-500 dark:text-gray-400">{{ metal_item.unit == 'gram' ? 'گرم' : 'عدد' }}</span>
             </div>
           </div>
           <div>
@@ -287,7 +287,7 @@
             @if (metal_item.unit == 'gram') {
               <div class="flex items-center gap-2 rounded-base border border-gray-300 dark:border-gray-600 px-2.5">
                 <div>
-                  <svg class="h-5 w-5 text-gray-500" id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg"
+                  <svg class="h-5 w-5 text-gray-500 dark:text-gray-400" id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg"
                        viewBox="0 0 24 24" stroke-width="1.5">
                     <defs>
                       <style>.cls-63ce7444ea57ea6c838005ea-1 {
@@ -317,14 +317,14 @@
                        pattern="[0-9]*"
                        id="price"
                        autocomplete="off"
-                       class="w-full border-0 bg-transparent px-0 text-sm text-gray-900 py-2.5 focus:ring-0"/>
-                <span class="text-sm text-gray-500">تومان</span>
+                       class="w-full border-0 bg-transparent px-0 text-sm text-gray-900 py-2.5 focus:ring-0 dark:text-white"/>
+                <span class="text-sm text-gray-500 dark:text-gray-400">تومان</span>
               </div>
             } @else {
               <div
                 class="flex items-center gap-2 rounded-base border border-gray-300 dark:border-gray-600 px-2.5 min-h-11">
                 <div>
-                  <svg class="h-5 w-5 text-gray-500" id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg"
+                  <svg class="h-5 w-5 text-gray-500 dark:text-gray-400" id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg"
                        viewBox="0 0 24 24" stroke-width="1.5">
                     <defs>
                       <style>.cls-63ce7444ea57ea6c838005ea-1 {
@@ -345,8 +345,8 @@
                   </svg>
                 </div>
                 <span
-                  class="w-full border-0 bg-transparent px-0 text-sm text-gray-900 py-2.5 focus:ring-0">{{ amountOfCash | number }}</span>
-                <span class="text-sm text-gray-500">تومان</span>
+                  class="w-full border-0 bg-transparent px-0 text-sm text-gray-900 py-2.5 focus:ring-0 dark:text-white">{{ amountOfCash | number }}</span>
+                <span class="text-sm text-gray-500 dark:text-gray-400">تومان</span>
               </div>
             }
           </div>

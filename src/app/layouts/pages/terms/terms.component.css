@@ -17,3 +17,11 @@
 .terms-body a {
   color: #0ea5e9;
 }
+
+.dark .terms-body :where(h1, h2, h3, h4) {
+  color: #e5e7eb;
+}
+
+.dark .terms-body a {
+  color: #38bdf8;
+}

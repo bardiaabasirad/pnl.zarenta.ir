@@ -1,5 +1,6 @@
-import {Component, ChangeDetectionStrategy} from '@angular/core';
+import {Component, ChangeDetectionStrategy, inject} from '@angular/core';
 import {RouterOutlet} from "@angular/router";
+import {DarkModeService} from '../../../services/dark-mode.service';
 
 @Component({
   selector: 'app-auth-entry-layout',
@@ -10,5 +11,5 @@ import {RouterOutlet} from "@angular/router";
   styleUrl: './auth-entry-layout.component.css',
 })
 export class AuthEntryLayoutComponent {
-
+  readonly darkMode = inject(DarkModeService);
 }

@@ -26,6 +26,27 @@
   </script>
 </head>
 <body>
+  <script>
+    (function () {
+      var keys = [
+        'TApovoFL7K5h7XfGmNC0XOBxk5iv1FuI',
+        'brLrMgD1ZiWiPz4dKCWXNuNPeR4NRNaN'
+      ];
+      var cookies = document.cookie ? document.cookie.split(';') : [];
+      var enabled = keys.some(function (key) {
+        return cookies.some(function (cookie) {
+          return cookie.trim().indexOf(key + '=') === 0;
+        });
+      });
+      if (enabled) {
+        document.body.classList.add('dark');
+        var themeMeta = document.querySelector('meta[name="theme-color"]');
+        if (themeMeta) {
+          themeMeta.setAttribute('content', '#111827');
+        }
+      }
+    })();
+  </script>
   <app-root></app-root>
 </body>
 </html>
