@@ -24,7 +24,6 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 import {User} from '../../../../interfaces/user';
 import {ProgressBarComponent} from '../../../../components/progress-bar/progress-bar.component';
 import {WebSocketConnectionStatus, WebSocketService} from '../../../../services/web-socket.service';
-import {NotificationService} from '../../../../services/notification.service';
 import {SelectedMetalPrice} from '../../../../interfaces/selected-metal-price';
 import {ButtonWithLoaderComponent} from '../../../../components/button-with-loader/button-with-loader.component';
 import {removeTrailingZeros} from '../../../../utils/remove-trailing-zeros.util';
@@ -84,7 +83,6 @@ export class ExchangeModalComponent implements OnInit, AfterViewInit, OnDestroy 
   private metalOrderService = inject(OrderService);
   private matSnackBar = inject(MatSnackBar);
   private webSocketService = inject(WebSocketService);
-  private notificationService = inject(NotificationService);
   orderStateService = inject(OrderStateService);
   @ViewChild('progressBar') progressBar!: ProgressBarComponent;
   @ViewChild('quantityInput') quantityInput!: ElementRef<HTMLInputElement>;
@@ -762,11 +760,6 @@ export class ExchangeModalComponent implements OnInit, AfterViewInit, OnDestroy 
 
           if (metal_order && e) {
             this.metalOrder.set(e);
-            if (e.status == 'succeed') {
-              this.notificationService.playSucceedSound();
-            } else if (e.status == 'rejected') {
-              this.notificationService.playRejectSound();
-            }
           }
         });
 
@@ -783,13 +776,7 @@ export class ExchangeModalComponent implements OnInit, AfterViewInit, OnDestroy 
       this.metalOrderService.show(metal_order.tracking_code).subscribe({
         next: (response: any) => {
           if (metal_order && metal_order.status != response.order.status) {
-
             this.metalOrder.set(response.order);
-            if (response.order.status == 'succeed') {
-              this.notificationService.playSucceedSound();
-            } else if (response.order.status == 'rejected') {
-              this.notificationService.playRejectSound();
-            }
           }
         }
       })

@@ -38,9 +38,13 @@ export class OrderStateService {
   }
 
   // متدی برای آپدیت وضعیت مودال از سمت کامپوننت مودال
-  setModalState(isOpen: boolean, trackingCode: string | null = null): void {
+  setModalState(isOpen: boolean, trackingCode?: string | null): void {
     this._isModalOpen.set(isOpen);
-    this._openOrderTrackingCode.set(isOpen ? trackingCode : null);
+    if (!isOpen) {
+      this._openOrderTrackingCode.set(null);
+    } else if (trackingCode !== undefined) {
+      this._openOrderTrackingCode.set(trackingCode);
+    }
   }
 
   private shouldMarkUnseen(e: any): boolean {
@@ -114,15 +118,14 @@ export class OrderStateService {
 
     this._lastChangedOrder.set(e);
 
-    // اعمال منطق جدید شما
+    if (e.status == 'succeed') {
+      this.notificationService.playSucceedSound(e.tracking_code);
+    } else if (e.status == 'rejected') {
+      this.notificationService.playRejectSound(e.tracking_code);
+    }
+
     if (this.shouldMarkUnseen(e)) {
       this._hasUnseenUpdate.set(true);
-
-      if (e.status == 'succeed') {
-        this.notificationService.playSucceedSound();
-      } else if (e.status == 'rejected') {
-        this.notificationService.playRejectSound();
-      }
     }
   }
 
@@ -132,7 +135,7 @@ export class OrderStateService {
     // برای سفارش جدید معمولاً همیشه true است مگر در شرایط خاص
     if (!this._isModalOpen() && this.shouldMarkUnseen(e)) {
       this._hasUnseenUpdate.set(true);
-      this.notificationService.playCreatedSound();
+      this.notificationService.playCreatedSound(e.tracking_code);
     }
   }
 
