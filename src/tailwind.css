@@ -51,6 +51,14 @@ body.dark {
     -webkit-box-shadow: 0 0 0px 1000px var(--color-gray-700) inset !important;
     -webkit-text-fill-color: var(--color-gray-100) !important;
   }
+
+  /* Flowbite hardcodes checkbox/radio background to #fff with no dark variant. */
+  .dark [type='checkbox']:not(:checked),
+  .dark [type='radio']:not(:checked) {
+    background-color: var(--color-gray-700);
+    border-color: var(--color-gray-600);
+    --tw-ring-offset-color: var(--color-gray-800);
+  }
 }
 
 @theme {

@@ -80,25 +80,25 @@
   cursor: pointer;
 }
 
-.dark .pwa-install-banner__inner {
+:host-context(.dark) .pwa-install-banner__inner {
   border-color: rgb(55 65 81);
   background: rgb(31 41 55 / 0.96);
   box-shadow: 0 10px 30px rgb(0 0 0 / 0.45);
 }
 
-.dark .pwa-install-banner__title {
+:host-context(.dark) .pwa-install-banner__title {
   color: rgb(243 244 246);
 }
 
-.dark .pwa-install-banner__desc {
+:host-context(.dark) .pwa-install-banner__desc {
   color: rgb(156 163 175);
 }
 
-.dark .pwa-install-banner__dismiss {
+:host-context(.dark) .pwa-install-banner__dismiss {
   color: rgb(156 163 175);
 }
 
-.dark .pwa-install-banner__dismiss:hover {
+:host-context(.dark) .pwa-install-banner__dismiss:hover {
   color: rgb(229 231 235);
 }
 
