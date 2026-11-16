@@ -1,26 +1,32 @@
 @if (pwaInstall.showBanner()) {
   <div
-    class="pwa-install-banner"
+    class="pointer-events-none fixed inset-x-0 bottom-0 z-90 p-3"
     role="dialog"
     aria-labelledby="pwa-install-title"
     aria-describedby="pwa-install-desc"
   >
-    <div class="pwa-install-banner__inner">
+    <div
+      class="pointer-events-auto mx-auto flex max-w-xl items-center gap-3 rounded-xl border border-gray-200 bg-white/95 px-3.5 py-3 shadow-lg shadow-black/10 backdrop-blur-sm max-[420px]:flex-wrap dark:border-gray-700 dark:bg-gray-800/95 dark:shadow-black/45"
+    >
       <img
-        class="pwa-install-banner__icon"
+        class="size-10 shrink-0 rounded-lg"
         src="icons/icon-192x192.png"
         width="40"
         height="40"
         alt=""
       >
-      <div class="pwa-install-banner__copy">
-        <p id="pwa-install-title" class="pwa-install-banner__title">نصب اپلیکیشن زرنتا</p>
-        <p id="pwa-install-desc" class="pwa-install-banner__desc">برای دسترسی سریع‌تر، برنامه را روی دستگاه خود نصب کنید.</p>
+      <div class="min-w-0 flex-1">
+        <p id="pwa-install-title" class="m-0 text-sm font-bold text-gray-900 dark:text-gray-100">
+          نصب اپلیکیشن زرنتا
+        </p>
+        <p id="pwa-install-desc" class="mt-0.5 mb-0 text-xs leading-snug text-gray-600 dark:text-gray-400">
+          برای دسترسی سریع‌تر، برنامه را روی دستگاه خود نصب کنید.
+        </p>
       </div>
-      <div class="pwa-install-banner__actions">
+      <div class="flex shrink-0 items-center gap-1.5 max-[420px]:w-full max-[420px]:justify-end">
         <button
           type="button"
-          class="pwa-install-banner__install"
+          class="cursor-pointer rounded-lg border-0 bg-primary px-3.5 py-1.5 text-[0.8125rem] font-bold text-gray-900 disabled:cursor-wait disabled:opacity-65"
           [disabled]="installing"
           (click)="install()"
         >
@@ -28,7 +34,7 @@
         </button>
         <button
           type="button"
-          class="pwa-install-banner__dismiss"
+          class="cursor-pointer border-0 bg-transparent px-2 py-1.5 text-xs text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200"
           aria-label="بستن"
           (click)="dismiss()"
         >

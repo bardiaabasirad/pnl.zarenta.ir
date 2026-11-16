@@ -5,7 +5,6 @@ import {PwaInstallService} from '../../services/pwa-install.service';
   selector: 'app-pwa-install-banner',
   standalone: true,
   templateUrl: './pwa-install-banner.component.html',
-  styleUrl: './pwa-install-banner.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PwaInstallBannerComponent {
